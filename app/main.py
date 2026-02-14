@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import sys
 from datetime import datetime, timedelta
 from typing import List, Dict, Any
@@ -34,6 +35,20 @@ except Exception:
     pass  # Ignore logging errors
 
 logger = logging.getLogger(__name__)
+
+app_insights_connection = (
+    os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING")
+    or os.getenv("APPINSIGHTS_CONNECTION_STRING")
+)
+if app_insights_connection:
+    try:
+        from azure.monitor.opentelemetry import configure_azure_monitor
+
+        configure_azure_monitor(connection_string=app_insights_connection)
+        safe_logger = logging.getLogger("appinsights")
+        safe_logger.info("Application Insights configured")
+    except Exception:
+        pass
 
 # In-memory log storage for frontend access
 class LogStore:

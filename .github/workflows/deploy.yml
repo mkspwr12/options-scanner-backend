@@ -52,7 +52,8 @@ jobs:
             --name ${{ env.AZURE_WEBAPP_NAME }} \
             --settings \
               SQL_CONNECTION_STRING="${{ secrets.SQL_CONNECTION_STRING }}" \
-              AZURE_CLIENT_ID="${{ secrets.MI_CLIENT_ID }}"
+              AZURE_CLIENT_ID="${{ secrets.MI_CLIENT_ID }}" \
+              APPLICATIONINSIGHTS_CONNECTION_STRING="${{ secrets.APPINSIGHTS_CONNECTION_STRING }}"
 
       - name: Restart App Service
         run: |
