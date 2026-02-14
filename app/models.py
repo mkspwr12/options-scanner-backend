@@ -27,6 +27,19 @@ class OptionOpportunity(BaseModel):
     timestamp: int
 
 
+class MultiLegOpportunity(BaseModel):
+    id: str
+    symbol: str
+    strategyType: str
+    legs: list[OptionOpportunity]
+    maxProfit: float
+    maxLoss: float
+    breakeven: float
+    riskRewardRatio: float
+    confidenceScore: float
+    timestamp: int
+
+
 class TrackedTrade(BaseModel):
     id: str
     opportunityId: str

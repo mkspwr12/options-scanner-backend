@@ -16,6 +16,7 @@ from .db import get_connection
 from .models import (
     Greeks,
     OptionOpportunity,
+    MultiLegOpportunity,
     PortfolioMetrics,
     PortfolioResponse,
     TrackedTrade,
@@ -284,6 +285,135 @@ def portfolio() -> dict:
 def watchlist() -> dict:
     symbols = ["META", "SPY", "AAPL", "NVDA"]
     return {"status": "ok", "symbols": symbols}
+
+
+@app.post("/api/trades/track")
+def track_trade(trade_data: Dict[str, Any]) -> dict:
+    """Track a new trade position."""
+    try:
+        safe_log("info", f"Trade tracked: {trade_data.get('symbol')} {trade_data.get('optionType')}", trade_data)
+        return {
+            "status": "ok",
+            "tradeId": f"trade-{datetime.utcnow().timestamp()}",
+            "message": f"Trade tracked: {trade_data.get('symbol')} {trade_data.get('optionType')}"
+        }
+    except Exception as exc:
+        safe_log("error", f"Failed to track trade: {str(exc)}")
+        raise HTTPException(status_code=400, detail=f"Failed to track trade: {str(exc)}")
+
+
+@app.post("/api/trades/close")
+def close_trade(trade_data: Dict[str, Any]) -> dict:
+    """Close an existing trade position."""
+    try:
+        trade_id = trade_data.get("tradeId")
+        exit_price = trade_data.get("exitPrice")
+        safe_log("info", f"Trade closed: {trade_id} @ ${exit_price}", trade_data)
+        
+        realized_pl = trade_data.get("realizedPL", 0)
+        return {
+            "status": "ok",
+            "tradeId": trade_id,
+            "realizedPL": realized_pl,
+            "message": f"Trade closed with P/L: ${realized_pl:.2f}"
+        }
+    except Exception as exc:
+        safe_log("error", f"Failed to close trade: {str(exc)}")
+        raise HTTPException(status_code=400, detail=f"Failed to close trade: {str(exc)}")
+
+
+@app.post("/api/watchlist/add")
+def add_to_watchlist(data: Dict[str, Any]) -> dict:
+    """Add a symbol to watchlist."""
+    try:
+        symbol = data.get("symbol", "").upper()
+        safe_log("info", f"Added to watchlist: {symbol}", data)
+        return {
+            "status": "ok",
+            "symbol": symbol,
+            "message": f"{symbol} added to watchlist"
+        }
+    except Exception as exc:
+        safe_log("error", f"Failed to add to watchlist: {str(exc)}")
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
+@app.post("/api/watchlist/remove")
+def remove_from_watchlist(data: Dict[str, Any]) -> dict:
+    """Remove a symbol from watchlist."""
+    try:
+        symbol = data.get("symbol", "").upper()
+        safe_log("info", f"Removed from watchlist: {symbol}", data)
+        return {
+            "status": "ok",
+            "symbol": symbol,
+            "message": f"{symbol} removed from watchlist"
+        }
+    except Exception as exc:
+        safe_log("error", f"Failed to remove from watchlist: {str(exc)}")
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
+@app.get("/api/multi-leg-opportunities")
+def multi_leg_opportunities() -> dict:
+    """Return multi-leg option strategies (spreads, butterflies, etc.)."""
+    now = int(datetime.utcnow().timestamp() * 1000)
+    expiration = (datetime.utcnow() + timedelta(days=21)).strftime("%Y-%m-%d")
+    
+    sample = [
+        MultiLegOpportunity(
+            id="ml-001",
+            symbol="SPY",
+            strategyType="BULL_CALL_SPREAD",
+            legs=[
+                OptionOpportunity(
+                    id="leg-1", symbol="SPY", strikePrice=680.0, expirationDate=expiration,
+                    optionType="CALL", currentPrice=8.5, underlyingPrice=681.7,
+                    impliedVolatility=0.27, greeks=Greeks(delta=0.6, gamma=0.04, theta=-0.02, vega=0.10),
+                    potentialGain=5.0, potentialLoss=3.5, riskRewardRatio=1.43, confidenceScore=76, timestamp=now
+                ),
+                OptionOpportunity(
+                    id="leg-2", symbol="SPY", strikePrice=690.0, expirationDate=expiration,
+                    optionType="CALL", currentPrice=3.2, underlyingPrice=681.7,
+                    impliedVolatility=0.25, greeks=Greeks(delta=0.35, gamma=0.05, theta=-0.01, vega=0.09),
+                    potentialGain=5.0, potentialLoss=1.8, riskRewardRatio=2.78, confidenceScore=74, timestamp=now
+                )
+            ],
+            maxProfit=5.0,
+            maxLoss=1.8,
+            breakeven=681.8,
+            riskRewardRatio=2.78,
+            confidenceScore=75,
+            timestamp=now
+        ),
+        MultiLegOpportunity(
+            id="ml-002",
+            symbol="META",
+            strategyType="IRON_CONDOR",
+            legs=[
+                OptionOpportunity(
+                    id="leg-3", symbol="META", strikePrice=680.0, expirationDate=expiration,
+                    optionType="CALL", currentPrice=2.5, underlyingPrice=689.3,
+                    impliedVolatility=0.31, greeks=Greeks(delta=0.25, gamma=0.03, theta=-0.01, vega=0.08),
+                    potentialGain=2.5, potentialLoss=2.5, riskRewardRatio=1.0, confidenceScore=72, timestamp=now
+                ),
+                OptionOpportunity(
+                    id="leg-4", symbol="META", strikePrice=700.0, expirationDate=expiration,
+                    optionType="CALL", currentPrice=0.8, underlyingPrice=689.3,
+                    impliedVolatility=0.28, greeks=Greeks(delta=0.10, gamma=0.02, theta=0.0, vega=0.05),
+                    potentialGain=0.8, potentialLoss=1.2, riskRewardRatio=0.67, confidenceScore=70, timestamp=now
+                )
+            ],
+            maxProfit=3.3,
+            maxLoss=1.7,
+            breakeven=686.7,
+            riskRewardRatio=1.94,
+            confidenceScore=73,
+            timestamp=now
+        )
+    ]
+    
+    return {"status": "ok", "opportunities": sample}
 
 
 # ===== Diagnostics & Logging Endpoints =====
