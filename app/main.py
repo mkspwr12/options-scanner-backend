@@ -73,6 +73,20 @@ except Exception:
             return []
     log_store = FallbackLogStore()
 
+
+def safe_log(level: str, message: str, data: Any = None) -> None:
+    try:
+        log_store.add(level, message, data)
+    except Exception:
+        pass
+    try:
+        if data is not None:
+            logger.log(getattr(logging, level.upper(), logging.INFO), f"{message} | {json.dumps(data, default=str)}")
+        else:
+            logger.log(getattr(logging, level.upper(), logging.INFO), message)
+    except Exception:
+        pass
+
 app = FastAPI(title="Options Scanner API")
 
 # Add CORS middleware
@@ -87,24 +101,23 @@ app.add_middleware(
 # Middleware to log all requests (with error handling)
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
-    try:
-        log_store.add("info", f"→ {request.method} {request.url.path}")
-    except Exception:
-        pass
-    
+    safe_log("info", f"→ {request.method} {request.url.path}")
     try:
         response = await call_next(request)
-        try:
-            log_store.add("info", f"← {request.method} {request.url.path} {response.status_code}")
-        except Exception:
-            pass
+        safe_log("info", f"← {request.method} {request.url.path} {response.status_code}")
         return response
     except Exception as e:
-        try:
-            log_store.add("error", f"✗ {request.method} {request.url.path}", {"error": str(e)})
-        except Exception:
-            pass
+        safe_log("error", f"✗ {request.method} {request.url.path}", {"error": str(e)})
         raise
+
+
+@app.get("/healthz")
+def healthz() -> dict:
+    """Lightweight health check without database dependency."""
+    return {
+        "status": "ok",
+        "timestamp": datetime.utcnow().isoformat(),
+    }
 
 
 @app.get("/health")
