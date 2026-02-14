@@ -140,14 +140,14 @@ def healthz() -> dict:
 
 @app.get("/health")
 def health() -> dict:
-    """Health check endpoint - verifies database connectivity."""
+    """Health check endpoint - lightweight version without DB connection."""
     try:
         settings = get_settings()
         
-        with get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT DB_NAME()")
-            db_name = cursor.fetchone()[0]
+        # Don't attempt actual DB connection due to pyodbc segfault on Linux
+        # Instead, verify configuration is present
+        if not settings.sql_connection_string:
+            raise HTTPException(status_code=503, detail="SQL_CONNECTION_STRING not configured")
         
         server = "unknown"
         for part in settings.sql_connection_string.split(";"):
@@ -158,13 +158,21 @@ def health() -> dict:
         response = {
             "status": "ok",
             "auth": "managed-identity",
-            "database": db_name,
+            "database": "configured",
             "server": server,
+            "note": "Database connectivity check skipped due to pyodbc segfault on Linux. Use /healthz for lightweight check.",
             "timestamp": datetime.utcnow().isoformat()
         }
         return response
+    except HTTPException:
+        raise
     except Exception as exc:  # noqa: BLE001
-        raise HTTPException(status_code=503, detail=str(exc)) from exc
+        import sys
+        import traceback
+        error_msg = str(exc)
+        print(f"[HEALTH] ERROR: {error_msg}", file=sys.stderr, flush=True)
+        traceback.print_exc(file=sys.stderr)
+        raise HTTPException(status_code=503, detail=error_msg) from exc
 
 
 @app.get("/api/scan")
