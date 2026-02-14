@@ -22,13 +22,17 @@ from .models import (
 )
 
 # Configure structured logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.StreamHandler(sys.stdout),
-    ]
-)
+try:
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.StreamHandler(sys.stdout),
+        ]
+    )
+except Exception:
+    pass  # Ignore logging errors
+
 logger = logging.getLogger(__name__)
 
 # In-memory log storage for frontend access
@@ -38,34 +42,36 @@ class LogStore:
         self.max_entries = max_entries
     
     def add(self, level: str, message: str, data: Any = None) -> None:
-        entry = {
-            "timestamp": datetime.utcnow().isoformat(),
-            "level": level,
-            "message": message,
-            "data": data,
-            "source": "backend"
-        }
-        self.logs.append(entry)
-        if len(self.logs) > self.max_entries:
-            self.logs.pop(0)
-        
-        # Also log to standard logger
-        log_func = {
-            "debug": logger.debug,
-            "info": logger.info,
-            "warning": logger.warning,
-            "error": logger.error,
-        }.get(level, logger.info)
-        
-        log_msg = f"{message}"
-        if data:
-            log_msg += f" | {json.dumps(data, default=str)}"
-        log_func(log_msg)
+        try:
+            entry = {
+                "timestamp": datetime.utcnow().isoformat(),
+                "level": level,
+                "message": message,
+                "data": data,
+                "source": "backend"
+            }
+            self.logs.append(entry)
+            if len(self.logs) > self.max_entries:
+                self.logs.pop(0)
+        except Exception:
+            pass  # Silently fail on log store errors
     
     def get_logs(self, limit: int = 100) -> List[Dict[str, Any]]:
-        return list(reversed(self.logs[-limit:]))
+        try:
+            return list(reversed(self.logs[-limit:]))
+        except Exception:
+            return []
 
-log_store = LogStore()
+try:
+    log_store = LogStore()
+except Exception:
+    # Fallback if LogStore fails to initialize
+    class FallbackLogStore:
+        def add(self, level: str, message: str, data: Any = None) -> None:
+            pass
+        def get_logs(self, limit: int = 100) -> List[Dict[str, Any]]:
+            return []
+    log_store = FallbackLogStore()
 
 app = FastAPI(title="Options Scanner API")
 
@@ -78,16 +84,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Middleware to log all requests
+# Middleware to log all requests (with error handling)
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
-    log_store.add("info", f"→ {request.method} {request.url.path}")
+    try:
+        log_store.add("info", f"→ {request.method} {request.url.path}")
+    except Exception:
+        pass
+    
     try:
         response = await call_next(request)
-        log_store.add("info", f"← {request.method} {request.url.path} {response.status_code}")
+        try:
+            log_store.add("info", f"← {request.method} {request.url.path} {response.status_code}")
+        except Exception:
+            pass
         return response
     except Exception as e:
-        log_store.add("error", f"✗ {request.method} {request.url.path}", {"error": str(e)})
+        try:
+            log_store.add("error", f"✗ {request.method} {request.url.path}", {"error": str(e)})
+        except Exception:
+            pass
         raise
 
 
@@ -95,10 +111,8 @@ async def log_requests(request: Request, call_next):
 def health() -> dict:
     """Health check endpoint - verifies database connectivity."""
     try:
-        log_store.add("info", "Health check initiated")
         settings = get_settings()
         
-        log_store.add("info", "Attempting database connection")
         with get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT DB_NAME()")
@@ -117,10 +131,8 @@ def health() -> dict:
             "server": server,
             "timestamp": datetime.utcnow().isoformat()
         }
-        log_store.add("info", "✓ Health check passed", {"database": db_name})
         return response
     except Exception as exc:  # noqa: BLE001
-        log_store.add("error", "Health check failed", {"error": str(exc), "type": type(exc).__name__})
         raise HTTPException(status_code=503, detail=str(exc)) from exc
 
 
@@ -231,9 +243,7 @@ def portfolio() -> dict:
 
 @app.get("/api/watchlist")
 def watchlist() -> dict:
-    log_store.add("info", "Watchlist endpoint called")
     symbols = ["META", "SPY", "AAPL", "NVDA"]
-    log_store.add("info", f"Returning {len(symbols)} watchlist symbols")
     return {"status": "ok", "symbols": symbols}
 
 
@@ -265,7 +275,6 @@ def receive_logs(log_entry: Dict[str, Any]) -> dict:
 def diagnostics() -> dict:
     """Comprehensive diagnostics endpoint."""
     try:
-        log_store.add("info", "Diagnostics endpoint called")
         settings = get_settings()
         
         # Database info
@@ -312,11 +321,9 @@ def diagnostics() -> dict:
             "recent_logs": log_store.get_logs(20)
         }
         
-        log_store.add("info", "✓ Diagnostics completed", {"db_connected": db_info["connected"]})
         return diagnostics_response
         
     except Exception as e:
-        log_store.add("error", "Diagnostics failed", {"error": str(e)})
         raise HTTPException(status_code=500, detail=str(e)) from e
 
 
