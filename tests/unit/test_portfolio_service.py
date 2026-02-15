@@ -35,6 +35,30 @@ class TestGetPortfolio:
         assert result.metrics.totalValue == 0.0
         assert result.metrics.winRate == 0.0
 
+    def test_db_error_returns_empty_portfolio(self) -> None:
+        """When DB is unavailable, get_portfolio should return empty portfolio."""
+        repo = MagicMock(spec=TradeRepository)
+        repo.get_active_trades.side_effect = Exception("DB down")
+
+        svc = PortfolioService(repo=repo)
+        result = svc.get_portfolio()
+
+        assert result.metrics.totalTrades == 0
+        assert result.metrics.totalValue == 0.0
+        assert result.activeTrades == []
+        assert result.closedTrades == []
+
+    def test_partial_db_failure_returns_empty(self) -> None:
+        """If get_active works but get_closed fails, still return empty."""
+        repo = MagicMock(spec=TradeRepository)
+        repo.get_active_trades.return_value = [make_active_trade()]
+        repo.get_closed_trades.side_effect = Exception("DB timeout")
+
+        svc = PortfolioService(repo=repo)
+        result = svc.get_portfolio()
+        # All trades should be empty since the except catches both calls
+        assert result.metrics.totalTrades == 0
+
 
 class TestCalculateMetrics:
     def test_win_rate_calculation(self) -> None:

@@ -18,6 +18,26 @@ class TestGetSymbols:
         svc = WatchlistService(repo=repo)
         assert svc.get_symbols() == ["META", "SPY"]
 
+    def test_db_error_returns_default_symbols(self) -> None:
+        """When DB is unavailable, get_symbols should return defaults."""
+        repo = MagicMock(spec=WatchlistRepository)
+        repo.get_all_symbols.side_effect = Exception("DB down")
+
+        svc = WatchlistService(repo=repo)
+        result = svc.get_symbols()
+        assert isinstance(result, list)
+        assert len(result) > 0
+        assert "AAPL" in result  # default list includes AAPL
+
+    def test_empty_db_returns_default_symbols(self) -> None:
+        """When DB returns empty list, fall back to defaults."""
+        repo = MagicMock(spec=WatchlistRepository)
+        repo.get_all_symbols.return_value = []
+
+        svc = WatchlistService(repo=repo)
+        result = svc.get_symbols()
+        assert len(result) > 0  # should return defaults instead of empty
+
 
 class TestAddSymbol:
     def test_success(self) -> None:
