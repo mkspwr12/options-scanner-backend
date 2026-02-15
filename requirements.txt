@@ -4,3 +4,8 @@ azure-identity==1.17.1
 pyodbc==5.1.0
 python-dotenv==1.0.1
 azure-monitor-opentelemetry==1.6.4
+
+# Testing
+pytest==8.3.4
+httpx==0.28.1
+pytest-cov==6.0.0
