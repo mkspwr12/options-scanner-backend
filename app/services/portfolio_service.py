@@ -22,9 +22,18 @@ class PortfolioService:
         self._repo = repo or TradeRepository()
 
     def get_portfolio(self) -> PortfolioResponse:
-        """Build the full portfolio response from real trade data."""
-        active_trades: list[TrackedTrade] = self._repo.get_active_trades()
-        closed_trades: list[ClosedTrade] = self._repo.get_closed_trades()
+        """Build the full portfolio response from real trade data.
+
+        Returns an empty portfolio when the database is unavailable so
+        downstream consumers always receive a valid response shape.
+        """
+        try:
+            active_trades: list[TrackedTrade] = self._repo.get_active_trades()
+            closed_trades: list[ClosedTrade] = self._repo.get_closed_trades()
+        except Exception:
+            logger.warning("Portfolio DB unavailable — returning empty portfolio")
+            active_trades = []
+            closed_trades = []
 
         metrics = self._calculate_metrics(active_trades, closed_trades)
         return PortfolioResponse(

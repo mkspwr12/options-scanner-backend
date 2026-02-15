@@ -45,6 +45,13 @@ jobs:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           package: .
 
+      - name: Configure Startup Command
+        run: |
+          az webapp config set \
+            --resource-group options-scanner-rg \
+            --name ${{ env.AZURE_WEBAPP_NAME }} \
+            --startup-file "bash /home/site/wwwroot/startup.sh"
+
       - name: Configure App Settings
         run: |
           az webapp config appsettings set \
@@ -53,7 +60,8 @@ jobs:
             --settings \
               SQL_CONNECTION_STRING="${{ secrets.SQL_CONNECTION_STRING }}" \
               AZURE_CLIENT_ID="${{ secrets.MI_CLIENT_ID }}" \
-              APPLICATIONINSIGHTS_CONNECTION_STRING="${{ secrets.APPINSIGHTS_CONNECTION_STRING }}"
+              APPLICATIONINSIGHTS_CONNECTION_STRING="${{ secrets.APPINSIGHTS_CONNECTION_STRING }}" \
+              WEBSITES_CONTAINER_START_TIME_LIMIT="600"
 
       - name: Restart App Service
         run: |
