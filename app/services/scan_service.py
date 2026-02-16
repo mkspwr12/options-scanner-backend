@@ -111,10 +111,31 @@ class ScanService:
         except Exception:
             logger.warning("DB scan retrieval failed — falling back to sample data")
 
-        # Fallback: hardcoded sample data
+        # Fallback: hardcoded sample data (apply filters in-memory)
+        samples = self._sample_opportunities()
+        filtered = self._filter_sample_opportunities(
+            samples,
+            symbol=symbol,
+            option_type=option_type,
+            min_confidence=min_confidence,
+            min_risk_reward=min_risk_reward,
+            moneyness=moneyness,
+            iv_min=iv_min,
+            iv_max=iv_max,
+            delta_min=delta_min,
+            delta_max=delta_max,
+            theta_min=theta_min,
+            theta_max=theta_max,
+            vega_min=vega_min,
+            vega_max=vega_max,
+        )
+        # Apply sort
+        sort_key = sort_by or "confidenceScore"
+        if hasattr(filtered[0], sort_key) if filtered else False:
+            filtered.sort(key=lambda o: getattr(o, sort_key, 0), reverse=True)
         return {
             "status": "ok",
-            "opportunities": self._sample_opportunities(),
+            "opportunities": filtered[:limit],
             "source": "sample",
             "stale": False,
         }
@@ -186,6 +207,62 @@ class ScanService:
     # ------------------------------------------------------------------
     # Internal helpers
     # ------------------------------------------------------------------
+
+    @staticmethod
+    def _filter_sample_opportunities(
+        opportunities: list[OptionOpportunity],
+        *,
+        symbol: str | None = None,
+        option_type: str | None = None,
+        min_confidence: float = 0,
+        min_risk_reward: float = 0,
+        moneyness: str | None = None,
+        iv_min: float | None = None,
+        iv_max: float | None = None,
+        delta_min: float | None = None,
+        delta_max: float | None = None,
+        theta_min: float | None = None,
+        theta_max: float | None = None,
+        vega_min: float | None = None,
+        vega_max: float | None = None,
+    ) -> list[OptionOpportunity]:
+        """Apply all filters to sample/fallback opportunities in-memory."""
+        filtered: list[OptionOpportunity] = []
+        for opp in opportunities:
+            if symbol and opp.symbol.upper() != symbol.upper():
+                continue
+            if option_type and opp.optionType.upper() != option_type.upper():
+                continue
+            if min_confidence and opp.confidenceScore < min_confidence:
+                continue
+            if min_risk_reward and opp.riskRewardRatio < min_risk_reward:
+                continue
+            if iv_min is not None and (opp.impliedVolatility or 0) < iv_min:
+                continue
+            if iv_max is not None and (opp.impliedVolatility or 0) > iv_max:
+                continue
+            greeks = opp.greeks
+            if greeks:
+                if delta_min is not None and (greeks.delta or 0) < delta_min:
+                    continue
+                if delta_max is not None and (greeks.delta or 0) > delta_max:
+                    continue
+                if theta_min is not None and (greeks.theta or 0) < theta_min:
+                    continue
+                if theta_max is not None and (greeks.theta or 0) > theta_max:
+                    continue
+                if vega_min is not None and (greeks.vega or 0) < vega_min:
+                    continue
+                if vega_max is not None and (greeks.vega or 0) > vega_max:
+                    continue
+            if moneyness and moneyness.lower() != "all":
+                m = ScanService._classify_moneyness(
+                    opp.strikePrice, opp.underlyingPrice, opp.optionType
+                )
+                if m != moneyness.upper():
+                    continue
+            filtered.append(opp)
+        return filtered
 
     @staticmethod
     def _apply_in_memory_filters(

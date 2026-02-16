@@ -158,7 +158,10 @@ async def _background_scanner() -> None:
 
 @asynccontextmanager
 async def lifespan(application: FastAPI):  # noqa: ANN201
-    """Startup / shutdown lifecycle for background tasks."""
+    """Startup / shutdown lifecycle for background tasks and migrations."""
+    # Run database migrations on startup
+    _run_migrations()
+
     global _scan_task  # noqa: PLW0603
     try:
         settings = get_settings()
@@ -174,6 +177,61 @@ async def lifespan(application: FastAPI):  # noqa: ANN201
             await _scan_task
         except asyncio.CancelledError:
             pass
+
+
+def _run_migrations() -> None:
+    """Execute all SQL migration files in order on startup (idempotent)."""
+    import glob
+    import pathlib
+
+    from .db import get_connection
+
+    migrations_dir = pathlib.Path(__file__).resolve().parent.parent / "migrations"
+    files = sorted(glob.glob(str(migrations_dir / "*.sql")))
+
+    if not files:
+        logger.info("No migration files found in %s", migrations_dir)
+        return
+
+    logger.info("Running %d migration(s) from %s", len(files), migrations_dir)
+
+    try:
+        conn = get_connection()
+        conn.autocommit = True
+    except Exception:
+        logger.warning("Cannot connect to database — skipping migrations")
+        return
+
+    for path in files:
+        name = os.path.basename(path)
+        try:
+            with open(path, "r") as f:
+                sql = f.read()
+
+            # Split on GO statements (SQL Server batch separator)
+            batches = [b.strip() for b in sql.split("\nGO") if b.strip()]
+
+            for batch in batches:
+                if not batch or batch.upper() == "GO":
+                    continue
+                cursor = conn.cursor()
+                cursor.execute(batch)
+                try:
+                    while cursor.nextset():
+                        pass
+                except Exception:
+                    pass
+
+            logger.info("Migration %s: OK", name)
+        except Exception as exc:
+            logger.warning("Migration %s: FAILED — %s", name, exc)
+
+    try:
+        conn.close()
+    except Exception:
+        pass
+
+    logger.info("Migrations complete")
 
 
 # ---------------------------------------------------------------------------
