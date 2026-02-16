@@ -31,7 +31,7 @@ if ! odbcinst -q -d -n "ODBC Driver 18 for SQL Server" > /dev/null 2>&1; then
     fi
 
     apt-get update -qq
-    ACCEPT_EULA=Y apt-get install -y --no-install-recommends msodbcsql18 unixodbc-dev
+    ACCEPT_EULA=Y apt-get install -y --no-install-recommends msodbcsql18
     apt-get clean
     rm -rf /var/lib/apt/lists/*
 
@@ -47,5 +47,12 @@ odbcinst -q -d || echo "  (none found)"
 # ------------------------------------------------------------------
 # Start the application
 # ------------------------------------------------------------------
-echo "Starting Uvicorn..."
-python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+echo "Starting Gunicorn with Uvicorn workers..."
+python -m gunicorn app.main:app \
+    --worker-class uvicorn.workers.UvicornWorker \
+    --workers 2 \
+    --bind 0.0.0.0:8000 \
+    --timeout 120 \
+    --graceful-timeout 30 \
+    --access-logfile - \
+    --error-logfile -
