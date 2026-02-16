@@ -50,12 +50,13 @@ def update_provider(
     return {"status": "updated", "provider": provider.model_dump()}
 
 
-@router.delete("/{provider_id}", status_code=204, response_class=Response)
+@router.delete("/{provider_id}")
 def delete_provider(
     provider_id: str,
     svc: ProviderService = Depends(get_provider_service),
-) -> None:
+) -> Response:
     svc.delete_provider(provider_id)
+    return Response(status_code=204)
 
 
 @router.post("/{provider_id}/test")
