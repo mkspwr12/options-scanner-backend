@@ -1,13 +1,99 @@
 """FastAPI dependency injection for services."""
 from __future__ import annotations
 
+import logging
+
+from .config import get_settings
+from .providers.base import MarketDataProvider
+from .providers.circuit_breaker import CircuitBreaker
+from .providers.mock_provider import MockProvider
+from .providers.registry import ProviderRegistry
+from .repositories.metrics_repository import MetricsRepository
+from .repositories.provider_repository import ProviderRepository
 from .repositories.scan_repository import ScanRepository
+from .repositories.strategy_repository import StrategyRepository
 from .repositories.trade_repository import TradeRepository
 from .repositories.watchlist_repository import WatchlistRepository
+from .services.metrics_service import MetricsService
+from .services.options_chain_service import OptionsChainService
 from .services.portfolio_service import PortfolioService
+from .services.provider_service import ProviderService
 from .services.scan_service import ScanService
+from .services.strategy_service import StrategyService
 from .services.trade_service import TradeService
 from .services.watchlist_service import WatchlistService
+
+logger = logging.getLogger(__name__)
+
+# Singleton-ish: created once, reused across requests
+_provider: MarketDataProvider | None = None
+_circuit_breaker: CircuitBreaker | None = None
+_registry: ProviderRegistry | None = None
+
+
+def _get_provider() -> MarketDataProvider | None:
+    """Lazily create the market data provider based on config."""
+    global _provider  # noqa: PLW0603
+    if _provider is not None:
+        return _provider
+
+    try:
+        settings = get_settings()
+    except Exception:
+        return None
+
+    name = settings.market_data_provider
+    if name == "yahoo_finance" or name == "yahoo":
+        from .providers.yahoo_provider import YahooFinanceProvider
+
+        _provider = YahooFinanceProvider()
+        logger.info("Market data provider: YahooFinance")
+    else:
+        _provider = MockProvider()
+        logger.info("Market data provider: Mock")
+    return _provider
+
+
+def _get_circuit_breaker() -> CircuitBreaker:
+    global _circuit_breaker  # noqa: PLW0603
+    if _circuit_breaker is not None:
+        return _circuit_breaker
+    try:
+        settings = get_settings()
+        _circuit_breaker = CircuitBreaker(
+            failure_threshold=settings.circuit_breaker_threshold,
+            recovery_timeout=float(settings.circuit_breaker_timeout),
+            name="market_data",
+        )
+    except Exception:
+        _circuit_breaker = CircuitBreaker(name="market_data")
+    return _circuit_breaker
+
+
+def _get_registry() -> ProviderRegistry:
+    """Lazily create the provider registry with the default provider."""
+    global _registry  # noqa: PLW0603
+    if _registry is not None:
+        return _registry
+
+    _registry = ProviderRegistry()
+    try:
+        settings = get_settings()
+        name = settings.market_data_provider
+        ptype = "YAHOO_FINANCE" if name in ("yahoo_finance", "yahoo") else "MOCK"
+    except Exception:
+        ptype = "MOCK"
+
+    _registry.register(
+        "default",
+        {"type": ptype, "enabled": True, "priority": 1},
+    )
+    return _registry
+
+
+# ---------------------------------------------------------------------------
+# Original service factories
+# ---------------------------------------------------------------------------
 
 
 def get_trade_service() -> TradeService:
@@ -23,4 +109,32 @@ def get_watchlist_service() -> WatchlistService:
 
 
 def get_scan_service() -> ScanService:
-    return ScanService(ScanRepository())
+    return ScanService(
+        repo=ScanRepository(),
+        provider=_get_provider(),
+        circuit_breaker=_get_circuit_breaker(),
+    )
+
+
+# ---------------------------------------------------------------------------
+# New service factories (Phase 1–6)
+# ---------------------------------------------------------------------------
+
+
+def get_provider_service() -> ProviderService:
+    return ProviderService(
+        repo=ProviderRepository(),
+        registry=_get_registry(),
+    )
+
+
+def get_options_chain_service() -> OptionsChainService:
+    return OptionsChainService(registry=_get_registry())
+
+
+def get_strategy_service() -> StrategyService:
+    return StrategyService(repo=StrategyRepository())
+
+
+def get_metrics_service() -> MetricsService:
+    return MetricsService(repo=MetricsRepository())

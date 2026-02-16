@@ -1,0 +1,14 @@
+{
+  "created": "2026-02-14T22:23:38Z",
+  "updated": "2026-02-14T22:52:01Z",
+  "comments": [],
+  "status": "In Review",
+  "labels": [
+    "type:story",
+    "priority:p0"
+  ],
+  "state": "open",
+  "title": "[Story] Trade Persistence - CRUD with Azure SQL",
+  "body": "Migrate POST /api/trades/track, POST /api/trades/close, GET /api/portfolio from hardcoded data to Azure SQL persistence. Parent: #1. Depends on: #2.",
+  "number": 3
+}

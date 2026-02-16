@@ -1,0 +1,32 @@
+{
+  "product-manager": {
+    "lastActivity": null,
+    "status": "idle",
+    "issue": null
+  },
+  "ux-designer": {
+    "lastActivity": null,
+    "status": "idle",
+    "issue": null
+  },
+  "architect": {
+    "lastActivity": null,
+    "status": "idle",
+    "issue": null
+  },
+  "engineer": {
+    "lastActivity": null,
+    "status": "idle",
+    "issue": null
+  },
+  "reviewer": {
+    "lastActivity": null,
+    "status": "idle",
+    "issue": null
+  },
+  "devops-engineer": {
+    "lastActivity": null,
+    "status": "idle",
+    "issue": null
+  }
+}

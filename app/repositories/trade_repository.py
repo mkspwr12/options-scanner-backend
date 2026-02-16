@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import logging
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any
 
 import pyodbc
@@ -64,7 +64,7 @@ class TradeRepository:
     def insert(self, data: dict[str, Any]) -> str:
         """Insert a new trade row.  Returns the generated trade ID."""
         trade_id = f"trade-{uuid.uuid4().hex[:12]}"
-        now_ms = int(datetime.utcnow().timestamp() * 1000)
+        now_ms = int(datetime.now(timezone.utc).timestamp() * 1000)
         try:
             with get_connection() as conn:
                 cursor = conn.cursor()
@@ -104,7 +104,7 @@ class TradeRepository:
     def close_trade(self, trade_id: str, exit_price: float) -> dict[str, Any]:
         """Mark a trade as closed, compute realized P/L, return summary."""
         trade = self.get_by_id(trade_id)  # raises NotFoundError if missing
-        now_ms = int(datetime.utcnow().timestamp() * 1000)
+        now_ms = int(datetime.now(timezone.utc).timestamp() * 1000)
         realized_pl = (exit_price - trade.entryPrice) * trade.quantity * 100
         realized_pl_pct = ((exit_price - trade.entryPrice) / trade.entryPrice) * 100 if trade.entryPrice else 0.0
         try:

@@ -221,7 +221,14 @@ class TestGetConnectionRetry:
         from app.db import SQL_COPT_SS_ACCESS_TOKEN
 
         assert SQL_COPT_SS_ACCESS_TOKEN in attrs
-        assert attrs[SQL_COPT_SS_ACCESS_TOKEN] == "test-token-value".encode("utf-16-le")
+        # Token should be struct-packed with length prefix (prevents ODBC segfault)
+        import struct
+
+        expected_bytes = "test-token-value".encode("utf-16-le")
+        expected_struct = struct.pack(
+            f"<I{len(expected_bytes)}s", len(expected_bytes), expected_bytes
+        )
+        assert attrs[SQL_COPT_SS_ACCESS_TOKEN] == expected_struct
 
     @patch("app.db.pyodbc")
     @patch("app.db.DefaultAzureCredential")

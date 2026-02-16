@@ -1,0 +1,14 @@
+{
+  "created": "2026-02-14T22:24:04Z",
+  "updated": "2026-02-14T22:24:04Z",
+  "comments": [],
+  "status": "Backlog",
+  "labels": [
+    "type:story",
+    "priority:p1"
+  ],
+  "state": "open",
+  "title": "[Story] API Key Authentication",
+  "body": "Add API key auth via X-API-Key header. Health endpoints remain unauthenticated. 401 on unauthorized. API key via env var. Parent: #1.",
+  "number": 10
+}

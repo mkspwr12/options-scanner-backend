@@ -1,7 +1,7 @@
 """Health and diagnostics router."""
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from fastapi import APIRouter, HTTPException
 
@@ -16,7 +16,7 @@ def healthz() -> dict:
     """Lightweight health check without database dependency."""
     return {
         "status": "ok",
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
 
@@ -41,7 +41,7 @@ def health() -> dict:
             "database": "configured",
             "server": server,
             "note": "Database connectivity check skipped due to pyodbc segfault on Linux. Use /healthz for lightweight check.",
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         }
     except HTTPException:
         raise
@@ -76,8 +76,8 @@ def diagnostics() -> dict:
 
     return {
         "status": "ok",
-        "timestamp": datetime.utcnow().isoformat(),
-        "backend": {"version": "2.0.0", "environment": "production", "uptime": "running"},
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "backend": {"version": "3.0.0", "environment": "production", "uptime": "running"},
         "database": db_info,
         "environment": {
             "sql_connection_string_set": bool(settings.sql_connection_string),
@@ -100,7 +100,8 @@ def debug_config() -> dict:
         "scan_interval_minutes": settings.scan_interval_minutes,
         "scan_enabled": settings.scan_enabled,
         "market_data_provider": settings.market_data_provider,
-        "timestamp": datetime.utcnow().isoformat(),
+        "rate_limit_per_minute": settings.rate_limit_per_minute,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
 
@@ -109,7 +110,7 @@ def root() -> dict:
     """Root endpoint with API documentation."""
     return {
         "name": "Options Scanner API",
-        "version": "2.0.0",
+        "version": "3.0.0",
         "endpoints": {
             "GET /health": "Health check with database verification",
             "GET /healthz": "Lightweight liveness probe",
@@ -123,5 +124,6 @@ def root() -> dict:
             "POST /api/logs": "Receive logs from frontend",
             "GET /api/diagnostics": "Comprehensive system diagnostics",
             "GET /api/debug/config": "Show configuration (no secrets)",
+            "POST /api/scan/trigger": "Manually trigger a live scan",
         },
     }

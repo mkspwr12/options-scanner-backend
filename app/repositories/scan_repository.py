@@ -23,6 +23,18 @@ class ScanRepository:
         min_risk_reward: float = 0,
         sort_by: str = "confidence_score",
         limit: int = 50,
+        # Phase 3: advanced filters
+        iv_min: float | None = None,
+        iv_max: float | None = None,
+        dte_min: int | None = None,
+        dte_max: int | None = None,
+        delta_min: float | None = None,
+        delta_max: float | None = None,
+        theta_min: float | None = None,
+        theta_max: float | None = None,
+        vega_min: float | None = None,
+        vega_max: float | None = None,
+        min_volume: int | None = None,
     ) -> list[OptionOpportunity]:
         """Return the most recent scan results, optionally filtered."""
         allowed_sort = {
@@ -50,6 +62,46 @@ class ScanRepository:
         if min_risk_reward > 0:
             conditions.append("risk_reward_ratio >= ?")
             params.append(min_risk_reward)
+
+        # Phase 3: advanced filters
+        if iv_min is not None:
+            conditions.append("implied_volatility >= ?")
+            params.append(iv_min)
+        if iv_max is not None:
+            conditions.append("implied_volatility <= ?")
+            params.append(iv_max)
+        if dte_min is not None:
+            conditions.append(
+                "DATEDIFF(day, GETUTCDATE(), expiration_date) >= ?"
+            )
+            params.append(dte_min)
+        if dte_max is not None:
+            conditions.append(
+                "DATEDIFF(day, GETUTCDATE(), expiration_date) <= ?"
+            )
+            params.append(dte_max)
+        if delta_min is not None:
+            conditions.append("delta >= ?")
+            params.append(delta_min)
+        if delta_max is not None:
+            conditions.append("delta <= ?")
+            params.append(delta_max)
+        if theta_min is not None:
+            conditions.append("theta >= ?")
+            params.append(theta_min)
+        if theta_max is not None:
+            conditions.append("theta <= ?")
+            params.append(theta_max)
+        if vega_min is not None:
+            conditions.append("vega >= ?")
+            params.append(vega_min)
+        if vega_max is not None:
+            conditions.append("vega <= ?")
+            params.append(vega_max)
+        if min_volume is not None:
+            # Note: volume is not persisted in scan_results —
+            # this filter is applied in-memory during live scans.
+            pass
 
         where = " AND ".join(conditions)
         where_clause = f"WHERE {where}" if where else ""

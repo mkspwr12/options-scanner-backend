@@ -1,0 +1,14 @@
+{
+  "created": "2026-02-14T22:24:00Z",
+  "updated": "2026-02-14T22:24:00Z",
+  "comments": [],
+  "status": "Backlog",
+  "labels": [
+    "type:story",
+    "priority:p1"
+  ],
+  "state": "open",
+  "title": "[Story] Background Scan Scheduler",
+  "body": "Add background task to run scans on configurable interval. Store results in scan_results table. POST /api/scan/trigger for manual scan. Parent: #1. Depends on: #2, #8.",
+  "number": 9
+}

@@ -26,6 +26,10 @@ class Settings:
     scan_enabled: bool = True
     log_retention: int = 1000
     market_data_provider: str = "mock"
+    rate_limit_per_minute: int = 60
+    circuit_breaker_threshold: int = 3
+    circuit_breaker_timeout: int = 300
+    encryption_key: str | None = None
 
 
 def get_settings() -> Settings:
@@ -45,6 +49,10 @@ def get_settings() -> Settings:
     scan_enabled = os.getenv("SCAN_ENABLED", "true").lower() in ("true", "1", "yes")
     log_retention = int(os.getenv("LOG_RETENTION", "1000"))
     market_data_provider = os.getenv("MARKET_DATA_PROVIDER", "mock").strip().lower()
+    rate_limit_per_minute = int(os.getenv("RATE_LIMIT_PER_MINUTE", "60"))
+    circuit_breaker_threshold = int(os.getenv("CIRCUIT_BREAKER_THRESHOLD", "3"))
+    circuit_breaker_timeout = int(os.getenv("CIRCUIT_BREAKER_TIMEOUT", "300"))
+    encryption_key = os.getenv("ENCRYPTION_KEY")
 
     return Settings(
         sql_connection_string=sql_connection_string,
@@ -56,4 +64,8 @@ def get_settings() -> Settings:
         scan_enabled=scan_enabled,
         log_retention=log_retention,
         market_data_provider=market_data_provider,
+        rate_limit_per_minute=rate_limit_per_minute,
+        circuit_breaker_threshold=circuit_breaker_threshold,
+        circuit_breaker_timeout=circuit_breaker_timeout,
+        encryption_key=encryption_key,
     )

@@ -6,6 +6,11 @@ pyodbc==5.1.0
 python-dotenv==1.0.1
 azure-monitor-opentelemetry==1.6.4
 
+# Market data & calculations
+yfinance==0.2.54
+scipy==1.15.2
+cryptography>=43.0.0
+
 # Testing
 pytest==8.3.4
 httpx==0.28.1

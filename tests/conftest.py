@@ -14,6 +14,8 @@ from fastapi.testclient import TestClient
 
 # Ensure required env vars are set **before** anything imports config
 os.environ.setdefault("SQL_CONNECTION_STRING", "Server=test;Database=test;")
+os.environ["RATE_LIMIT_PER_MINUTE"] = "0"  # disable rate limiting in tests
+os.environ["SCAN_ENABLED"] = "false"  # disable background scanner in tests
 
 
 from app.dependencies import (  # noqa: E402
@@ -21,6 +23,10 @@ from app.dependencies import (  # noqa: E402
     get_scan_service,
     get_trade_service,
     get_watchlist_service,
+    get_provider_service,
+    get_options_chain_service,
+    get_strategy_service,
+    get_metrics_service,
 )
 from app.main import app  # noqa: E402
 from app.models import (  # noqa: E402
@@ -33,10 +39,18 @@ from app.models import (  # noqa: E402
 from app.repositories.scan_repository import ScanRepository  # noqa: E402
 from app.repositories.trade_repository import TradeRepository  # noqa: E402
 from app.repositories.watchlist_repository import WatchlistRepository  # noqa: E402
+from app.repositories.provider_repository import ProviderRepository  # noqa: E402
+from app.repositories.strategy_repository import StrategyRepository  # noqa: E402
+from app.repositories.metrics_repository import MetricsRepository  # noqa: E402
+from app.providers.registry import ProviderRegistry  # noqa: E402
 from app.services.portfolio_service import PortfolioService  # noqa: E402
 from app.services.scan_service import ScanService  # noqa: E402
 from app.services.trade_service import TradeService  # noqa: E402
 from app.services.watchlist_service import WatchlistService  # noqa: E402
+from app.services.provider_service import ProviderService  # noqa: E402
+from app.services.options_chain_service import OptionsChainService  # noqa: E402
+from app.services.strategy_service import StrategyService  # noqa: E402
+from app.services.metrics_service import MetricsService  # noqa: E402
 
 
 # ---------------------------------------------------------------------------
@@ -130,6 +144,51 @@ def mock_scan_repo() -> MagicMock:
     return repo
 
 
+@pytest.fixture()
+def mock_provider_repo() -> MagicMock:
+    repo = MagicMock(spec=ProviderRepository)
+    repo.get_all.return_value = []
+    repo.get_by_id.return_value = None
+    repo.insert.return_value = None
+    repo.update.return_value = None
+    repo.delete.return_value = None
+    repo.count.return_value = 0
+    return repo
+
+
+@pytest.fixture()
+def mock_strategy_repo() -> MagicMock:
+    repo = MagicMock(spec=StrategyRepository)
+    repo.get_all.return_value = []
+    repo.get_by_id.return_value = None
+    repo.insert.return_value = None
+    repo.update.return_value = None
+    repo.delete.return_value = None
+    return repo
+
+
+@pytest.fixture()
+def mock_metrics_repo() -> MagicMock:
+    repo = MagicMock(spec=MetricsRepository)
+    repo.record.return_value = None
+    repo.get_aggregated.return_value = {
+        "total_calls": 0,
+        "success_count": 0,
+        "error_count": 0,
+        "avg_latency": 0,
+        "error_rate": 0,
+    }
+    repo.get_top_errors.return_value = []
+    repo.get_all_providers_summary.return_value = []
+    return repo
+
+
+@pytest.fixture()
+def mock_registry() -> MagicMock:
+    registry = MagicMock(spec=ProviderRegistry)
+    return registry
+
+
 # ---------------------------------------------------------------------------
 # TestClient with overridden DI
 # ---------------------------------------------------------------------------
@@ -139,6 +198,10 @@ def client(
     mock_trade_repo: MagicMock,
     mock_watchlist_repo: MagicMock,
     mock_scan_repo: MagicMock,
+    mock_provider_repo: MagicMock,
+    mock_strategy_repo: MagicMock,
+    mock_metrics_repo: MagicMock,
+    mock_registry: MagicMock,
 ) -> TestClient:
     """Return a FastAPI TestClient with stubbed service dependencies."""
 
@@ -154,10 +217,26 @@ def client(
     def _scan_svc() -> ScanService:
         return ScanService(repo=mock_scan_repo)
 
+    def _provider_svc() -> ProviderService:
+        return ProviderService(repo=mock_provider_repo, registry=mock_registry)
+
+    def _options_chain_svc() -> OptionsChainService:
+        return OptionsChainService(registry=mock_registry)
+
+    def _strategy_svc() -> StrategyService:
+        return StrategyService(repo=mock_strategy_repo)
+
+    def _metrics_svc() -> MetricsService:
+        return MetricsService(repo=mock_metrics_repo)
+
     app.dependency_overrides[get_trade_service] = _trade_svc
     app.dependency_overrides[get_portfolio_service] = _portfolio_svc
     app.dependency_overrides[get_watchlist_service] = _watchlist_svc
     app.dependency_overrides[get_scan_service] = _scan_svc
+    app.dependency_overrides[get_provider_service] = _provider_svc
+    app.dependency_overrides[get_options_chain_service] = _options_chain_svc
+    app.dependency_overrides[get_strategy_service] = _strategy_svc
+    app.dependency_overrides[get_metrics_service] = _metrics_svc
 
     yield TestClient(app)
 

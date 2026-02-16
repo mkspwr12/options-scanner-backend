@@ -1,0 +1,14 @@
+{
+  "created": "2026-02-14T22:23:34Z",
+  "updated": "2026-02-14T22:52:01Z",
+  "comments": [],
+  "status": "In Review",
+  "labels": [
+    "type:feature",
+    "priority:p0"
+  ],
+  "state": "open",
+  "title": "[Feature] Database Schema & Migration Scripts",
+  "body": "Create SQL migration scripts for trades, watchlist_items, scan_results tables. Parent: #1. Acceptance: idempotent migrations, schema matches Pydantic models.",
+  "number": 2
+}

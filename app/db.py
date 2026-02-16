@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import struct
 import time
 
 import pyodbc
@@ -46,6 +47,8 @@ def get_connection(*, retries: int = _MAX_RETRIES) -> pyodbc.Connection:
     credential = DefaultAzureCredential(managed_identity_client_id=settings.azure_client_id)
     token = credential.get_token("https://database.windows.net//.default").token
     token_bytes = token.encode("utf-16-le")
+    # ODBC Driver requires token as a length-prefixed struct to avoid segfault
+    token_struct = struct.pack(f"<I{len(token_bytes)}s", len(token_bytes), token_bytes)
     conn_str = _normalize_connection_string(settings.sql_connection_string, settings.sql_driver)
 
     last_exc: Exception | None = None
@@ -53,7 +56,7 @@ def get_connection(*, retries: int = _MAX_RETRIES) -> pyodbc.Connection:
         try:
             return pyodbc.connect(
                 conn_str,
-                attrs_before={SQL_COPT_SS_ACCESS_TOKEN: token_bytes},
+                attrs_before={SQL_COPT_SS_ACCESS_TOKEN: token_struct},
                 timeout=30,
             )
         except Exception as exc:

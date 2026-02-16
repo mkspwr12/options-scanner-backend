@@ -1,0 +1,14 @@
+{
+  "created": "2026-02-14T22:21:37Z",
+  "updated": "2026-02-14T22:24:12Z",
+  "comments": [],
+  "status": "Ready",
+  "labels": [
+    "type:epic",
+    "priority:p0"
+  ],
+  "state": "open",
+  "title": "[Epic] Options Scanner Backend - Stability & Feature Enhancement",
+  "body": "",
+  "number": 1
+}

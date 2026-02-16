@@ -6,19 +6,25 @@ in repositories/.
 """
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
 import os
 import sys
-from datetime import datetime
+from contextlib import asynccontextmanager
+from datetime import datetime, timezone
 from typing import Any, Dict, List
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from .config import get_settings
+from .dependencies import get_scan_service, get_watchlist_service
 from .exceptions import register_error_handlers
+from .middleware.auth import ApiKeyMiddleware
+from .middleware.rate_limit import RateLimitMiddleware
 from .routers import health, logs, scan, trades, watchlist
+from .routers import options_chain, portfolio_risk, providers, strategies
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -61,7 +67,7 @@ class LogStore:
     def add(self, level: str, message: str, data: Any = None) -> None:
         try:
             entry = {
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
                 "level": level,
                 "message": message,
                 "data": data,
@@ -117,9 +123,67 @@ def safe_log(level: str, message: str, data: Any = None) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Background scanner task
+# ---------------------------------------------------------------------------
+_scan_task: asyncio.Task[None] | None = None
+
+
+async def _background_scanner() -> None:
+    """Periodically scan watchlist symbols using the configured provider."""
+    try:
+        settings = get_settings()
+        interval = settings.scan_interval_minutes * 60
+    except Exception:
+        interval = 15 * 60
+
+    logger.info("Background scanner started (interval=%ds)", interval)
+
+    while True:
+        try:
+            await asyncio.sleep(interval)
+            scan_svc = get_scan_service()
+            wl_svc = get_watchlist_service()
+            symbols = wl_svc.get_symbols()
+            result = scan_svc.run_scan(symbols)
+            safe_log(
+                "info",
+                f"Background scan completed: {result.get('resultsCount', 0)} results",
+            )
+        except asyncio.CancelledError:
+            logger.info("Background scanner stopped")
+            return
+        except Exception:
+            logger.exception("Background scanner error — will retry next interval")
+
+
+@asynccontextmanager
+async def lifespan(application: FastAPI):  # noqa: ANN201
+    """Startup / shutdown lifecycle for background tasks."""
+    global _scan_task  # noqa: PLW0603
+    try:
+        settings = get_settings()
+        if settings.scan_enabled:
+            _scan_task = asyncio.create_task(_background_scanner())
+            logger.info("Background scanner task created")
+    except Exception:
+        logger.warning("Could not start background scanner (config error)")
+    yield
+    if _scan_task is not None:
+        _scan_task.cancel()
+        try:
+            await _scan_task
+        except asyncio.CancelledError:
+            pass
+
+
+# ---------------------------------------------------------------------------
 # FastAPI app
 # ---------------------------------------------------------------------------
-app = FastAPI(title="Options Scanner API", version="2.0.0")
+app = FastAPI(
+    title="Options Scanner API",
+    version="3.0.0",
+    lifespan=lifespan,
+)
 
 # CORS — uses configurable origins with safe fallback
 try:
@@ -137,6 +201,20 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# API key authentication (disabled when API_KEY env var is unset)
+try:
+    _api_key = get_settings().api_key
+except Exception:
+    _api_key = None
+app.add_middleware(ApiKeyMiddleware, api_key=_api_key)
+
+# Rate limiting
+try:
+    _rate_limit = get_settings().rate_limit_per_minute
+except Exception:
+    _rate_limit = 60
+app.add_middleware(RateLimitMiddleware, max_requests=_rate_limit, window_seconds=60)
 
 # Register global error handlers
 register_error_handlers(app)
@@ -163,3 +241,7 @@ app.include_router(trades.router)
 app.include_router(watchlist.router)
 app.include_router(scan.router)
 app.include_router(logs.router)
+app.include_router(providers.router)
+app.include_router(options_chain.router)
+app.include_router(strategies.router)
+app.include_router(portfolio_risk.router)

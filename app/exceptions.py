@@ -49,6 +49,20 @@ class ConflictError(AppError):
         super().__init__(message=message, status_code=409)
 
 
+class ProviderError(AppError):
+    """Provider configuration or runtime error (400)."""
+
+    def __init__(self, message: str) -> None:
+        super().__init__(message=message, status_code=400)
+
+
+class RateLimitError(AppError):
+    """Rate limit exceeded (429)."""
+
+    def __init__(self, message: str = "Rate limit exceeded") -> None:
+        super().__init__(message=message, status_code=429)
+
+
 # ---------------------------------------------------------------------------
 # Global Error Handlers — register on the FastAPI app
 # ---------------------------------------------------------------------------

@@ -3,8 +3,9 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Depends, Query
 
-from ..dependencies import get_scan_service
+from ..dependencies import get_scan_service, get_watchlist_service
 from ..services.scan_service import ScanService
+from ..services.watchlist_service import WatchlistService
 
 router = APIRouter(prefix="/api", tags=["Scan"])
 
@@ -17,6 +18,21 @@ def scan(
     minRiskReward: float = Query(default=0, ge=0, description="Minimum risk/reward ratio"),
     sortBy: str = Query(default="confidenceScore", description="Sort field"),
     limit: int = Query(default=50, ge=1, le=200, description="Max results"),
+    # Phase 3: Advanced filters
+    ivMin: float | None = Query(default=None, ge=0, description="Min implied volatility"),
+    ivMax: float | None = Query(default=None, ge=0, description="Max implied volatility"),
+    dteMin: int | None = Query(default=None, ge=0, description="Min days to expiration"),
+    dteMax: int | None = Query(default=None, ge=0, description="Max days to expiration"),
+    deltaMin: float | None = Query(default=None, description="Min delta"),
+    deltaMax: float | None = Query(default=None, description="Max delta"),
+    thetaMin: float | None = Query(default=None, description="Min theta"),
+    thetaMax: float | None = Query(default=None, description="Max theta"),
+    vegaMin: float | None = Query(default=None, description="Min vega"),
+    vegaMax: float | None = Query(default=None, description="Max vega"),
+    minVolume: int | None = Query(default=None, ge=0, description="Min volume"),
+    moneyness: str | None = Query(
+        default=None, description="Moneyness filter: itm, otm, atm, or all"
+    ),
     svc: ScanService = Depends(get_scan_service),
 ) -> dict:
     """Get scan opportunities (with optional filtering)."""
@@ -27,7 +43,29 @@ def scan(
         min_risk_reward=minRiskReward,
         sort_by=sortBy,
         limit=limit,
+        iv_min=ivMin,
+        iv_max=ivMax,
+        dte_min=dteMin,
+        dte_max=dteMax,
+        delta_min=deltaMin,
+        delta_max=deltaMax,
+        theta_min=thetaMin,
+        theta_max=thetaMax,
+        vega_min=vegaMin,
+        vega_max=vegaMax,
+        min_volume=minVolume,
+        moneyness=moneyness,
     )
+
+
+@router.post("/scan/trigger")
+def trigger_scan(
+    scan_svc: ScanService = Depends(get_scan_service),
+    wl_svc: WatchlistService = Depends(get_watchlist_service),
+) -> dict:
+    """Manually trigger a live scan for watchlist symbols."""
+    symbols = wl_svc.get_symbols()
+    return scan_svc.run_scan(symbols)
 
 
 @router.get("/multi-leg-opportunities")

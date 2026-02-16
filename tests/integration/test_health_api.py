@@ -67,7 +67,7 @@ class TestRoot:
 
     def test_root_version(self, client: TestClient) -> None:
         resp = client.get("/")
-        assert resp.json()["version"] == "2.0.0"
+        assert resp.json()["version"] == "3.0.0"
 
 
 class TestDebugConfig:
@@ -112,6 +112,6 @@ class TestDiagnostics:
         resp = client.get("/api/diagnostics")
         if resp.status_code == 200:
             data = resp.json()
-            assert data["backend"]["version"] == "2.0.0"
+            assert data["backend"]["version"] == "3.0.0"
             assert "database" in data
             assert "environment" in data
