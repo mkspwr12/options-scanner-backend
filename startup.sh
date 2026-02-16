@@ -49,16 +49,19 @@ odbcinst -q -d || echo "  (none found)"
 # ------------------------------------------------------------------
 
 # Activate virtual environment if present
-if [ -d "/home/site/wwwroot/antenv" ]; then
-    echo "Activating virtual environment..."
-    source /home/site/wwwroot/antenv/bin/activate
-elif [ -d "antenv" ]; then
+SITE_DIR="${APP_PATH:-/home/site/wwwroot}"
+if [ -d "antenv" ]; then
     echo "Activating local virtual environment..."
     source antenv/bin/activate
+elif [ -d "${SITE_DIR}/antenv" ]; then
+    echo "Activating site virtual environment..."
+    source "${SITE_DIR}/antenv/bin/activate"
 fi
 
+echo "Working directory: $(pwd)"
+echo "Python: $(which python)"
+
 echo "Starting Gunicorn with Uvicorn workers..."
-cd /home/site/wwwroot
 python -m gunicorn app.main:app \
     --worker-class uvicorn.workers.UvicornWorker \
     --workers 2 \
