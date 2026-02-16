@@ -7,3 +7,4 @@ app-logs.zip
 app-logs-debug.zip
 app-logs-debug/
 run_migrations.py
+run_migrations_pytds.py
