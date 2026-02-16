@@ -50,7 +50,7 @@ jobs:
           az webapp config set \
             --resource-group options-scanner-rg \
             --name ${{ env.AZURE_WEBAPP_NAME }} \
-            --startup-file "bash /home/site/wwwroot/startup.sh"
+            --startup-file "bash startup.sh"
 
       - name: Configure App Settings
         run: |
