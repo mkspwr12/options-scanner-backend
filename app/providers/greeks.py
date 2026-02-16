@@ -1,14 +1,26 @@
 """Black-Scholes Greeks calculator.
 
 Provides delta, gamma, theta, and vega for European-style options.
-Uses ``scipy.stats.norm`` for the cumulative-normal distribution.
+Uses the standard-library ``math.erf`` for the cumulative-normal distribution.
 """
 from __future__ import annotations
 
 import math
 from dataclasses import dataclass
 
-from scipy.stats import norm
+
+_SQRT_2 = math.sqrt(2)
+_SQRT_2PI = math.sqrt(2 * math.pi)
+
+
+def _norm_cdf(x: float) -> float:
+    """Standard normal cumulative distribution function."""
+    return (1.0 + math.erf(x / _SQRT_2)) / 2.0
+
+
+def _norm_pdf(x: float) -> float:
+    """Standard normal probability density function."""
+    return math.exp(-0.5 * x * x) / _SQRT_2PI
 
 
 @dataclass(frozen=True)
@@ -54,24 +66,24 @@ def calculate_greeks(
 
     # --- Delta ---
     if option_type == "CALL":
-        delta = float(norm.cdf(d1))
+        delta = _norm_cdf(d1)
     else:
-        delta = float(norm.cdf(d1) - 1.0)
+        delta = _norm_cdf(d1) - 1.0
 
     # --- Gamma (same for calls and puts) ---
-    gamma = float(norm.pdf(d1) / (S * sigma * sqrt_T))
+    gamma = _norm_pdf(d1) / (S * sigma * sqrt_T)
 
     # --- Theta ---
-    common_theta = -(S * norm.pdf(d1) * sigma) / (2.0 * sqrt_T)
+    common_theta = -(S * _norm_pdf(d1) * sigma) / (2.0 * sqrt_T)
     if option_type == "CALL":
-        theta = float(common_theta - r * K * math.exp(-r * T) * norm.cdf(d2))
+        theta = common_theta - r * K * math.exp(-r * T) * _norm_cdf(d2)
     else:
-        theta = float(common_theta + r * K * math.exp(-r * T) * norm.cdf(-d2))
+        theta = common_theta + r * K * math.exp(-r * T) * _norm_cdf(-d2)
     # Convert to daily theta
     theta = theta / _TRADING_DAYS
 
     # --- Vega ---
-    vega = float(S * norm.pdf(d1) * sqrt_T)
+    vega = S * _norm_pdf(d1) * sqrt_T
     # Express per 1% move in IV
     vega = vega / 100.0
 

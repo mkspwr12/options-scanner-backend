@@ -8,7 +8,6 @@ azure-monitor-opentelemetry==1.6.4
 
 # Market data & calculations
 yfinance==0.2.54
-scipy==1.15.2
 cryptography>=43.0.0
 
 # Testing
