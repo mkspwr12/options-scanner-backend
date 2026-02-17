@@ -24,7 +24,7 @@ from .exceptions import register_error_handlers
 from .middleware.auth import ApiKeyMiddleware
 from .middleware.rate_limit import RateLimitMiddleware
 from .routers import health, logs, scan, trades, watchlist
-from .routers import options_chain, portfolio_risk, providers, strategies
+from .routers import options_chain, portfolio_actions, portfolio_risk, providers, strategies
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -303,3 +303,4 @@ app.include_router(providers.router)
 app.include_router(options_chain.router)
 app.include_router(strategies.router)
 app.include_router(portfolio_risk.router)
+app.include_router(portfolio_actions.router)

@@ -159,3 +159,136 @@ class UpdateStrategyRequest(BaseModel):
     status: Literal["active", "closed", "expired"] | None = None
     tags: list[str] | None = None
     notes: str | None = None
+
+
+# ---------------------------------------------------------------------------
+# Multi-leg scan schemas (Issue #11)
+# ---------------------------------------------------------------------------
+
+
+class MultiLegScanFilters(BaseModel):
+    """Filters for POST /api/multi-leg-scan."""
+
+    minProbability: float | None = Field(default=None, ge=0, le=100)
+    minCredit: float | None = Field(default=None, ge=0)
+    dteRange: list[int] | None = Field(default=None, min_length=2, max_length=2)
+    maxBuyingPower: float | None = Field(default=None, ge=0)
+
+
+class MultiLegScanRequest(BaseModel):
+    """Request body for POST /api/multi-leg-scan."""
+
+    ticker: str = Field(..., min_length=1, max_length=10)
+    strategyType: str = Field(
+        ...,
+        description="iron_condor, vertical_spread, calendar_spread, butterfly, diagonal_spread",
+    )
+    filters: MultiLegScanFilters | None = None
+
+    @field_validator("ticker", mode="before")
+    @classmethod
+    def uppercase_ticker(cls, v: str) -> str:
+        return v.strip().upper()
+
+
+# ---------------------------------------------------------------------------
+# Stock scan schemas (Issue #12)
+# ---------------------------------------------------------------------------
+
+
+class RangeFilter(BaseModel):
+    """Generic min/max range filter."""
+
+    min: float | None = None
+    max: float | None = None
+
+
+class IntRangeFilter(BaseModel):
+    """Generic min/max range filter for integers."""
+
+    min: int | None = None
+    max: int | None = None
+
+
+class MovingAverageFilter(BaseModel):
+    period: int = 50
+    above: bool = True
+
+
+class TechnicalFilters(BaseModel):
+    rsi: RangeFilter | None = None
+    macd: str | None = None
+    movingAverage: MovingAverageFilter | None = None
+
+
+class FundamentalFilters(BaseModel):
+    peRatio: RangeFilter | None = None
+    marketCap: IntRangeFilter | None = None
+    sector: list[str] | None = None
+
+
+class PriceChangeFilter(BaseModel):
+    period: str = "1d"
+    min: float | None = None
+
+
+class MomentumFilters(BaseModel):
+    volumeIncrease: float | None = None
+    priceChange: PriceChangeFilter | None = None
+    insiderBuying: bool | None = None
+
+
+class StockScanFilters(BaseModel):
+    technical: TechnicalFilters | None = None
+    fundamental: FundamentalFilters | None = None
+    momentum: MomentumFilters | None = None
+
+
+class StockScanRequest(BaseModel):
+    """Request body for POST /api/stock-scan."""
+
+    filters: StockScanFilters | None = None
+    page: int = Field(default=1, ge=1)
+    pageSize: int = Field(default=50, ge=1, le=200)
+
+
+# ---------------------------------------------------------------------------
+# Position action schemas (Issue #14)
+# ---------------------------------------------------------------------------
+
+
+class ClosePositionRequest(BaseModel):
+    """Request body for POST /api/portfolio/close-position."""
+
+    positionId: str = Field(..., min_length=1)
+    closePrice: float = Field(..., ge=0)
+
+
+class RollPositionStrikes(BaseModel):
+    sellPut: float | None = None
+    buyPut: float | None = None
+    sellCall: float | None = None
+    buyCall: float | None = None
+
+
+class RollPositionRequest(BaseModel):
+    """Request body for POST /api/portfolio/roll-position."""
+
+    positionId: str = Field(..., min_length=1)
+    newExpiration: str = Field(..., description="YYYY-MM-DD")
+    adjustStrikes: bool = False
+    newStrikes: RollPositionStrikes | None = None
+
+
+class AdjustPositionRequest(BaseModel):
+    """Request body for POST /api/portfolio/adjust-position."""
+
+    positionId: str = Field(..., min_length=1)
+    adjustmentType: Literal[
+        "add_protective_put",
+        "add_protective_call",
+        "adjust_strike",
+        "reduce_size",
+    ] = Field(...)
+    strike: float | None = None
+    quantity: int | None = Field(default=None, ge=1)

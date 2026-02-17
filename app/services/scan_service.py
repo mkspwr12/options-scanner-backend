@@ -12,7 +12,7 @@ import uuid
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
-from ..models import Greeks, MultiLegOpportunity, OptionOpportunity
+from ..models import Greeks, MultiLegOpportunity, OptionOpportunity, PayoutChart
 from ..providers.base import MarketDataProvider, OptionContract
 from ..providers.circuit_breaker import CircuitBreaker
 from ..providers.greeks import calculate_greeks
@@ -367,6 +367,15 @@ class ScanService:
             delta=greeks.delta,
         )
 
+        # Issue #10 — payout chart data
+        payout = self._calculate_payout_chart(
+            underlying_price, c.strike, mid_price, c.option_type
+        )
+        breakeven = self._calculate_breakeven(c.strike, mid_price, c.option_type)
+        probability = self._calculate_probability(greeks.delta, c.option_type)
+        max_profit_val = payout["maxProfit"]
+        max_loss_val = payout["maxLoss"]
+
         return {
             "id": f"opp-{uuid.uuid4().hex[:12]}",
             "symbol": c.symbol,
@@ -387,6 +396,15 @@ class ScanService:
             "riskRewardRatio": round(risk_reward, 4),
             "confidenceScore": confidence,
             "timestamp": timestamp,
+            "payoutChart": {
+                "pricePoints": payout["pricePoints"],
+                "profitPoints": payout["profitPoints"],
+            },
+            "probability": probability,
+            "breakeven": breakeven,
+            "maxProfit": max_profit_val,
+            "maxLoss": max_loss_val,
+            "position": "long",
         }
 
     def _cached_results(self) -> dict[str, Any]:
@@ -412,20 +430,94 @@ class ScanService:
         }
 
     # ------------------------------------------------------------------
+    # Payout chart calculation helpers (Issue #10)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _calculate_payout_chart(
+        underlying_price: float,
+        strike: float,
+        premium: float,
+        option_type: str,
+        num_points: int = 7,
+    ) -> dict[str, Any]:
+        """Generate payout chart data for a long option position.
+
+        Returns dict with pricePoints, profitPoints, maxProfit, maxLoss.
+        """
+        low = round(underlying_price * 0.85, 2)
+        high = round(underlying_price * 1.15, 2)
+        step = (high - low) / (num_points - 1) if num_points > 1 else 0
+        price_points: list[float] = [round(low + i * step, 2) for i in range(num_points)]
+        profit_points: list[float] = []
+        premium_cost = premium * 100  # per-contract cost
+
+        for p in price_points:
+            if option_type.upper() == "CALL":
+                intrinsic = max(p - strike, 0)
+                pnl = round((intrinsic * 100) - premium_cost, 2)
+            else:
+                intrinsic = max(strike - p, 0)
+                pnl = round((intrinsic * 100) - premium_cost, 2)
+            profit_points.append(pnl)
+
+        max_profit = round(max(profit_points), 2)
+        max_loss = round(-premium_cost, 2)
+
+        return {
+            "pricePoints": price_points,
+            "profitPoints": profit_points,
+            "maxProfit": max_profit,
+            "maxLoss": max_loss,
+        }
+
+    @staticmethod
+    def _calculate_breakeven(
+        strike: float, premium: float, option_type: str
+    ) -> float:
+        """Calculate the breakeven price for a long option."""
+        if option_type.upper() == "CALL":
+            return round(strike + premium, 2)
+        return round(strike - premium, 2)
+
+    @staticmethod
+    def _calculate_probability(delta: float, option_type: str) -> float:
+        """Approximate probability of profit using delta.
+
+        For long calls, probability ≈ delta * 100.
+        For long puts, probability ≈ (1 - |delta|) * 100 ... but
+        more accurately |delta| for puts already reflects ITM probability.
+        We use |delta| as a rough proxy for probability of finishing ITM.
+        """
+        prob = abs(delta) * 100
+        return round(min(max(prob, 0), 100), 1)
+
+    # ------------------------------------------------------------------
     # Hardcoded sample data (preserved from Phase 1)
     # ------------------------------------------------------------------
 
     @staticmethod
     def _sample_opportunities() -> list[OptionOpportunity]:
         now = int(datetime.now(timezone.utc).timestamp() * 1000)
+        exp1 = (datetime.now(timezone.utc) + timedelta(days=28)).strftime("%Y-%m-%d")
+        exp2 = (datetime.now(timezone.utc) + timedelta(days=21)).strftime("%Y-%m-%d")
+
+        # META CALL sample
+        meta_payout = ScanService._calculate_payout_chart(689.3, 690.0, 6.9, "CALL")
+        meta_breakeven = ScanService._calculate_breakeven(690.0, 6.9, "CALL")
+        meta_prob = ScanService._calculate_probability(0.42, "CALL")
+
+        # SPY PUT sample
+        spy_payout = ScanService._calculate_payout_chart(681.7, 690.0, 5.2, "PUT")
+        spy_breakeven = ScanService._calculate_breakeven(690.0, 5.2, "PUT")
+        spy_prob = ScanService._calculate_probability(-0.38, "PUT")
+
         return [
             OptionOpportunity(
                 id="opp-001",
                 symbol="META",
                 strikePrice=690.0,
-                expirationDate=(
-                    datetime.now(timezone.utc) + timedelta(days=28)
-                ).strftime("%Y-%m-%d"),
+                expirationDate=exp1,
                 optionType="CALL",
                 currentPrice=6.9,
                 underlyingPrice=689.3,
@@ -436,14 +528,21 @@ class ScanService:
                 riskRewardRatio=2.81,
                 confidenceScore=78,
                 timestamp=now,
+                payoutChart=PayoutChart(
+                    pricePoints=meta_payout["pricePoints"],
+                    profitPoints=meta_payout["profitPoints"],
+                ),
+                probability=meta_prob,
+                breakeven=meta_breakeven,
+                maxProfit=meta_payout["maxProfit"],
+                maxLoss=meta_payout["maxLoss"],
+                position="long",
             ),
             OptionOpportunity(
                 id="opp-002",
                 symbol="SPY",
                 strikePrice=690.0,
-                expirationDate=(
-                    datetime.now(timezone.utc) + timedelta(days=21)
-                ).strftime("%Y-%m-%d"),
+                expirationDate=exp2,
                 optionType="PUT",
                 currentPrice=5.2,
                 underlyingPrice=681.7,
@@ -454,6 +553,15 @@ class ScanService:
                 riskRewardRatio=2.55,
                 confidenceScore=74,
                 timestamp=now,
+                payoutChart=PayoutChart(
+                    pricePoints=spy_payout["pricePoints"],
+                    profitPoints=spy_payout["profitPoints"],
+                ),
+                probability=spy_prob,
+                breakeven=spy_breakeven,
+                maxProfit=spy_payout["maxProfit"],
+                maxLoss=spy_payout["maxLoss"],
+                position="long",
             ),
         ]
 

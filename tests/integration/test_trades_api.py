@@ -148,46 +148,40 @@ class TestPortfolio:
         assert data["status"] == "ok"
         assert "portfolio" in data
         portfolio = data["portfolio"]
-        assert "metrics" in portfolio
-        assert "activeTrades" in portfolio
-        assert "closedTrades" in portfolio
+        assert "summary" in portfolio
+        assert "positions" in portfolio
+        assert "aggregatePayoutChart" in portfolio
 
-    def test_portfolio_metrics_fields(self, client: TestClient) -> None:
+    def test_portfolio_summary_fields(self, client: TestClient) -> None:
         resp = client.get("/api/portfolio")
-        metrics = resp.json()["portfolio"]["metrics"]
-        assert "totalValue" in metrics
-        assert "totalPL" in metrics
-        assert "totalPLPercent" in metrics
-        assert "winRate" in metrics
-        assert "totalTrades" in metrics
-        assert "activeTrades" in metrics
-        assert "aggregateGreeks" in metrics
+        summary = resp.json()["portfolio"]["summary"]
+        assert "totalValue" in summary
+        assert "totalPL" in summary
+        assert "totalPLPercent" in summary
+        assert "maxProfit" in summary
+        assert "maxLoss" in summary
+        assert "netDelta" in summary
+        assert "netTheta" in summary
 
-    def test_portfolio_aggregate_greeks(self, client: TestClient) -> None:
+    def test_portfolio_aggregate_payout_chart(self, client: TestClient) -> None:
         resp = client.get("/api/portfolio")
-        greeks = resp.json()["portfolio"]["metrics"]["aggregateGreeks"]
-        assert "delta" in greeks
-        assert "gamma" in greeks
-        assert "theta" in greeks
-        assert "vega" in greeks
+        chart = resp.json()["portfolio"]["aggregatePayoutChart"]
+        assert "pricePoints" in chart
+        assert "profitPoints" in chart
 
-    def test_portfolio_active_trade_shape(self, client: TestClient) -> None:
+    def test_portfolio_positions_shape(self, client: TestClient) -> None:
         resp = client.get("/api/portfolio")
-        trades = resp.json()["portfolio"]["activeTrades"]
-        if trades:
-            trade = trades[0]
-            assert "id" in trade
-            assert "symbol" in trade
-            assert "entryPrice" in trade
-            assert "currentPrice" in trade
-            assert "unrealizedPL" in trade
-            assert "greeks" in trade
+        positions = resp.json()["portfolio"]["positions"]
+        if positions:
+            pos = positions[0]
+            assert "id" in pos
+            assert "ticker" in pos
+            assert "entryPrice" in pos
+            assert "currentValue" in pos
+            assert "unrealizedPL" in pos
+            assert "plHistory" in pos
 
-    def test_portfolio_closed_trade_shape(self, client: TestClient) -> None:
+    def test_portfolio_positions_empty(self, client: TestClient) -> None:
         resp = client.get("/api/portfolio")
-        trades = resp.json()["portfolio"]["closedTrades"]
-        if trades:
-            trade = trades[0]
-            assert "exitPrice" in trade
-            assert "realizedPL" in trade
-            assert "exitDate" in trade
+        positions = resp.json()["portfolio"]["positions"]
+        assert isinstance(positions, list)

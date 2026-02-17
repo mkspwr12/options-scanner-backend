@@ -33,6 +33,6 @@ def close_trade(
 def portfolio(
     svc: PortfolioService = Depends(get_portfolio_service),
 ) -> dict:
-    """Get portfolio data with metrics."""
-    result = svc.get_portfolio()
-    return {"status": "ok", "portfolio": result}
+    """Get enhanced portfolio data with summary, positions, and payout chart (Issue #13)."""
+    result = svc.get_enhanced_portfolio()
+    return {"status": "ok", "portfolio": result.model_dump()}

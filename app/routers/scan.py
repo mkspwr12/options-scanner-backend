@@ -3,8 +3,11 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Depends, Query
 
-from ..dependencies import get_scan_service, get_watchlist_service
+from ..dependencies import get_multi_leg_scan_service, get_scan_service, get_stock_scan_service, get_watchlist_service
+from ..schemas import MultiLegScanRequest, StockScanRequest
+from ..services.multi_leg_scan_service import MultiLegScanService
 from ..services.scan_service import ScanService
+from ..services.stock_scan_service import StockScanService
 from ..services.watchlist_service import WatchlistService
 
 router = APIRouter(prefix="/api", tags=["Scan"])
@@ -74,3 +77,21 @@ def multi_leg_opportunities(
 ) -> dict:
     """Return multi-leg option strategies."""
     return svc.get_multi_leg_opportunities()
+
+
+@router.post("/multi-leg-scan")
+def multi_leg_scan(
+    request: MultiLegScanRequest,
+    svc: MultiLegScanService = Depends(get_multi_leg_scan_service),
+) -> dict:
+    """Scan for multi-leg option strategies (Issue #11)."""
+    return svc.scan(request)
+
+
+@router.post("/stock-scan")
+def stock_scan(
+    request: StockScanRequest,
+    svc: StockScanService = Depends(get_stock_scan_service),
+) -> dict:
+    """Server-side stock screening with caching (Issue #12)."""
+    return svc.scan(request)

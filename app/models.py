@@ -10,6 +10,18 @@ class Greeks(BaseModel):
     vega: float
 
 
+# ---------------------------------------------------------------------------
+# Payout chart model (Issue #10)
+# ---------------------------------------------------------------------------
+
+
+class PayoutChart(BaseModel):
+    """Mini payout chart for an option position."""
+
+    pricePoints: list[float]
+    profitPoints: list[float]
+
+
 class OptionOpportunity(BaseModel):
     id: str
     symbol: str
@@ -25,6 +37,13 @@ class OptionOpportunity(BaseModel):
     riskRewardRatio: float
     confidenceScore: float
     timestamp: int
+    # Issue #10 — payout chart fields (optional for backward compat)
+    payoutChart: PayoutChart | None = None
+    probability: float | None = None
+    breakeven: float | None = None
+    maxProfit: float | None = None
+    maxLoss: float | None = None
+    position: str | None = None
 
 
 class MultiLegOpportunity(BaseModel):
@@ -38,6 +57,11 @@ class MultiLegOpportunity(BaseModel):
     riskRewardRatio: float
     confidenceScore: float
     timestamp: int
+    # Issue #11 — extra multi-leg fields (optional for backward compat)
+    netCredit: float | None = None
+    breakevens: list[float] | None = None
+    probability: float | None = None
+    payoutChart: PayoutChart | None = None
 
 
 class TrackedTrade(BaseModel):
@@ -79,6 +103,141 @@ class PortfolioResponse(BaseModel):
     metrics: PortfolioMetrics
     activeTrades: list[TrackedTrade]
     closedTrades: list[ClosedTrade]
+
+
+# ---------------------------------------------------------------------------
+# Enhanced portfolio models (Issue #13)
+# ---------------------------------------------------------------------------
+
+
+class PLHistoryEntry(BaseModel):
+    """Daily P&L snapshot for a position."""
+
+    date: str
+    value: float
+
+
+class PositionLeg(BaseModel):
+    """A single leg within a portfolio position."""
+
+    type: str  # e.g. "sell_put", "buy_call"
+    strike: float
+    quantity: int
+
+
+class PortfolioPosition(BaseModel):
+    """Enriched position for enhanced portfolio endpoint."""
+
+    id: str
+    ticker: str
+    strategy: str
+    legs: list[PositionLeg]
+    openDate: str
+    expiration: str
+    dte: int
+    entryPrice: float
+    currentValue: float
+    unrealizedPL: float
+    unrealizedPLPercent: float
+    maxProfit: float
+    maxLoss: float
+    breakevens: list[float]
+    probability: float
+    plHistory: list[PLHistoryEntry]
+
+
+class PortfolioSummary(BaseModel):
+    """Aggregate portfolio summary."""
+
+    totalValue: float
+    totalPL: float
+    totalPLPercent: float
+    maxProfit: float
+    maxLoss: float
+    netDelta: float
+    netTheta: float
+
+
+class EnhancedPortfolioResponse(BaseModel):
+    """Issue #13 — enhanced portfolio response."""
+
+    summary: PortfolioSummary
+    positions: list[PortfolioPosition]
+    aggregatePayoutChart: PayoutChart
+
+
+# ---------------------------------------------------------------------------
+# Multi-leg scan result (Issue #11)
+# ---------------------------------------------------------------------------
+
+
+class MultiLegScanLeg(BaseModel):
+    """A single leg in a multi-leg scan result."""
+
+    type: str  # e.g. "sell_put", "buy_call"
+    strike: float
+    premium: float
+    delta: float
+
+
+class MultiLegScanResult(BaseModel):
+    """A single result from multi-leg scan."""
+
+    strategyType: str
+    legs: list[MultiLegScanLeg]
+    netCredit: float
+    maxProfit: float
+    maxLoss: float
+    breakevens: list[float]
+    probability: float
+    payoutChart: PayoutChart
+
+
+# ---------------------------------------------------------------------------
+# Stock scan result (Issue #12)
+# ---------------------------------------------------------------------------
+
+
+class MACDData(BaseModel):
+    value: float
+    signal: float
+    histogram: float
+
+
+class StockScanResult(BaseModel):
+    """A single result from the stock screener."""
+
+    ticker: str
+    name: str
+    price: float
+    change: float
+    volume: int
+    rsi: float
+    macd: MACDData
+    pe: float
+    marketCap: int
+    optionLiquidity: str
+
+
+# ---------------------------------------------------------------------------
+# Position action models (Issue #14)
+# ---------------------------------------------------------------------------
+
+
+class ClosedPositionInfo(BaseModel):
+    id: str
+    ticker: str
+    closeDate: str
+    closePrice: float
+    entryPrice: float
+    realizedPL: float
+
+
+class AdjustmentRecord(BaseModel):
+    date: str
+    type: str
+    strike: float | None = None
+    quantity: int | None = None
 
 
 # ---------------------------------------------------------------------------

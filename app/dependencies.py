@@ -15,10 +15,13 @@ from .repositories.strategy_repository import StrategyRepository
 from .repositories.trade_repository import TradeRepository
 from .repositories.watchlist_repository import WatchlistRepository
 from .services.metrics_service import MetricsService
+from .services.multi_leg_scan_service import MultiLegScanService
 from .services.options_chain_service import OptionsChainService
 from .services.portfolio_service import PortfolioService
+from .services.position_action_service import PositionActionService
 from .services.provider_service import ProviderService
 from .services.scan_service import ScanService
+from .services.stock_scan_service import StockScanService
 from .services.strategy_service import StrategyService
 from .services.trade_service import TradeService
 from .services.watchlist_service import WatchlistService
@@ -150,3 +153,20 @@ def get_strategy_service() -> StrategyService:
 
 def get_metrics_service() -> MetricsService:
     return MetricsService(repo=MetricsRepository())
+
+
+# ---------------------------------------------------------------------------
+# New service factories (Issues #11, #12, #14)
+# ---------------------------------------------------------------------------
+
+
+def get_multi_leg_scan_service() -> MultiLegScanService:
+    return MultiLegScanService()
+
+
+def get_stock_scan_service() -> StockScanService:
+    return StockScanService()
+
+
+def get_position_action_service() -> PositionActionService:
+    return PositionActionService(repo=TradeRepository())
