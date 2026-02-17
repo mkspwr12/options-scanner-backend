@@ -59,7 +59,7 @@ class StrategyRepository:
                 # Fetch legs for each strategy
                 for strat in strategies:
                     cursor.execute(
-                        "SELECT * FROM strategy_legs WHERE strategy_id = ? ORDER BY leg_order",
+                        "SELECT * FROM strategy_legs WHERE strategy_id = ? ORDER BY leg_index",
                         (strat["id"],),
                     )
                     leg_cols = [c[0] for c in cursor.description]
@@ -82,7 +82,7 @@ class StrategyRepository:
                 strat = dict(zip(cols, row))
 
                 cursor.execute(
-                    "SELECT * FROM strategy_legs WHERE strategy_id = ? ORDER BY leg_order",
+                    "SELECT * FROM strategy_legs WHERE strategy_id = ? ORDER BY leg_index",
                     (strategy_id,),
                 )
                 leg_cols = [c[0] for c in cursor.description]
@@ -107,10 +107,8 @@ class StrategyRepository:
                     """
                     INSERT INTO strategies
                         (id, strategy_type, name, ticker, underlying_price,
-                         max_profit, max_loss, breakevens, risk_reward,
-                         net_debit, net_credit, unrealized_pl, unrealized_pl_pct,
                          status, tags, notes)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         strategy_id,
@@ -118,14 +116,6 @@ class StrategyRepository:
                         data.get("name"),
                         data["ticker"],
                         data.get("underlying_price"),
-                        data.get("max_profit"),
-                        data.get("max_loss"),
-                        json.dumps(data.get("breakevens")) if data.get("breakevens") else None,
-                        data.get("risk_reward"),
-                        data.get("net_debit"),
-                        data.get("net_credit"),
-                        data.get("unrealized_pl", 0),
-                        data.get("unrealized_pl_pct", 0),
                         data.get("status", "active"),
                         json.dumps(data.get("tags")) if data.get("tags") else None,
                         data.get("notes"),
@@ -133,18 +123,20 @@ class StrategyRepository:
                 )
                 # Insert legs
                 for i, leg in enumerate(data.get("legs", [])):
+                    leg_id = leg.get("id") or f"leg-{uuid.uuid4().hex[:12]}"
                     cursor.execute(
                         """
                         INSERT INTO strategy_legs
-                            (strategy_id, leg_order, option_type, strike, expiration,
+                            (id, strategy_id, leg_index, type, strike, expiration,
                              action, quantity, entry_price, current_price,
-                             delta, gamma, theta, vega, implied_vol)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                             delta, gamma, theta, vega, implied_volatility)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                         """,
                         (
+                            leg_id,
                             strategy_id,
                             i + 1,
-                            leg["option_type"],
+                            leg.get("option_type") or leg.get("type"),
                             leg["strike"],
                             leg["expiration"],
                             leg["action"],
@@ -155,7 +147,7 @@ class StrategyRepository:
                             leg.get("gamma"),
                             leg.get("theta"),
                             leg.get("vega"),
-                            leg.get("implied_vol"),
+                            leg.get("implied_volatility") or leg.get("implied_vol"),
                         ),
                     )
                 conn.commit()
@@ -169,8 +161,7 @@ class StrategyRepository:
         sets: list[str] = []
         params: list[Any] = []
         updatable = [
-            "name", "status", "unrealized_pl", "unrealized_pl_pct",
-            "notes", "exit_date",
+            "name", "status", "notes", "exit_date",
         ]
         for key in updatable:
             if key in data:

@@ -14,11 +14,12 @@ def mock_repo() -> MagicMock:
     repo = MagicMock(spec=MetricsRepository)
     repo.record.return_value = None
     repo.get_aggregated.return_value = {
-        "total_calls": 100,
-        "success_count": 95,
-        "error_count": 5,
-        "avg_latency": 123.4,
-        "error_rate": 0.05,
+        "totalCalls": 100,
+        "successCount": 95,
+        "errorCount": 5,
+        "avgLatencyMs": 123.4,
+        "errorRatePercent": 5.0,
+        "lastCallAt": None,
     }
     repo.get_top_errors.return_value = [
         {"error_message": "timeout", "count": 3},

@@ -88,6 +88,18 @@ def _get_registry() -> ProviderRegistry:
         "default",
         {"type": ptype, "enabled": True, "priority": 1},
     )
+
+    # Load DB-stored providers into registry so proxy/test/metrics work
+    try:
+        repo = ProviderRepository()
+        for row in repo.get_all():
+            pid = row.get("id") or row.get("provider_id")
+            if pid and pid != "default":
+                _registry.register(pid, row)
+        logger.debug("Loaded DB providers into registry")
+    except Exception:
+        logger.debug("Could not load DB providers into registry (DB may be unavailable)")
+
     return _registry
 
 

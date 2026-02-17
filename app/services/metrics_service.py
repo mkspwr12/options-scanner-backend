@@ -50,11 +50,11 @@ class MetricsService:
         return {
             "providerId": provider_id,
             "timeRange": time_range,
-            "totalCalls": agg.get("total_calls", 0),
-            "successCount": agg.get("success_count", 0),
-            "errorCount": agg.get("error_count", 0),
-            "avgLatencyMs": round(agg.get("avg_latency", 0), 1),
-            "errorRate": round(agg.get("error_rate", 0), 4),
+            "totalCalls": agg.get("totalCalls", 0),
+            "successCount": agg.get("successCount", 0),
+            "errorCount": agg.get("errorCount", 0),
+            "avgLatencyMs": round(agg.get("avgLatencyMs", 0), 1),
+            "errorRate": round(agg.get("errorRatePercent", 0) / 100, 4) if agg.get("errorRatePercent") else 0.0,
         }
 
     def get_top_errors(
