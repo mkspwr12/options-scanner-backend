@@ -106,10 +106,20 @@ class ScanRepository:
         where = " AND ".join(conditions)
         where_clause = f"WHERE {where}" if where else ""
 
+        # Deduplicate: keep only the latest row per unique contract
+        # (symbol, strike_price, expiration_date, option_type)
         query = f"""
             SELECT TOP (?) *
-            FROM scan_results
-            {where_clause}
+            FROM (
+                SELECT *,
+                       ROW_NUMBER() OVER (
+                           PARTITION BY symbol, strike_price, expiration_date, option_type
+                           ORDER BY scan_timestamp DESC
+                       ) AS _rn
+                FROM scan_results
+                {where_clause}
+            ) AS deduped
+            WHERE _rn = 1
             ORDER BY {order_col} DESC
         """
         params.insert(0, limit)
@@ -125,12 +135,26 @@ class ScanRepository:
             raise DatabaseError(f"Failed to retrieve scan results: {exc}") from exc
 
     def save_results(self, results: list[dict[str, Any]]) -> int:
-        """Bulk-insert scan results.  Returns count inserted."""
+        """Bulk-insert scan results.  Returns count inserted.
+
+        Deletes stale entries for the scanned symbols first to prevent
+        duplicate contracts accumulating across scan runs.
+        """
         if not results:
             return 0
         try:
             with get_connection() as conn:
                 cursor = conn.cursor()
+
+                # Delete old entries for the symbols being scanned
+                symbols = list({r["symbol"] for r in results})
+                if symbols:
+                    placeholders = ",".join("?" for _ in symbols)
+                    cursor.execute(
+                        f"DELETE FROM scan_results WHERE symbol IN ({placeholders})",
+                        symbols,
+                    )
+
                 for r in results:
                     cursor.execute(
                         """

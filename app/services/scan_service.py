@@ -317,6 +317,19 @@ class ScanService:
                 if not self._cb.allow_request():
                     return self._cached_results()
 
+        # Deduplicate: keep only one entry per (symbol, strike, expiration, type)
+        seen: dict[tuple, dict] = {}
+        for opp in all_opportunities:
+            key = (
+                opp["symbol"],
+                opp["strikePrice"],
+                opp["expirationDate"],
+                opp["optionType"],
+            )
+            if key not in seen:
+                seen[key] = opp
+        all_opportunities = list(seen.values())
+
         # Sort by confidence descending
         all_opportunities.sort(key=lambda o: o["confidenceScore"], reverse=True)
 
