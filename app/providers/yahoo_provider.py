@@ -76,11 +76,11 @@ class YahooFinanceProvider:
             info = ticker.fast_info
             return Quote(
                 symbol=symbol.upper(),
-                price=float(getattr(info, "last_price", 0) or 0),
-                day_high=float(getattr(info, "day_high", 0) or 0),
-                day_low=float(getattr(info, "day_low", 0) or 0),
-                volume=int(getattr(info, "last_volume", 0) or 0),
-                previous_close=float(getattr(info, "previous_close", 0) or 0),
+                price=self._safe_float(getattr(info, "last_price", 0)),
+                day_high=self._safe_float(getattr(info, "day_high", 0)),
+                day_low=self._safe_float(getattr(info, "day_low", 0)),
+                volume=self._safe_int(getattr(info, "last_volume", 0)),
+                previous_close=self._safe_float(getattr(info, "previous_close", 0)),
             )
         except Exception:
             logger.exception("Failed to fetch quote for %s", symbol)
@@ -119,18 +119,46 @@ class YahooFinanceProvider:
         self._last_request_time = time.monotonic()
 
     @staticmethod
+    def _safe_float(val: object, default: float = 0.0) -> float:
+        """Convert to float, returning *default* for None / NaN."""
+        import math
+
+        if val is None:
+            return default
+        try:
+            f = float(val)
+            return default if math.isnan(f) or math.isinf(f) else f
+        except (ValueError, TypeError):
+            return default
+
+    @staticmethod
+    def _safe_int(val: object, default: int = 0) -> int:
+        """Convert to int, returning *default* for None / NaN / Inf."""
+        import math
+
+        if val is None:
+            return default
+        try:
+            f = float(val)
+            if math.isnan(f) or math.isinf(f):
+                return default
+            return int(f)
+        except (ValueError, TypeError):
+            return default
+
+    @classmethod
     def _row_to_contract(
-        symbol: str, expiration: str, option_type: str, row: object
+        cls, symbol: str, expiration: str, option_type: str, row: object
     ) -> OptionContract:
         return OptionContract(
             symbol=symbol.upper(),
-            strike=float(getattr(row, "strike", 0)),
+            strike=cls._safe_float(getattr(row, "strike", 0)),
             expiration=expiration,
             option_type=option_type,
-            bid=float(getattr(row, "bid", 0) or 0),
-            ask=float(getattr(row, "ask", 0) or 0),
-            last_price=float(getattr(row, "lastPrice", 0) or 0),
-            volume=int(getattr(row, "volume", 0) or 0),
-            open_interest=int(getattr(row, "openInterest", 0) or 0),
-            implied_volatility=float(getattr(row, "impliedVolatility", 0) or 0),
+            bid=cls._safe_float(getattr(row, "bid", 0)),
+            ask=cls._safe_float(getattr(row, "ask", 0)),
+            last_price=cls._safe_float(getattr(row, "lastPrice", 0)),
+            volume=cls._safe_int(getattr(row, "volume", 0)),
+            open_interest=cls._safe_int(getattr(row, "openInterest", 0)),
+            implied_volatility=cls._safe_float(getattr(row, "impliedVolatility", 0)),
         )
