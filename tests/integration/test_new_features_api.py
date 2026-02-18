@@ -156,14 +156,14 @@ class TestStockScan:
         assert data["page"] == 1
 
     def test_stock_scan_pagination(self, client: TestClient) -> None:
-        resp = client.post("/api/stock-scan", json={"page": 1, "pageSize": 5})
+        resp = client.post("/api/stock-scan", json={"page": 1, "pageSize": 2})
         assert resp.status_code == 200
         data = resp.json()
-        assert len(data["results"]) == 5
+        assert len(data["results"]) == 2
         assert data["totalPages"] >= 2
 
     def test_stock_scan_page_2(self, client: TestClient) -> None:
-        resp = client.post("/api/stock-scan", json={"page": 2, "pageSize": 5})
+        resp = client.post("/api/stock-scan", json={"page": 2, "pageSize": 2})
         assert resp.status_code == 200
         data = resp.json()
         assert data["page"] == 2

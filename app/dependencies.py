@@ -161,11 +161,11 @@ def get_metrics_service() -> MetricsService:
 
 
 def get_multi_leg_scan_service() -> MultiLegScanService:
-    return MultiLegScanService()
+    return MultiLegScanService(provider=_get_provider())
 
 
 def get_stock_scan_service() -> StockScanService:
-    return StockScanService()
+    return StockScanService(provider=_get_provider())
 
 
 def get_position_action_service() -> PositionActionService:

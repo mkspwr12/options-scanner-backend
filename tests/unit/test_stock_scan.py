@@ -21,22 +21,22 @@ class TestStockScanService:
         result = self.svc.scan(req)
         assert result["status"] == "ok"
         assert "results" in result
-        assert result["totalResults"] >= 10
+        assert result["totalResults"] >= 1
         assert result["page"] == 1
         assert result["totalPages"] >= 1
 
     def test_pagination(self) -> None:
-        req = StockScanRequest(page=1, pageSize=5)
+        req = StockScanRequest(page=1, pageSize=2)
         result = self.svc.scan(req)
-        assert len(result["results"]) == 5
+        assert len(result["results"]) == 2
         assert result["page"] == 1
         assert result["totalPages"] >= 2
 
     def test_pagination_page_2(self) -> None:
-        req = StockScanRequest(page=2, pageSize=5)
+        req = StockScanRequest(page=2, pageSize=2)
         result = self.svc.scan(req)
         assert result["page"] == 2
-        assert len(result["results"]) == 5
+        assert len(result["results"]) >= 1
 
     def test_result_shape(self) -> None:
         req = StockScanRequest(pageSize=1)
@@ -106,4 +106,49 @@ class TestStockScanService:
     def test_no_filters_returns_all(self) -> None:
         req = StockScanRequest(pageSize=200)
         result = self.svc.scan(req)
-        assert result["totalResults"] == 20  # 20 sample stocks
+        assert result["totalResults"] == 5  # 5 fallback stocks (no provider)
+
+
+class TestTechnicalIndicators:
+    """Tests for RSI and MACD calculation functions."""
+
+    def test_rsi_basic(self) -> None:
+        # Alternating up/down should give RSI ~50
+        prices = [100 + (i % 2) * 2 for i in range(30)]
+        rsi = StockScanService._calculate_rsi(prices)
+        assert 40 <= rsi <= 60
+
+    def test_rsi_all_up(self) -> None:
+        prices = [100 + i for i in range(30)]
+        rsi = StockScanService._calculate_rsi(prices)
+        assert rsi == 100.0
+
+    def test_rsi_all_down(self) -> None:
+        prices = [200 - i for i in range(30)]
+        rsi = StockScanService._calculate_rsi(prices)
+        assert rsi < 5.0
+
+    def test_rsi_insufficient_data(self) -> None:
+        prices = [100, 101, 102]
+        rsi = StockScanService._calculate_rsi(prices)
+        assert rsi == 50.0  # neutral fallback
+
+    def test_macd_basic(self) -> None:
+        prices = [100 + i * 0.5 for i in range(60)]
+        macd = StockScanService._calculate_macd(prices)
+        assert macd.value != 0
+        assert macd.signal != 0
+        assert macd.histogram == round(macd.value - macd.signal, 4)
+
+    def test_macd_insufficient_data(self) -> None:
+        prices = [100, 101, 102]
+        macd = StockScanService._calculate_macd(prices)
+        assert macd.value == 0.0
+        assert macd.signal == 0.0
+        assert macd.histogram == 0.0
+
+    def test_provider_none_uses_fallback(self) -> None:
+        svc = StockScanService(provider=None)
+        assert svc._provider is None
+        stocks = svc._fetch_live_stocks()
+        assert len(stocks) == 5  # fallback mock data

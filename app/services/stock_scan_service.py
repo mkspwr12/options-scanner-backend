@@ -1,8 +1,8 @@
 """Stock scan service — server-side stock screening with in-memory caching.
 
 Issue #12: POST /api/stock-scan endpoint.
-Uses mock data with TTL-based in-memory caching.
-Ready for Yahoo Finance / Alpha Vantage integration.
+Uses Yahoo Finance (yfinance) for live market data with TTL-based caching.
+Falls back to mock data when the provider is unavailable.
 """
 from __future__ import annotations
 
@@ -11,17 +11,52 @@ import time
 from typing import Any
 
 from ..models import MACDData, StockScanResult
+from ..providers.base import MarketDataProvider
 from ..schemas import StockScanRequest
 
 logger = logging.getLogger(__name__)
 
 # In-memory cache (replaces Redis for initial implementation)
 _cache: dict[str, tuple[float, Any]] = {}
-_CACHE_TTL_SECONDS = 3600  # 60 minutes
+_CACHE_TTL_SECONDS = 900  # 15 minutes for live data
+
+# Default stock universe for screening
+_DEFAULT_TICKERS = [
+    "AAPL", "MSFT", "GOOGL", "AMZN", "NVDA", "META", "TSLA", "AMD",
+    "JPM", "V", "JNJ", "UNH", "PG", "DIS", "NFLX", "CRM", "INTC",
+    "BA", "COIN", "PLTR",
+]
+
+# Company name map (yfinance info can be slow, cache common names)
+_COMPANY_NAMES: dict[str, str] = {
+    "AAPL": "Apple Inc.",
+    "MSFT": "Microsoft Corp.",
+    "GOOGL": "Alphabet Inc.",
+    "AMZN": "Amazon.com Inc.",
+    "NVDA": "NVIDIA Corp.",
+    "META": "Meta Platforms",
+    "TSLA": "Tesla Inc.",
+    "AMD": "Advanced Micro Devices",
+    "JPM": "JPMorgan Chase",
+    "V": "Visa Inc.",
+    "JNJ": "Johnson & Johnson",
+    "UNH": "UnitedHealth Group",
+    "PG": "Procter & Gamble",
+    "DIS": "Walt Disney Co.",
+    "NFLX": "Netflix Inc.",
+    "CRM": "Salesforce Inc.",
+    "INTC": "Intel Corp.",
+    "BA": "Boeing Co.",
+    "COIN": "Coinbase Global",
+    "PLTR": "Palantir Technologies",
+}
 
 
 class StockScanService:
-    """Scans and filters stocks with in-memory caching."""
+    """Scans and filters stocks with in-memory caching and live data."""
+
+    def __init__(self, provider: MarketDataProvider | None = None) -> None:
+        self._provider = provider
 
     def scan(self, request: StockScanRequest) -> dict[str, Any]:
         """Execute a stock scan with optional filters and pagination."""
@@ -30,8 +65,8 @@ class StockScanService:
         if cached is not None:
             return self._paginate(cached, request.page, request.pageSize, source="cache")
 
-        # Generate (or fetch from live API in future)
-        all_stocks = self._generate_sample_stocks()
+        # Fetch live data or fall back to mock
+        all_stocks = self._fetch_live_stocks()
 
         # Apply filters
         filtered = self._apply_filters(all_stocks, request.filters)
@@ -39,7 +74,7 @@ class StockScanService:
         # Cache the filtered results
         self._set_cache(cache_key, filtered)
 
-        return self._paginate(filtered, request.page, request.pageSize, source="scan")
+        return self._paginate(filtered, request.page, request.pageSize, source="live")
 
     # ------------------------------------------------------------------
     # Caching
@@ -184,35 +219,208 @@ class StockScanService:
         return filtered
 
     # ------------------------------------------------------------------
-    # Sample data
+    # Live data fetching
+    # ------------------------------------------------------------------
+
+    def _fetch_live_stocks(self) -> list[StockScanResult]:
+        """Fetch real stock data from Yahoo Finance.
+
+        Falls back to mock data if the provider is unavailable or not Yahoo.
+        """
+        if self._provider is None:
+            logger.warning("No provider — returning mock stock data")
+            return self._generate_sample_stocks()
+
+        # Only use live Yahoo data when the provider is YahooFinanceProvider
+        try:
+            from ..providers.yahoo_provider import YahooFinanceProvider
+            if not isinstance(self._provider, YahooFinanceProvider):
+                logger.info("Provider is not Yahoo — using mock stock data")
+                return self._generate_sample_stocks()
+        except ImportError:
+            return self._generate_sample_stocks()
+
+        try:
+            return self._fetch_from_yahoo()
+        except Exception:
+            logger.exception("Live stock fetch failed — falling back to mock")
+            return self._generate_sample_stocks()
+
+    def _fetch_from_yahoo(self) -> list[StockScanResult]:
+        """Fetch live data for all tickers using yfinance."""
+        import yfinance as yf
+
+        results: list[StockScanResult] = []
+
+        for ticker_sym in _DEFAULT_TICKERS:
+            try:
+                ticker = yf.Ticker(ticker_sym)
+
+                # Get price history (60 days for RSI/MACD calculations)
+                hist = ticker.history(period="3mo")
+                if hist.empty or len(hist) < 14:
+                    logger.warning("Insufficient history for %s, skipping", ticker_sym)
+                    continue
+
+                close = hist["Close"]
+                volume_series = hist["Volume"]
+
+                # Current price and change
+                current_price = float(close.iloc[-1])
+                prev_close = float(close.iloc[-2]) if len(close) >= 2 else current_price
+                change_pct = round(
+                    ((current_price - prev_close) / prev_close) * 100, 2
+                ) if prev_close > 0 else 0.0
+
+                # Current volume
+                current_volume = int(volume_series.iloc[-1])
+
+                # RSI (14-period)
+                rsi = self._calculate_rsi(close.tolist(), period=14)
+
+                # MACD (12, 26, 9)
+                macd_data = self._calculate_macd(close.tolist())
+
+                # Market cap and PE from fast_info / info
+                info = ticker.fast_info
+                market_cap = int(getattr(info, "market_cap", 0) or 0)
+
+                # PE ratio — fast_info doesn't always have it, try info dict
+                pe_ratio = 0.0
+                try:
+                    pe_ratio = float(getattr(info, "pe_ratio", 0) or 0)
+                except Exception:
+                    pass
+                if pe_ratio == 0:
+                    try:
+                        full_info = ticker.info
+                        pe_ratio = float(full_info.get("trailingPE", 0) or 0)
+                    except Exception:
+                        pass
+
+                # Option liquidity — based on options availability and volume
+                option_liq = self._assess_option_liquidity(ticker)
+
+                name = _COMPANY_NAMES.get(ticker_sym, ticker_sym)
+
+                results.append(
+                    StockScanResult(
+                        ticker=ticker_sym,
+                        name=name,
+                        price=round(current_price, 2),
+                        change=change_pct,
+                        volume=current_volume,
+                        rsi=round(rsi, 1),
+                        macd=macd_data,
+                        pe=round(pe_ratio, 1),
+                        marketCap=market_cap,
+                        optionLiquidity=option_liq,
+                    )
+                )
+                logger.info(
+                    "Fetched live data for %s: $%.2f (RSI=%.1f)",
+                    ticker_sym, current_price, rsi,
+                )
+
+            except Exception:
+                logger.exception("Failed to fetch data for %s", ticker_sym)
+                continue
+
+        if not results:
+            logger.warning("No live data fetched — falling back to mock")
+            return self._generate_sample_stocks()
+
+        return results
+
+    # ------------------------------------------------------------------
+    # Technical indicator calculations
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _calculate_rsi(prices: list[float], period: int = 14) -> float:
+        """Calculate RSI (Relative Strength Index) from price list."""
+        if len(prices) < period + 1:
+            return 50.0  # neutral fallback
+
+        deltas = [prices[i] - prices[i - 1] for i in range(1, len(prices))]
+        gains = [d if d > 0 else 0.0 for d in deltas]
+        losses = [-d if d < 0 else 0.0 for d in deltas]
+
+        # Initial average gain/loss
+        avg_gain = sum(gains[:period]) / period
+        avg_loss = sum(losses[:period]) / period
+
+        # Smoothed via Wilder's method
+        for i in range(period, len(gains)):
+            avg_gain = (avg_gain * (period - 1) + gains[i]) / period
+            avg_loss = (avg_loss * (period - 1) + losses[i]) / period
+
+        if avg_loss == 0:
+            return 100.0
+
+        rs = avg_gain / avg_loss
+        return round(100.0 - (100.0 / (1.0 + rs)), 2)
+
+    @staticmethod
+    def _calculate_macd(
+        prices: list[float],
+        fast: int = 12,
+        slow: int = 26,
+        signal_period: int = 9,
+    ) -> MACDData:
+        """Calculate MACD, Signal, and Histogram from price list."""
+        if len(prices) < slow + signal_period:
+            return MACDData(value=0.0, signal=0.0, histogram=0.0)
+
+        # EMA helper
+        def ema(data: list[float], span: int) -> list[float]:
+            multiplier = 2.0 / (span + 1)
+            result = [0.0] * len(data)
+            result[0] = data[0]
+            for i in range(1, len(data)):
+                result[i] = (data[i] - result[i - 1]) * multiplier + result[i - 1]
+            return result
+
+        ema_fast = ema(prices, fast)
+        ema_slow = ema(prices, slow)
+        macd_line = [f - s for f, s in zip(ema_fast, ema_slow)]
+        signal_line = ema(macd_line, signal_period)
+        histogram = [m - s for m, s in zip(macd_line, signal_line)]
+
+        return MACDData(
+            value=round(macd_line[-1], 4),
+            signal=round(signal_line[-1], 4),
+            histogram=round(histogram[-1], 4),
+        )
+
+    @staticmethod
+    def _assess_option_liquidity(ticker: object) -> str:
+        """Assess option liquidity for a ticker. Returns 'high', 'medium', or 'low'."""
+        try:
+            expirations = ticker.options  # type: ignore[attr-defined]
+            if len(expirations) >= 12:
+                return "high"
+            elif len(expirations) >= 6:
+                return "medium"
+            else:
+                return "low"
+        except Exception:
+            return "low"
+
+    # ------------------------------------------------------------------
+    # Mock fallback
     # ------------------------------------------------------------------
 
     @staticmethod
     def _generate_sample_stocks() -> list[StockScanResult]:
-        """Generate a universe of sample stocks for screening."""
+        """Fallback sample data when Yahoo Finance is unavailable."""
         samples = [
             ("AAPL", "Apple Inc.", 175.50, 2.5, 85_000_000, 55.0, 1.2, 0.8, 0.4, 22.5, 2_800_000_000_000, "high"),
             ("MSFT", "Microsoft Corp.", 420.30, 3.1, 45_000_000, 48.0, 0.9, 0.7, 0.2, 35.2, 3_100_000_000_000, "high"),
+            ("NVDA", "NVIDIA Corp.", 875.20, 8.5, 70_000_000, 72.0, 3.2, 2.5, 0.7, 65.0, 2_100_000_000_000, "high"),
             ("GOOGL", "Alphabet Inc.", 178.80, -1.2, 32_000_000, 62.0, -0.5, -0.3, -0.2, 25.8, 2_200_000_000_000, "high"),
             ("AMZN", "Amazon.com Inc.", 225.40, 4.2, 55_000_000, 42.0, 1.5, 1.1, 0.4, 60.5, 1_900_000_000_000, "high"),
-            ("NVDA", "NVIDIA Corp.", 875.20, 8.5, 70_000_000, 72.0, 3.2, 2.5, 0.7, 65.0, 2_100_000_000_000, "high"),
-            ("META", "Meta Platforms", 610.50, 5.3, 40_000_000, 58.0, 2.1, 1.8, 0.3, 28.0, 1_550_000_000_000, "high"),
-            ("TSLA", "Tesla Inc.", 245.80, -3.5, 95_000_000, 38.0, -1.2, -0.8, -0.4, 55.0, 780_000_000_000, "high"),
-            ("AMD", "Advanced Micro Devices", 178.60, 2.8, 60_000_000, 52.0, 0.8, 0.5, 0.3, 42.0, 290_000_000_000, "high"),
-            ("JPM", "JPMorgan Chase", 245.30, 1.5, 15_000_000, 50.0, 0.6, 0.4, 0.2, 12.5, 715_000_000_000, "medium"),
-            ("V", "Visa Inc.", 310.20, 1.8, 12_000_000, 54.0, 0.7, 0.5, 0.2, 32.0, 640_000_000_000, "medium"),
-            ("JNJ", "Johnson & Johnson", 158.40, -0.5, 8_000_000, 45.0, -0.3, -0.1, -0.2, 18.5, 380_000_000_000, "medium"),
-            ("UNH", "UnitedHealth Group", 520.10, 3.2, 6_000_000, 60.0, 1.1, 0.9, 0.2, 24.0, 480_000_000_000, "medium"),
-            ("PG", "Procter & Gamble", 162.80, 0.8, 7_000_000, 47.0, 0.3, 0.2, 0.1, 26.0, 385_000_000_000, "low"),
-            ("DIS", "Walt Disney Co.", 115.60, 2.1, 18_000_000, 56.0, 0.9, 0.6, 0.3, 72.0, 210_000_000_000, "medium"),
-            ("NFLX", "Netflix Inc.", 890.50, 6.2, 10_000_000, 65.0, 2.5, 2.0, 0.5, 48.0, 390_000_000_000, "medium"),
-            ("CRM", "Salesforce Inc.", 325.40, 1.9, 9_000_000, 49.0, 0.5, 0.3, 0.2, 55.0, 315_000_000_000, "medium"),
-            ("INTC", "Intel Corp.", 32.50, -1.8, 45_000_000, 35.0, -0.8, -0.5, -0.3, 95.0, 135_000_000_000, "medium"),
-            ("BA", "Boeing Co.", 185.20, 3.5, 12_000_000, 58.0, 1.0, 0.7, 0.3, -15.0, 110_000_000_000, "medium"),
-            ("COIN", "Coinbase Global", 265.30, 8.9, 25_000_000, 70.0, 3.0, 2.2, 0.8, 35.0, 65_000_000_000, "medium"),
-            ("PLTR", "Palantir Technologies", 78.50, 4.2, 55_000_000, 68.0, 1.8, 1.3, 0.5, 180.0, 175_000_000_000, "medium"),
         ]
-
         results: list[StockScanResult] = []
         for (ticker, name, price, change, vol, rsi,
              macd_v, macd_s, macd_h, pe, mcap, liq) in samples:

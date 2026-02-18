@@ -109,7 +109,34 @@ class ScanService:
                     "stale": False,
                 }
         except Exception:
-            logger.warning("DB scan retrieval failed — falling back to sample data")
+            logger.warning("DB scan retrieval failed — falling back to live/sample data")
+
+        # Try live provider scan for the requested symbol before falling back
+        if self._provider and symbol and self._cb.allow_request():
+            try:
+                live_result = self.run_scan([symbol])
+                if live_result.get("resultsCount", 0) > 0:
+                    # Re-fetch from DB after live scan populated it
+                    try:
+                        db_results = self._repo.get_latest(
+                            symbol=symbol,
+                            option_type=option_type,
+                            min_confidence=min_confidence,
+                            min_risk_reward=min_risk_reward,
+                            sort_by=sort_by,
+                            limit=limit,
+                        )
+                        if db_results:
+                            return {
+                                "status": "ok",
+                                "opportunities": db_results,
+                                "source": "live",
+                                "stale": False,
+                            }
+                    except Exception:
+                        pass
+            except Exception:
+                logger.warning("Live scan fallback failed for %s", symbol)
 
         # Fallback: hardcoded sample data (apply filters in-memory)
         samples = self._sample_opportunities()
