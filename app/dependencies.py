@@ -9,6 +9,7 @@ from .providers.circuit_breaker import CircuitBreaker
 from .providers.mock_provider import MockProvider
 from .providers.registry import ProviderRegistry
 from .repositories.metrics_repository import MetricsRepository
+from .repositories.position_repository import PositionRepository
 from .repositories.provider_repository import ProviderRepository
 from .repositories.scan_repository import ScanRepository
 from .repositories.strategy_repository import StrategyRepository
@@ -19,6 +20,7 @@ from .services.multi_leg_scan_service import MultiLegScanService
 from .services.options_chain_service import OptionsChainService
 from .services.portfolio_service import PortfolioService
 from .services.position_action_service import PositionActionService
+from .services.position_service import PositionService
 from .services.provider_service import ProviderService
 from .services.scan_service import ScanService
 from .services.stock_scan_service import StockScanService
@@ -170,3 +172,7 @@ def get_stock_scan_service() -> StockScanService:
 
 def get_position_action_service() -> PositionActionService:
     return PositionActionService(repo=TradeRepository())
+
+
+def get_position_service() -> PositionService:
+    return PositionService(PositionRepository())

@@ -20,6 +20,7 @@ os.environ["SCAN_ENABLED"] = "false"  # disable background scanner in tests
 
 from app.dependencies import (  # noqa: E402
     get_portfolio_service,
+    get_position_service,
     get_scan_service,
     get_trade_service,
     get_watchlist_service,
@@ -42,6 +43,7 @@ from app.repositories.watchlist_repository import WatchlistRepository  # noqa: E
 from app.repositories.provider_repository import ProviderRepository  # noqa: E402
 from app.repositories.strategy_repository import StrategyRepository  # noqa: E402
 from app.repositories.metrics_repository import MetricsRepository  # noqa: E402
+from app.repositories.position_repository import PositionRepository  # noqa: E402
 from app.providers.registry import ProviderRegistry  # noqa: E402
 from app.services.portfolio_service import PortfolioService  # noqa: E402
 from app.services.scan_service import ScanService  # noqa: E402
@@ -51,6 +53,7 @@ from app.services.provider_service import ProviderService  # noqa: E402
 from app.services.options_chain_service import OptionsChainService  # noqa: E402
 from app.services.strategy_service import StrategyService  # noqa: E402
 from app.services.metrics_service import MetricsService  # noqa: E402
+from app.services.position_service import PositionService  # noqa: E402
 
 
 # ---------------------------------------------------------------------------
@@ -184,6 +187,16 @@ def mock_metrics_repo() -> MagicMock:
 
 
 @pytest.fixture()
+def mock_position_repo() -> MagicMock:
+    repo = MagicMock(spec=PositionRepository)
+    repo.insert.return_value = "pos-abc12345"
+    repo.get_all_open.return_value = []
+    repo.get_all.return_value = []
+    repo.get_by_id.return_value = None
+    return repo
+
+
+@pytest.fixture()
 def mock_registry() -> MagicMock:
     registry = MagicMock(spec=ProviderRegistry)
     return registry
@@ -201,6 +214,7 @@ def client(
     mock_provider_repo: MagicMock,
     mock_strategy_repo: MagicMock,
     mock_metrics_repo: MagicMock,
+    mock_position_repo: MagicMock,
     mock_registry: MagicMock,
 ) -> TestClient:
     """Return a FastAPI TestClient with stubbed service dependencies."""
@@ -229,6 +243,9 @@ def client(
     def _metrics_svc() -> MetricsService:
         return MetricsService(repo=mock_metrics_repo)
 
+    def _position_svc() -> PositionService:
+        return PositionService(repo=mock_position_repo)
+
     app.dependency_overrides[get_trade_service] = _trade_svc
     app.dependency_overrides[get_portfolio_service] = _portfolio_svc
     app.dependency_overrides[get_watchlist_service] = _watchlist_svc
@@ -237,6 +254,7 @@ def client(
     app.dependency_overrides[get_options_chain_service] = _options_chain_svc
     app.dependency_overrides[get_strategy_service] = _strategy_svc
     app.dependency_overrides[get_metrics_service] = _metrics_svc
+    app.dependency_overrides[get_position_service] = _position_svc
 
     yield TestClient(app)
 

@@ -335,3 +335,49 @@ class AdjustPositionRequest(BaseModel):
     ] = Field(...)
     strike: float | None = None
     quantity: int | None = Field(default=None, ge=1)
+
+
+class AddPositionRequest(BaseModel):
+    """Request body for POST /api/portfolio/add-position (Issue #18)."""
+
+    symbol: str = Field(..., min_length=1, max_length=10, description="Ticker symbol")
+    strike: float = Field(..., gt=0, description="Option strike price")
+    expiration: str = Field(..., description="Expiration date YYYY-MM-DD")
+    type: Literal["call", "put", "CALL", "PUT"] = Field(..., description="Option type")
+    quantity: int = Field(default=1, gt=0, description="Number of contracts")
+    premium: float = Field(..., gt=0, description="Premium per contract")
+    entryDate: str | None = Field(default=None, description="Entry date YYYY-MM-DD (defaults to today)")
+
+    @field_validator("symbol", mode="before")
+    @classmethod
+    def uppercase_symbol(cls, v: str) -> str:
+        return v.strip().upper()
+
+    @field_validator("type", mode="before")
+    @classmethod
+    def lowercase_type(cls, v: str) -> str:
+        return v.strip().lower()
+
+    @field_validator("expiration")
+    @classmethod
+    def validate_expiration(cls, v: str) -> str:
+        from datetime import datetime
+
+        try:
+            datetime.strptime(v, "%Y-%m-%d")
+        except ValueError:
+            raise ValueError("expiration must be YYYY-MM-DD format")
+        return v
+
+    @field_validator("entryDate")
+    @classmethod
+    def validate_entry_date(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        from datetime import datetime
+
+        try:
+            datetime.strptime(v, "%Y-%m-%d")
+        except ValueError:
+            raise ValueError("entryDate must be YYYY-MM-DD format")
+        return v

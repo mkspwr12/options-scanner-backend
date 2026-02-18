@@ -362,3 +362,25 @@ class RiskAlert(BaseModel):
     threshold: float
     currentValue: float
     message: str
+
+
+# ---------------------------------------------------------------------------
+# Portfolio position models (Issue #18)
+# ---------------------------------------------------------------------------
+
+
+class PortfolioPositionRecord(BaseModel):
+    """Persisted position from the positions table."""
+
+    id: str
+    symbol: str
+    strike: float
+    expiration: str
+    type: str  # call or put
+    quantity: int
+    premium: float
+    entryDate: str
+    currentValue: float
+    pnl: float
+    status: str  # open or closed
+    createdAt: str
