@@ -58,8 +58,13 @@ elif [ -d "${SITE_DIR}/antenv" ]; then
     source "${SITE_DIR}/antenv/bin/activate"
 fi
 
+# Ensure working directory is the app root (Oryx may extract to /tmp/<hash>)
+cd "${SITE_DIR}"
+export PYTHONPATH="${SITE_DIR}:${PYTHONPATH}"
+
 echo "Working directory: $(pwd)"
 echo "Python: $(which python)"
+echo "PYTHONPATH: ${PYTHONPATH}"
 
 echo "Starting Gunicorn with Uvicorn workers..."
 python -m gunicorn app.main:app \
