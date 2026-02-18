@@ -45,6 +45,9 @@ class MultiLegScanService:
             filters=request.filters,
         )
 
+        # Enrich results with Issue #17 fields
+        self._enrich_results(results, request.ticker)
+
         return {"status": "ok", "results": [r.model_dump() for r in results]}
 
     # ------------------------------------------------------------------
@@ -336,6 +339,27 @@ class MultiLegScanService:
                 payoutChart=PayoutChart(pricePoints=prices, profitPoints=profits),
             )
         ]
+
+    @staticmethod
+    def _enrich_results(
+        results: list[MultiLegScanResult], ticker: str
+    ) -> None:
+        """Add Issue #17 fields: id, ticker, buyingPower, split leg types."""
+        exp_date = (datetime.now(timezone.utc) + timedelta(days=30)).strftime(
+            "%Y-%m-%d"
+        )
+        for r in results:
+            r.id = f"strategy-{uuid.uuid4().hex[:8]}"
+            r.ticker = ticker
+            r.buyingPower = round(abs(r.maxLoss), 2)
+            for leg in r.legs:
+                parts = leg.type.split("_", 1)
+                if len(parts) == 2:
+                    action, opt_type = parts
+                    leg.type = opt_type  # "put" or "call"
+                    leg.position = "short" if action == "sell" else "long"
+                leg.quantity = 1
+                leg.expiration = exp_date
 
     @staticmethod
     def _apply_filters(

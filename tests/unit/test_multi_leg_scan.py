@@ -21,6 +21,16 @@ class TestMultiLegScanService:
         assert r["maxLoss"] < 0
         assert len(r["breakevens"]) == 2
         assert "payoutChart" in r
+        # Issue #17 — new fields
+        assert r["id"].startswith("strategy-")
+        assert r["ticker"] == "AAPL"
+        assert r["buyingPower"] > 0
+        # Legs should have enriched fields
+        leg = r["legs"][0]
+        assert leg["type"] in ("put", "call")
+        assert leg["position"] in ("long", "short")
+        assert leg["quantity"] == 1
+        assert leg["expiration"] != ""
 
     def test_vertical_spread_scan(self) -> None:
         req = MultiLegScanRequest(ticker="SPY", strategyType="vertical_spread")

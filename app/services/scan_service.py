@@ -140,6 +140,109 @@ class ScanService:
             "stale": False,
         }
 
+    def scan_single(
+        self,
+        ticker: str,
+        *,
+        min_delta: float | None = None,
+        max_delta: float | None = None,
+        min_dte: int | None = None,
+        max_dte: int | None = None,
+        min_iv: float | None = None,
+        max_iv: float | None = None,
+        strike_min: float | None = None,
+        strike_max: float | None = None,
+    ) -> dict[str, Any]:
+        """POST /api/scan — single options scanner (Issue #17).
+
+        Reuses get_opportunities() internally and transforms results
+        into the frontend-expected response format.
+        """
+        raw = self.get_opportunities(
+            symbol=ticker,
+            delta_min=min_delta,
+            delta_max=max_delta,
+            dte_min=min_dte,
+            dte_max=max_dte,
+            iv_min=min_iv,
+            iv_max=max_iv,
+        )
+        opportunities = raw.get("opportunities", [])
+        results: list[dict[str, Any]] = []
+
+        for opp in opportunities:
+            # Normalize to dict
+            if hasattr(opp, "model_dump"):
+                o = opp.model_dump()
+            elif isinstance(opp, dict):
+                o = opp
+            else:
+                continue
+
+            strike = o.get("strikePrice", 0)
+
+            # Apply strike range filter
+            if strike_min is not None and strike < strike_min:
+                continue
+            if strike_max is not None and strike > strike_max:
+                continue
+
+            premium = o.get("currentPrice", 0)
+            opt_type = (o.get("optionType") or "call").lower()
+            iv = o.get("impliedVolatility", 0)
+
+            greeks = o.get("greeks", {})
+            if isinstance(greeks, dict):
+                delta = greeks.get("delta", 0)
+            else:
+                delta = getattr(greeks, "delta", 0)
+
+            probability = o.get("probability") or round(abs(delta) * 100, 1)
+            breakeven = o.get("breakeven") or (
+                round(strike + premium, 2)
+                if opt_type == "call"
+                else round(strike - premium, 2)
+            )
+
+            # Payout chart (transform pricePoints/profitPoints → prices/pnl)
+            payout = o.get("payoutChart")
+            if payout:
+                if isinstance(payout, dict):
+                    prices = payout.get("pricePoints", [])
+                    pnl = payout.get("profitPoints", [])
+                else:
+                    prices = getattr(payout, "pricePoints", [])
+                    pnl = getattr(payout, "profitPoints", [])
+            else:
+                prices = [round(strike * f, 2) for f in [0.9, 0.95, 1.0, 1.05, 1.1]]
+                pnl = []
+                for p in prices:
+                    if opt_type == "call":
+                        intrinsic = max(p - strike, 0)
+                    else:
+                        intrinsic = max(strike - p, 0)
+                    pnl.append(round((intrinsic - premium) * 100, 2))
+
+            max_profit = o.get("maxProfit") or (round(max(pnl), 2) if pnl else 0)
+            max_loss = o.get("maxLoss") or (round(min(pnl), 2) if pnl else 0)
+
+            results.append({
+                "symbol": o.get("symbol", ticker),
+                "strike": strike,
+                "expiration": o.get("expirationDate", ""),
+                "type": opt_type,
+                "premium": round(premium, 2),
+                "delta": round(delta, 4),
+                "iv": round(iv, 1),
+                "probability": round(probability, 1),
+                "payoutChart": {"prices": prices, "pnl": pnl},
+                "breakeven": round(breakeven, 2),
+                "maxProfit": round(max_profit, 2),
+                "maxLoss": round(max_loss, 2),
+            })
+
+        return {"results": results}
+
     def get_multi_leg_opportunities(self) -> dict[str, Any]:
         """Return multi-leg strategies (hardcoded sample data)."""
         return {

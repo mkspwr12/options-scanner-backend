@@ -4,7 +4,7 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends, Query
 
 from ..dependencies import get_multi_leg_scan_service, get_scan_service, get_stock_scan_service, get_watchlist_service
-from ..schemas import MultiLegScanRequest, StockScanRequest
+from ..schemas import MultiLegScanRequest, SingleScanRequest, StockScanRequest
 from ..services.multi_leg_scan_service import MultiLegScanService
 from ..services.scan_service import ScanService
 from ..services.stock_scan_service import StockScanService
@@ -58,6 +58,26 @@ def scan(
         vega_max=vegaMax,
         min_volume=minVolume,
         moneyness=moneyness,
+    )
+
+
+@router.post("/scan")
+def scan_post(
+    request: SingleScanRequest,
+    svc: ScanService = Depends(get_scan_service),
+) -> dict:
+    """POST single options scanner (Issue #17)."""
+    f = request.filters
+    return svc.scan_single(
+        ticker=request.ticker,
+        min_delta=f.minDelta if f else None,
+        max_delta=f.maxDelta if f else None,
+        min_dte=f.minDTE if f else None,
+        max_dte=f.maxDTE if f else None,
+        min_iv=f.minIV if f else None,
+        max_iv=f.maxIV if f else None,
+        strike_min=f.strikeRange.min if f and f.strikeRange else None,
+        strike_max=f.strikeRange.max if f and f.strikeRange else None,
     )
 
 

@@ -128,6 +128,14 @@ class StockScanService:
                     continue
                 if t.macd == "bearish_crossover" and s.macd.histogram >= 0:
                     continue
+                # Issue #15 — boolean MACD bullish filter
+                if t.macdBullish is True and s.macd.histogram <= 0:
+                    continue
+                if t.macdBullish is False and s.macd.histogram > 0:
+                    continue
+                # Issue #15 — unusual volume filter
+                if t.unusualVolume is True and s.volume < 50_000_000:
+                    continue
 
             # Fundamental filters
             if filters.fundamental:
@@ -137,18 +145,40 @@ class StockScanService:
                         continue
                     if f.peRatio.max is not None and s.pe > f.peRatio.max:
                         continue
-                if f.marketCap:
-                    if f.marketCap.min is not None and s.marketCap < f.marketCap.min:
-                        continue
-                    if f.marketCap.max is not None and s.marketCap < f.marketCap.max:
-                        continue
+                if f.marketCap is not None:
+                    if isinstance(f.marketCap, str):
+                        # Issue #15 — string-based market cap categories
+                        cap = s.marketCap
+                        if f.marketCap == "small" and cap >= 2_000_000_000:
+                            continue
+                        elif f.marketCap == "mid" and (
+                            cap < 2_000_000_000 or cap >= 10_000_000_000
+                        ):
+                            continue
+                        elif f.marketCap == "large" and (
+                            cap < 10_000_000_000 or cap >= 200_000_000_000
+                        ):
+                            continue
+                        elif f.marketCap == "mega" and cap < 200_000_000_000:
+                            continue
+                        # "all" → no filter
+                    else:
+                        # IntRangeFilter backward compat
+                        if f.marketCap.min is not None and s.marketCap < f.marketCap.min:
+                            continue
+                        if f.marketCap.max is not None and s.marketCap > f.marketCap.max:
+                            continue
 
             # Momentum filters
             if filters.momentum:
                 m = filters.momentum
-                # volumeIncrease filter: percentage above average
-                # (approximate — mock data doesn't have average)
-                pass
+                # Issue #15 — volume spike filter (ratio vs 30M baseline)
+                if m.volumeSpike is not None:
+                    spike_ratio = s.volume / 30_000_000
+                    if m.volumeSpike.min is not None and spike_ratio < m.volumeSpike.min:
+                        continue
+                    if m.volumeSpike.max is not None and spike_ratio > m.volumeSpike.max:
+                        continue
 
             filtered.append(s)
         return filtered

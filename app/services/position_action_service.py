@@ -11,7 +11,6 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any
 
-from ..models import AdjustmentRecord, ClosedPositionInfo
 from ..repositories.trade_repository import TradeRepository
 from ..schemas import AdjustPositionRequest, ClosePositionRequest, RollPositionRequest
 
@@ -38,7 +37,6 @@ class PositionActionService:
 
         entry_price = trade.entryPrice
         realized_pl = round((request.closePrice - entry_price) * trade.quantity * 100, 2)
-        close_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
         # Close in DB
         try:
@@ -52,15 +50,11 @@ class PositionActionService:
 
         return {
             "success": True,
-            "realizedPL": realized_pl,
-            "closedPosition": ClosedPositionInfo(
-                id=request.positionId,
-                ticker=trade.symbol,
-                closeDate=close_date,
-                closePrice=request.closePrice,
-                entryPrice=entry_price,
-                realizedPL=realized_pl,
-            ).model_dump(),
+            "closedPosition": {
+                "id": request.positionId,
+                "closedAt": datetime.now(timezone.utc).isoformat(),
+                "realizedPnL": realized_pl,
+            },
         }
 
     def roll_position(self, request: RollPositionRequest) -> dict[str, Any]:
@@ -110,13 +104,6 @@ class PositionActionService:
         except Exception:
             logger.warning("Failed to insert rolled position in DB")
 
-        # Calculate DTE
-        try:
-            exp = datetime.strptime(request.newExpiration, "%Y-%m-%d")
-            dte = max((exp - datetime.now()).days, 0)
-        except Exception:
-            dte = 30
-
         logger.info(
             "Position rolled: %s → %s, P/L: $%.2f",
             request.positionId, new_id, realized_pl,
@@ -124,17 +111,9 @@ class PositionActionService:
 
         return {
             "success": True,
-            "closedPosition": {
-                "id": request.positionId,
-                "realizedPL": realized_pl,
-            },
-            "newPosition": {
-                "id": new_id,
-                "expiration": request.newExpiration,
-                "legs": [],
-                "netCredit": round(new_entry_price * trade.quantity * 100, 2),
-                "dte": dte,
-            },
+            "oldPositionId": request.positionId,
+            "newPositionId": new_id,
+            "rollCredit": round(realized_pl, 2),
         }
 
     def adjust_position(self, request: AdjustPositionRequest) -> dict[str, Any]:
@@ -147,26 +126,36 @@ class PositionActionService:
         if trade is None:
             return self._mock_adjust(request)
 
-        now_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-
-        adjustment = AdjustmentRecord(
-            date=now_str,
-            type=request.adjustmentType,
-            strike=request.strike,
-            quantity=request.quantity,
-        )
-
         logger.info(
             "Position adjusted: %s, type=%s",
             request.positionId, request.adjustmentType,
         )
 
+        # Build new legs based on adjustment type
+        new_legs = []
+        if request.adjustmentType.startswith("add_protective_"):
+            opt_type = "put" if "put" in request.adjustmentType else "call"
+            new_legs.append({
+                "strike": request.strike or 0,
+                "optionType": opt_type,
+                "position": "long",
+                "quantity": request.quantity or 1,
+                "premium": 1.50,
+            })
+        elif request.adjustmentType == "adjust_strike":
+            new_legs.append({
+                "strike": request.strike or 0,
+                "optionType": "call",
+                "position": "long",
+                "quantity": request.quantity or 1,
+                "premium": 0.0,
+            })
+
         return {
             "success": True,
-            "updatedPosition": {
+            "adjustedPosition": {
                 "id": request.positionId,
-                "legs": [],
-                "adjustments": [adjustment.model_dump()],
+                "newLegs": new_legs,
             },
         }
 
@@ -180,52 +169,47 @@ class PositionActionService:
         realized_pl = round((request.closePrice - entry_price) * 100, 2)
         return {
             "success": True,
-            "realizedPL": realized_pl,
-            "closedPosition": ClosedPositionInfo(
-                id=request.positionId,
-                ticker="MOCK",
-                closeDate=datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-                closePrice=request.closePrice,
-                entryPrice=entry_price,
-                realizedPL=realized_pl,
-            ).model_dump(),
+            "closedPosition": {
+                "id": request.positionId,
+                "closedAt": datetime.now(timezone.utc).isoformat(),
+                "realizedPnL": realized_pl,
+            },
         }
 
     @staticmethod
     def _mock_roll(request: RollPositionRequest) -> dict[str, Any]:
         new_id = f"pos-{uuid.uuid4().hex[:8]}"
-        try:
-            exp = datetime.strptime(request.newExpiration, "%Y-%m-%d")
-            dte = max((exp - datetime.now()).days, 0)
-        except Exception:
-            dte = 30
         return {
             "success": True,
-            "closedPosition": {"id": request.positionId, "realizedPL": 70.0},
-            "newPosition": {
-                "id": new_id,
-                "expiration": request.newExpiration,
-                "legs": [],
-                "netCredit": 280.0,
-                "dte": dte,
-            },
+            "oldPositionId": request.positionId,
+            "newPositionId": new_id,
+            "rollCredit": 70.0,
         }
 
     @staticmethod
     def _mock_adjust(request: AdjustPositionRequest) -> dict[str, Any]:
-        now_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        new_legs = []
+        if request.adjustmentType.startswith("add_protective_"):
+            opt_type = "put" if "put" in request.adjustmentType else "call"
+            new_legs.append({
+                "strike": request.strike or 0,
+                "optionType": opt_type,
+                "position": "long",
+                "quantity": request.quantity or 1,
+                "premium": 1.50,
+            })
+        elif request.adjustmentType == "adjust_strike":
+            new_legs.append({
+                "strike": request.strike or 0,
+                "optionType": "call",
+                "position": "long",
+                "quantity": request.quantity or 1,
+                "premium": 0.0,
+            })
         return {
             "success": True,
-            "updatedPosition": {
+            "adjustedPosition": {
                 "id": request.positionId,
-                "legs": [],
-                "adjustments": [
-                    AdjustmentRecord(
-                        date=now_str,
-                        type=request.adjustmentType,
-                        strike=request.strike,
-                        quantity=request.quantity,
-                    ).model_dump()
-                ],
+                "newLegs": new_legs,
             },
         }

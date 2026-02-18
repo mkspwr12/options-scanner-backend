@@ -22,6 +22,13 @@ class PayoutChart(BaseModel):
     profitPoints: list[float]
 
 
+class FrontendPayoutChart(BaseModel):
+    """Payout chart with frontend-expected field names (Issue #17)."""
+
+    prices: list[float]
+    pnl: list[float]
+
+
 class OptionOpportunity(BaseModel):
     id: str
     symbol: str
@@ -174,15 +181,20 @@ class EnhancedPortfolioResponse(BaseModel):
 class MultiLegScanLeg(BaseModel):
     """A single leg in a multi-leg scan result."""
 
-    type: str  # e.g. "sell_put", "buy_call"
+    type: str  # "put" or "call"
     strike: float
     premium: float
     delta: float
+    expiration: str = ""
+    position: str = ""  # "long" or "short"
+    quantity: int = 1
 
 
 class MultiLegScanResult(BaseModel):
     """A single result from multi-leg scan."""
 
+    id: str = ""
+    ticker: str = ""
     strategyType: str
     legs: list[MultiLegScanLeg]
     netCredit: float
@@ -191,6 +203,7 @@ class MultiLegScanResult(BaseModel):
     breakevens: list[float]
     probability: float
     payoutChart: PayoutChart
+    buyingPower: float = 0.0
 
 
 # ---------------------------------------------------------------------------
@@ -217,6 +230,23 @@ class StockScanResult(BaseModel):
     pe: float
     marketCap: int
     optionLiquidity: str
+
+
+class SingleScanResult(BaseModel):
+    """A single result from the single options scanner (Issue #17)."""
+
+    symbol: str
+    strike: float
+    expiration: str
+    type: str
+    premium: float
+    delta: float
+    iv: float
+    probability: float
+    payoutChart: FrontendPayoutChart
+    breakeven: float
+    maxProfit: float
+    maxLoss: float
 
 
 # ---------------------------------------------------------------------------

@@ -145,43 +145,42 @@ class TestPortfolio:
         resp = client.get("/api/portfolio")
         assert resp.status_code == 200
         data = resp.json()
-        assert data["status"] == "ok"
         assert "portfolio" in data
-        portfolio = data["portfolio"]
-        assert "summary" in portfolio
-        assert "positions" in portfolio
-        assert "aggregatePayoutChart" in portfolio
+        assert "summary" in data
+        assert "positions" in data
+        # Issue #16 — portfolio metadata
+        assert "id" in data["portfolio"]
+        assert "userId" in data["portfolio"]
 
     def test_portfolio_summary_fields(self, client: TestClient) -> None:
         resp = client.get("/api/portfolio")
-        summary = resp.json()["portfolio"]["summary"]
+        summary = resp.json()["summary"]
+        assert "totalPnL" in summary
+        assert "pnlPercent" in summary
         assert "totalValue" in summary
-        assert "totalPL" in summary
-        assert "totalPLPercent" in summary
-        assert "maxProfit" in summary
-        assert "maxLoss" in summary
-        assert "netDelta" in summary
-        assert "netTheta" in summary
-
-    def test_portfolio_aggregate_payout_chart(self, client: TestClient) -> None:
-        resp = client.get("/api/portfolio")
-        chart = resp.json()["portfolio"]["aggregatePayoutChart"]
-        assert "pricePoints" in chart
-        assert "profitPoints" in chart
+        assert "totalCostBasis" in summary
 
     def test_portfolio_positions_shape(self, client: TestClient) -> None:
         resp = client.get("/api/portfolio")
-        positions = resp.json()["portfolio"]["positions"]
+        positions = resp.json()["positions"]
         if positions:
             pos = positions[0]
             assert "id" in pos
             assert "ticker" in pos
-            assert "entryPrice" in pos
+            assert "strategyName" in pos
+            assert "costBasis" in pos
             assert "currentValue" in pos
-            assert "unrealizedPL" in pos
-            assert "plHistory" in pos
+            assert "unrealizedPnL" in pos
+            assert "openedAt" in pos
+            # legs should have frontend fields
+            if pos.get("legs"):
+                leg = pos["legs"][0]
+                assert "strike" in leg
+                assert "optionType" in leg
+                assert "position" in leg
+                assert "quantity" in leg
 
     def test_portfolio_positions_empty(self, client: TestClient) -> None:
         resp = client.get("/api/portfolio")
-        positions = resp.json()["portfolio"]["positions"]
+        positions = resp.json()["positions"]
         assert isinstance(positions, list)

@@ -132,6 +132,16 @@ class TestMultiLegScan:
         assert "breakevens" in result
         assert "probability" in result
         assert "payoutChart" in result
+        # Issue #17 — new fields
+        assert "id" in result
+        assert "ticker" in result
+        assert "buyingPower" in result
+        # Check leg structure
+        leg = result["legs"][0]
+        assert leg["type"] in ("put", "call")
+        assert "position" in leg
+        assert "quantity" in leg
+        assert "expiration" in leg
 
 
 class TestStockScan:
@@ -199,7 +209,7 @@ class TestStockScan:
 
 
 class TestPortfolioActions:
-    """Issue #14 — position action endpoints."""
+    """Issue #14, #16 — position action endpoints with frontend-aligned responses."""
 
     def test_close_position(self, client: TestClient) -> None:
         resp = client.post(
@@ -209,8 +219,9 @@ class TestPortfolioActions:
         assert resp.status_code == 200
         data = resp.json()
         assert data["success"] is True
-        assert "realizedPL" in data
         assert "closedPosition" in data
+        assert "closedAt" in data["closedPosition"]
+        assert "realizedPnL" in data["closedPosition"]
 
     def test_roll_position(self, client: TestClient) -> None:
         resp = client.post(
@@ -220,9 +231,9 @@ class TestPortfolioActions:
         assert resp.status_code == 200
         data = resp.json()
         assert data["success"] is True
-        assert "closedPosition" in data
-        assert "newPosition" in data
-        assert data["newPosition"]["expiration"] == "2026-03-21"
+        assert "oldPositionId" in data
+        assert "newPositionId" in data
+        assert "rollCredit" in data
 
     def test_adjust_position_protective_put(self, client: TestClient) -> None:
         resp = client.post(
@@ -237,7 +248,10 @@ class TestPortfolioActions:
         assert resp.status_code == 200
         data = resp.json()
         assert data["success"] is True
-        assert data["updatedPosition"]["adjustments"][0]["type"] == "add_protective_put"
+        assert "adjustedPosition" in data
+        legs = data["adjustedPosition"]["newLegs"]
+        assert len(legs) == 1
+        assert legs[0]["optionType"] == "put"
 
     def test_adjust_position_reduce_size(self, client: TestClient) -> None:
         resp = client.post(

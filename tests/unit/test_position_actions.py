@@ -21,9 +21,10 @@ class TestClosePosition:
             ClosePositionRequest(positionId="pos-123", closePrice=180.0)
         )
         assert result["success"] is True
-        assert "realizedPL" in result
         assert "closedPosition" in result
         assert result["closedPosition"]["id"] == "pos-123"
+        assert "closedAt" in result["closedPosition"]
+        assert "realizedPnL" in result["closedPosition"]
 
     def test_close_position_with_trade(self) -> None:
         """Close position with an existing trade calculates P&L."""
@@ -37,7 +38,7 @@ class TestClosePosition:
             ClosePositionRequest(positionId=trade.id, closePrice=7.0)
         )
         assert result["success"] is True
-        assert result["realizedPL"] == 200.0  # (7 - 5) * 1 * 100
+        assert result["closedPosition"]["realizedPnL"] == 200.0  # (7 - 5) * 1 * 100
 
 
 class TestRollPosition:
@@ -50,9 +51,10 @@ class TestRollPosition:
             RollPositionRequest(positionId="pos-123", newExpiration="2026-03-21")
         )
         assert result["success"] is True
-        assert "closedPosition" in result
-        assert "newPosition" in result
-        assert result["newPosition"]["expiration"] == "2026-03-21"
+        assert "oldPositionId" in result
+        assert "newPositionId" in result
+        assert "rollCredit" in result
+        assert result["oldPositionId"] == "pos-123"
 
     def test_roll_position_with_trade(self) -> None:
         trade = make_active_trade()
@@ -66,7 +68,9 @@ class TestRollPosition:
             RollPositionRequest(positionId=trade.id, newExpiration="2026-04-15")
         )
         assert result["success"] is True
-        assert result["newPosition"]["expiration"] == "2026-04-15"
+        assert result["oldPositionId"] == trade.id
+        assert "newPositionId" in result
+        assert "rollCredit" in result
 
 
 class TestAdjustPosition:
@@ -84,9 +88,12 @@ class TestAdjustPosition:
             )
         )
         assert result["success"] is True
-        assert "updatedPosition" in result
-        assert result["updatedPosition"]["adjustments"][0]["type"] == "add_protective_put"
-        assert result["updatedPosition"]["adjustments"][0]["strike"] == 160.0
+        assert "adjustedPosition" in result
+        legs = result["adjustedPosition"]["newLegs"]
+        assert len(legs) == 1
+        assert legs[0]["optionType"] == "put"
+        assert legs[0]["position"] == "long"
+        assert legs[0]["strike"] == 160.0
 
     def test_adjust_reduce_size(self) -> None:
         trade = make_active_trade()
@@ -117,4 +124,7 @@ class TestAdjustPosition:
             )
         )
         assert result["success"] is True
-        assert result["updatedPosition"]["adjustments"][0]["type"] == "add_protective_call"
+        legs = result["adjustedPosition"]["newLegs"]
+        assert len(legs) == 1
+        assert legs[0]["optionType"] == "call"
+        assert legs[0]["position"] == "long"

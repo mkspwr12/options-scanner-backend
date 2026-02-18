@@ -192,6 +192,42 @@ class MultiLegScanRequest(BaseModel):
 
 
 # ---------------------------------------------------------------------------
+# Single scan schemas (Issue #17)
+# ---------------------------------------------------------------------------
+
+
+class StrikeRangeFilter(BaseModel):
+    """Min/max strike price range."""
+
+    min: float | None = None
+    max: float | None = None
+
+
+class SingleScanFilters(BaseModel):
+    """Filters for POST /api/scan single options scanner."""
+
+    minDelta: float | None = None
+    maxDelta: float | None = None
+    minDTE: int | None = None
+    maxDTE: int | None = None
+    minIV: float | None = None
+    maxIV: float | None = None
+    strikeRange: StrikeRangeFilter | None = None
+
+
+class SingleScanRequest(BaseModel):
+    """Request body for POST /api/scan (Issue #17)."""
+
+    ticker: str = Field(..., min_length=1, max_length=10)
+    filters: SingleScanFilters | None = None
+
+    @field_validator("ticker", mode="before")
+    @classmethod
+    def uppercase_ticker(cls, v: str) -> str:
+        return v.strip().upper()
+
+
+# ---------------------------------------------------------------------------
 # Stock scan schemas (Issue #12)
 # ---------------------------------------------------------------------------
 
@@ -218,13 +254,18 @@ class MovingAverageFilter(BaseModel):
 class TechnicalFilters(BaseModel):
     rsi: RangeFilter | None = None
     macd: str | None = None
+    macdBullish: bool | None = None
     movingAverage: MovingAverageFilter | None = None
+    above50MA: bool | None = None
+    above200MA: bool | None = None
+    unusualVolume: bool | None = None
 
 
 class FundamentalFilters(BaseModel):
     peRatio: RangeFilter | None = None
-    marketCap: IntRangeFilter | None = None
+    marketCap: IntRangeFilter | str | None = None
     sector: list[str] | None = None
+    earningsGrowth: RangeFilter | None = None
 
 
 class PriceChangeFilter(BaseModel):
@@ -236,6 +277,8 @@ class MomentumFilters(BaseModel):
     volumeIncrease: float | None = None
     priceChange: PriceChangeFilter | None = None
     insiderBuying: bool | None = None
+    earningsWithinDays: int | None = None
+    volumeSpike: RangeFilter | None = None
 
 
 class StockScanFilters(BaseModel):
