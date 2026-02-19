@@ -72,11 +72,12 @@ class MockProvider:
         for pct in (-0.05, -0.02, 0.0, 0.02, 0.05):
             strike = round(price * (1 + pct), 2)
             for opt_type in ("CALL", "PUT"):
-                moneyness = price / strike
+                # Extrinsic value declines as distance from ATM increases
+                extrinsic = price * 0.03 * max(0.2, 1 - abs(pct) * 8)
                 if opt_type == "CALL":
-                    mid = max(price - strike, 0) + price * 0.02
+                    mid = max(price - strike, 0) + extrinsic
                 else:
-                    mid = max(strike - price, 0) + price * 0.02
+                    mid = max(strike - price, 0) + extrinsic
 
                 contracts.append(
                     OptionContract(

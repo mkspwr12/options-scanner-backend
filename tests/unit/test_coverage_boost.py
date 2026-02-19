@@ -62,7 +62,7 @@ class TestProviderRepoUpdate:
         conn, cursor = _mock_db()
         _patch_cm(mock_fn, conn)
         # get_by_id is called internally — simulate found row
-        cursor.fetchone.return_value = ("p1", "Old", "MOCK", None, None, "", 1, 1, 2000, 20000, 0)
+        cursor.fetchone.return_value = ("p1", "Old", "YAHOO_FINANCE", None, None, "", 1, 1, 2000, 20000, 0)
         cursor.description = [
             ("id",), ("name",), ("type",), ("api_key_encrypted",),
             ("api_secret_encrypted",), ("base_url",), ("enabled",),
@@ -79,7 +79,7 @@ class TestProviderRepoUpdate:
     def test_update_no_changes(self, mock_fn: MagicMock) -> None:
         conn, cursor = _mock_db()
         _patch_cm(mock_fn, conn)
-        cursor.fetchone.return_value = ("p1", "Name", "MOCK", None, None, "", 1, 1, 2000, 20000, 0)
+        cursor.fetchone.return_value = ("p1", "Name", "YAHOO_FINANCE", None, None, "", 1, 1, 2000, 20000, 0)
         cursor.description = [
             ("id",), ("name",), ("type",), ("api_key_encrypted",),
             ("api_secret_encrypted",), ("base_url",), ("enabled",),
@@ -144,7 +144,7 @@ class TestProviderRepoInsert:
         result = repo.insert({
             "id": "prov-new",
             "name": "New Provider",
-            "type": "MOCK",
+            "type": "YAHOO_FINANCE",
             "base_url": "",
             "enabled": True,
             "priority": 1,
@@ -391,7 +391,7 @@ class TestProviderServiceUpdate:
         mock_repo.get_by_id.return_value = {
             "id": "p1",
             "name": "Old",
-            "type": "MOCK",
+            "type": "YAHOO_FINANCE",
             "base_url": "",
             "enabled": True,
             "priority": 1,
@@ -409,7 +409,7 @@ class TestProviderServiceUpdate:
         mock_repo.get_by_id.return_value = {
             "id": "p1",
             "name": "Old",
-            "type": "MOCK",
+            "type": "YAHOO_FINANCE",
             "base_url": "",
             "enabled": True,
             "priority": 1,
@@ -428,7 +428,7 @@ class TestProviderServiceUpdate:
         mock_repo.get_by_id.return_value = {
             "id": "p1",
             "name": "Old",
-            "type": "MOCK",
+            "type": "YAHOO_FINANCE",
             "base_url": "",
             "enabled": True,
             "priority": 1,
@@ -456,11 +456,11 @@ class TestProviderServiceConnectionTest:
         mock_reg = MagicMock(spec=ProviderRegistry)
         mock_repo.get_by_id.return_value = {
             "id": "p1",
-            "type": "MOCK",
+            "type": "CUSTOM",
         }
         svc = ProviderService(repo=mock_repo, registry=mock_reg)
-        result = svc.test_connection("p1", override={"type": "MOCK"})
-        assert result.success is True
+        result = svc.test_connection("p1", override={"type": "CUSTOM"})
+        assert result.success is False
 
     def test_provider_exception(self) -> None:
         mock_repo = MagicMock(spec=ProviderRepository)
@@ -483,7 +483,7 @@ class TestProviderServiceCreate:
         mock_repo.get_by_id.return_value = {
             "id": "prov-test",
             "name": "Secure",
-            "type": "MOCK",
+            "type": "YAHOO_FINANCE",
             "api_key_encrypted": "encrypted_data",
             "base_url": "",
             "enabled": True,
@@ -492,7 +492,7 @@ class TestProviderServiceCreate:
         svc = ProviderService(repo=mock_repo, registry=mock_reg)
         result = svc.create_provider({
             "name": "Secure",
-            "type": "MOCK",
+            "type": "YAHOO_FINANCE",
             "apiKey": "my-secret-key",
         })
         # API key should be masked in the result
@@ -536,18 +536,18 @@ class TestRegistryEdgeCases:
     def test_len(self) -> None:
         reg = ProviderRegistry()
         assert len(reg) == 0
-        reg.register("p1", {"type": "MOCK", "enabled": True, "priority": 1})
+        reg.register("p1", {"type": "YAHOO_FINANCE", "enabled": True, "priority": 1})
         assert len(reg) == 1
 
     def test_provider_ids(self) -> None:
         reg = ProviderRegistry()
-        reg.register("a", {"type": "MOCK", "enabled": True, "priority": 1})
-        reg.register("b", {"type": "MOCK", "enabled": True, "priority": 2})
+        reg.register("a", {"type": "YAHOO_FINANCE", "enabled": True, "priority": 1})
+        reg.register("b", {"type": "YAHOO_FINANCE", "enabled": True, "priority": 2})
         assert sorted(reg.provider_ids) == ["a", "b"]
 
     def test_is_rate_limited(self) -> None:
         reg = ProviderRegistry()
-        reg.register("p1", {"type": "MOCK", "enabled": True, "priority": 1, "rate_limit_max_per_hour": 2})
+        reg.register("p1", {"type": "YAHOO_FINANCE", "enabled": True, "priority": 1, "rate_limit_max_per_hour": 2})
         reg.record_call("p1")
         reg.record_call("p1")
         assert reg.is_rate_limited("p1") is True

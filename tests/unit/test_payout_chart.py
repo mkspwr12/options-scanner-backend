@@ -53,16 +53,3 @@ class TestPayoutChart:
         chart = ScanService._calculate_payout_chart(200.0, 200.0, 5.0, "CALL")
         assert chart["pricePoints"][0] == 170.0  # 200 * 0.85
         assert chart["pricePoints"][-1] == 230.0  # 200 * 1.15
-
-    def test_sample_opportunities_have_payout_data(self) -> None:
-        """Sample opportunities should include payout chart fields."""
-        opps = ScanService._sample_opportunities()
-        for opp in opps:
-            assert opp.payoutChart is not None
-            assert len(opp.payoutChart.pricePoints) >= 5
-            assert len(opp.payoutChart.profitPoints) >= 5
-            assert opp.probability is not None
-            assert opp.breakeven is not None
-            assert opp.maxProfit is not None
-            assert opp.maxLoss is not None
-            assert opp.position == "long"

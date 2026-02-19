@@ -2,7 +2,7 @@
 
 Issue #12: POST /api/stock-scan endpoint.
 Uses Yahoo Finance (yfinance) for live market data with TTL-based caching.
-Falls back to mock data when the provider is unavailable.
+Returns empty results when the provider is unavailable.
 """
 from __future__ import annotations
 
@@ -225,26 +225,17 @@ class StockScanService:
     def _fetch_live_stocks(self) -> list[StockScanResult]:
         """Fetch real stock data from Yahoo Finance.
 
-        Falls back to mock data if the provider is unavailable or not Yahoo.
+        Returns empty list if the provider is unavailable.
         """
         if self._provider is None:
-            logger.warning("No provider — returning mock stock data")
-            return self._generate_sample_stocks()
-
-        # Only use live Yahoo data when the provider is YahooFinanceProvider
-        try:
-            from ..providers.yahoo_provider import YahooFinanceProvider
-            if not isinstance(self._provider, YahooFinanceProvider):
-                logger.info("Provider is not Yahoo — using mock stock data")
-                return self._generate_sample_stocks()
-        except ImportError:
-            return self._generate_sample_stocks()
+            logger.warning("No provider configured — returning empty stock list")
+            return []
 
         try:
             return self._fetch_from_yahoo()
         except Exception:
-            logger.exception("Live stock fetch failed — falling back to mock")
-            return self._generate_sample_stocks()
+            logger.exception("Live stock fetch failed — no data available")
+            return []
 
     def _fetch_from_yahoo(self) -> list[StockScanResult]:
         """Fetch live data for all tickers using yfinance."""
@@ -327,8 +318,8 @@ class StockScanService:
                 continue
 
         if not results:
-            logger.warning("No live data fetched — falling back to mock")
-            return self._generate_sample_stocks()
+            logger.warning("No live data fetched — returning empty list")
+            return []
 
         return results
 
@@ -406,36 +397,3 @@ class StockScanService:
                 return "low"
         except Exception:
             return "low"
-
-    # ------------------------------------------------------------------
-    # Mock fallback
-    # ------------------------------------------------------------------
-
-    @staticmethod
-    def _generate_sample_stocks() -> list[StockScanResult]:
-        """Fallback sample data when Yahoo Finance is unavailable."""
-        samples = [
-            ("AAPL", "Apple Inc.", 175.50, 2.5, 85_000_000, 55.0, 1.2, 0.8, 0.4, 22.5, 2_800_000_000_000, "high"),
-            ("MSFT", "Microsoft Corp.", 420.30, 3.1, 45_000_000, 48.0, 0.9, 0.7, 0.2, 35.2, 3_100_000_000_000, "high"),
-            ("NVDA", "NVIDIA Corp.", 875.20, 8.5, 70_000_000, 72.0, 3.2, 2.5, 0.7, 65.0, 2_100_000_000_000, "high"),
-            ("GOOGL", "Alphabet Inc.", 178.80, -1.2, 32_000_000, 62.0, -0.5, -0.3, -0.2, 25.8, 2_200_000_000_000, "high"),
-            ("AMZN", "Amazon.com Inc.", 225.40, 4.2, 55_000_000, 42.0, 1.5, 1.1, 0.4, 60.5, 1_900_000_000_000, "high"),
-        ]
-        results: list[StockScanResult] = []
-        for (ticker, name, price, change, vol, rsi,
-             macd_v, macd_s, macd_h, pe, mcap, liq) in samples:
-            results.append(
-                StockScanResult(
-                    ticker=ticker,
-                    name=name,
-                    price=price,
-                    change=change,
-                    volume=vol,
-                    rsi=rsi,
-                    macd=MACDData(value=macd_v, signal=macd_s, histogram=macd_h),
-                    pe=pe,
-                    marketCap=mcap,
-                    optionLiquidity=liq,
-                )
-            )
-        return results

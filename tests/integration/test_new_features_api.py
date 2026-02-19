@@ -1,21 +1,58 @@
 """Integration tests for new scan endpoints (Issues #10, #11, #12)."""
 from __future__ import annotations
 
+from unittest.mock import MagicMock
+
 import pytest
 from fastapi.testclient import TestClient
 
+from app.dependencies import get_multi_leg_scan_service, get_scan_service
 from app.main import app
+from app.providers.mock_provider import MockProvider
+from app.repositories.scan_repository import ScanRepository
+from app.services.multi_leg_scan_service import MultiLegScanService
+from app.services.scan_service import ScanService
 
 
 @pytest.fixture
 def client() -> TestClient:
-    return TestClient(app, raise_server_exceptions=False)
+    """TestClient with MockProvider wired in for scan/multi-leg services."""
+    mock_repo = MagicMock(spec=ScanRepository)
+    stored_results: list = []
+
+    def _save(results):
+        stored_results.clear()
+        stored_results.extend(results)
+
+    def _get_latest(**kwargs):
+        return stored_results
+
+    mock_repo.get_latest.side_effect = _get_latest
+    mock_repo.save_results.side_effect = _save
+
+    provider = MockProvider()
+
+    def _scan_svc() -> ScanService:
+        return ScanService(repo=mock_repo, provider=provider)
+
+    def _multi_leg_svc() -> MultiLegScanService:
+        return MultiLegScanService(provider=provider)
+
+    app.dependency_overrides[get_scan_service] = _scan_svc
+    app.dependency_overrides[get_multi_leg_scan_service] = _multi_leg_svc
+
+    yield TestClient(app, raise_server_exceptions=False)
+
+    app.dependency_overrides.pop(get_scan_service, None)
+    app.dependency_overrides.pop(get_multi_leg_scan_service, None)
 
 
 class TestScanPayoutChart:
     """Issue #10 — payout chart data in /api/scan response."""
 
     def test_scan_results_have_payout_chart(self, client: TestClient) -> None:
+        # Trigger a scan first to populate data
+        client.post("/api/scan/trigger")
         resp = client.get("/api/scan")
         assert resp.status_code == 200
         opps = resp.json()["opportunities"]
@@ -29,19 +66,24 @@ class TestScanPayoutChart:
             assert "position" in opp
 
     def test_payout_chart_structure(self, client: TestClient) -> None:
+        client.post("/api/scan/trigger")
         resp = client.get("/api/scan")
-        chart = resp.json()["opportunities"][0]["payoutChart"]
+        opps = resp.json()["opportunities"]
+        assert len(opps) > 0
+        chart = opps[0]["payoutChart"]
         assert "pricePoints" in chart
         assert "profitPoints" in chart
         assert len(chart["pricePoints"]) >= 5
         assert len(chart["profitPoints"]) >= 5
 
     def test_probability_range(self, client: TestClient) -> None:
+        client.post("/api/scan/trigger")
         resp = client.get("/api/scan")
         for opp in resp.json()["opportunities"]:
             assert 0 <= opp["probability"] <= 100
 
     def test_breakeven_reasonable(self, client: TestClient) -> None:
+        client.post("/api/scan/trigger")
         resp = client.get("/api/scan")
         for opp in resp.json()["opportunities"]:
             assert opp["breakeven"] > 0

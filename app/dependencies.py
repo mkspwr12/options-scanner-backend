@@ -6,7 +6,6 @@ import logging
 from .config import get_settings
 from .providers.base import MarketDataProvider
 from .providers.circuit_breaker import CircuitBreaker
-from .providers.mock_provider import MockProvider
 from .providers.registry import ProviderRegistry
 from .repositories.metrics_repository import MetricsRepository
 from .repositories.position_repository import PositionRepository
@@ -48,14 +47,16 @@ def _get_provider() -> MarketDataProvider | None:
         return None
 
     name = settings.market_data_provider
-    if name == "yahoo_finance" or name == "yahoo":
+    if name in ("yahoo_finance", "yahoo"):
         from .providers.yahoo_provider import YahooFinanceProvider
 
         _provider = YahooFinanceProvider()
         logger.info("Market data provider: YahooFinance")
     else:
-        _provider = MockProvider()
-        logger.info("Market data provider: Mock")
+        from .providers.yahoo_provider import YahooFinanceProvider
+
+        _provider = YahooFinanceProvider()
+        logger.info("Market data provider: YahooFinance (default)")
     return _provider
 
 
@@ -85,9 +86,9 @@ def _get_registry() -> ProviderRegistry:
     try:
         settings = get_settings()
         name = settings.market_data_provider
-        ptype = "YAHOO_FINANCE" if name in ("yahoo_finance", "yahoo") else "MOCK"
+        ptype = "YAHOO_FINANCE"
     except Exception:
-        ptype = "MOCK"
+        ptype = "YAHOO_FINANCE"
 
     _registry.register(
         "default",

@@ -39,14 +39,14 @@ class TestGetSettings:
             "SCAN_INTERVAL_MINUTES": "15",
             "SCAN_ENABLED": "true",
             "LOG_RETENTION": "1000",
-            "MARKET_DATA_PROVIDER": "mock",
+            "MARKET_DATA_PROVIDER": "yahoo",
         }
         with patch.dict(os.environ, env, clear=False):
             s = get_settings()
             assert s.sql_connection_string == "Server=test;Database=test;"
             assert s.scan_interval_minutes == 15
             assert s.scan_enabled is True
-            assert s.market_data_provider == "mock"
+            assert s.market_data_provider == "yahoo"
 
     def test_scan_disabled(self) -> None:
         env = {
@@ -189,4 +189,4 @@ class TestSettingsDataclass:
         assert s.scan_interval_minutes == 15
         assert s.scan_enabled is True
         assert s.log_retention == 1000
-        assert s.market_data_provider == "mock"
+        assert s.market_data_provider == "yahoo"

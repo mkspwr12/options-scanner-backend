@@ -21,14 +21,14 @@ class TestCreateProvider:
         mock_provider_repo.get_by_id.return_value = {
             "id": "prov-test",
             "name": "Test Provider",
-            "type": "MOCK",
+            "type": "YAHOO_FINANCE",
             "base_url": "",
             "enabled": True,
             "priority": 1,
         }
         resp = client.post("/api/providers", json={
             "name": "Test Provider",
-            "type": "MOCK",
+            "type": "YAHOO_FINANCE",
         })
         assert resp.status_code == 201
         data = resp.json()
@@ -44,7 +44,7 @@ class TestCreateProvider:
         assert resp.status_code == 422
 
     def test_create_missing_name(self, client: TestClient) -> None:
-        resp = client.post("/api/providers", json={"type": "MOCK"})
+        resp = client.post("/api/providers", json={"type": "YAHOO_FINANCE"})
         assert resp.status_code == 422
 
 

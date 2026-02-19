@@ -22,6 +22,7 @@ from app.dependencies import (  # noqa: E402
     get_portfolio_service,
     get_position_service,
     get_scan_service,
+    get_multi_leg_scan_service,
     get_trade_service,
     get_watchlist_service,
     get_provider_service,
@@ -45,6 +46,8 @@ from app.repositories.strategy_repository import StrategyRepository  # noqa: E40
 from app.repositories.metrics_repository import MetricsRepository  # noqa: E402
 from app.repositories.position_repository import PositionRepository  # noqa: E402
 from app.providers.registry import ProviderRegistry  # noqa: E402
+from app.providers.mock_provider import MockProvider  # noqa: E402
+from app.services.multi_leg_scan_service import MultiLegScanService  # noqa: E402
 from app.services.portfolio_service import PortfolioService  # noqa: E402
 from app.services.scan_service import ScanService  # noqa: E402
 from app.services.trade_service import TradeService  # noqa: E402
@@ -143,7 +146,17 @@ def mock_watchlist_repo() -> MagicMock:
 @pytest.fixture()
 def mock_scan_repo() -> MagicMock:
     repo = MagicMock(spec=ScanRepository)
-    repo.get_latest.return_value = []  # triggers fallback to sample data
+    stored: list = []
+
+    def _save(results: list) -> None:
+        stored.clear()
+        stored.extend(results)
+
+    def _get_latest(**kwargs: Any) -> list:
+        return stored
+
+    repo.get_latest.side_effect = _get_latest
+    repo.save_results.side_effect = _save
     return repo
 
 
@@ -219,6 +232,8 @@ def client(
 ) -> TestClient:
     """Return a FastAPI TestClient with stubbed service dependencies."""
 
+    mock_provider = MockProvider()
+
     def _trade_svc() -> TradeService:
         return TradeService(repo=mock_trade_repo)
 
@@ -229,7 +244,10 @@ def client(
         return WatchlistService(repo=mock_watchlist_repo)
 
     def _scan_svc() -> ScanService:
-        return ScanService(repo=mock_scan_repo)
+        return ScanService(repo=mock_scan_repo, provider=mock_provider)
+
+    def _multi_leg_svc() -> MultiLegScanService:
+        return MultiLegScanService(provider=mock_provider)
 
     def _provider_svc() -> ProviderService:
         return ProviderService(repo=mock_provider_repo, registry=mock_registry)
@@ -250,12 +268,17 @@ def client(
     app.dependency_overrides[get_portfolio_service] = _portfolio_svc
     app.dependency_overrides[get_watchlist_service] = _watchlist_svc
     app.dependency_overrides[get_scan_service] = _scan_svc
+    app.dependency_overrides[get_multi_leg_scan_service] = _multi_leg_svc
     app.dependency_overrides[get_provider_service] = _provider_svc
     app.dependency_overrides[get_options_chain_service] = _options_chain_svc
     app.dependency_overrides[get_strategy_service] = _strategy_svc
     app.dependency_overrides[get_metrics_service] = _metrics_svc
     app.dependency_overrides[get_position_service] = _position_svc
 
-    yield TestClient(app)
+    # Pre-populate scan data by triggering a scan
+    test_client = TestClient(app)
+    test_client.post("/api/scan/trigger")
+
+    yield test_client
 
     app.dependency_overrides.clear()

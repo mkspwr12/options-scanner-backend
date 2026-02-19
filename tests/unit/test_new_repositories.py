@@ -53,7 +53,7 @@ class TestProviderRepository:
 
         repo = ProviderRepository()
         with pytest.raises(ConflictError, match="already exists"):
-            repo.insert({"id": "p1", "name": "Dup", "type": "MOCK"})
+            repo.insert({"id": "p1", "name": "Dup", "type": "YAHOO_FINANCE"})
 
 
 class TestStrategyRepository:

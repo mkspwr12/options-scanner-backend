@@ -34,7 +34,7 @@ class TestScan:
         resp = client.get("/api/scan")
         data = resp.json()
         assert "source" in data
-        assert data["source"] in ("database", "sample")
+        assert data["source"] in ("database", "none")
 
     def test_scan_opportunities_have_required_fields(self, client: TestClient) -> None:
         resp = client.get("/api/scan")
@@ -82,31 +82,42 @@ class TestScan:
 
 class TestMultiLegOpportunities:
     def test_returns_strategies(self, client: TestClient) -> None:
-        resp = client.get("/api/multi-leg-opportunities")
+        resp = client.post(
+            "/api/multi-leg-scan",
+            json={"ticker": "META", "strategyType": "iron_condor"},
+        )
         assert resp.status_code == 200
         data = resp.json()
         assert data["status"] == "ok"
-        assert len(data["opportunities"]) >= 1
+        assert len(data["results"]) >= 1
 
     def test_strategies_have_required_fields(self, client: TestClient) -> None:
-        resp = client.get("/api/multi-leg-opportunities")
-        for strategy in resp.json()["opportunities"]:
+        resp = client.post(
+            "/api/multi-leg-scan",
+            json={"ticker": "AAPL", "strategyType": "vertical_spread"},
+        )
+        for strategy in resp.json()["results"]:
             assert "id" in strategy
-            assert "symbol" in strategy
+            assert "ticker" in strategy
             assert "strategyType" in strategy
             assert "legs" in strategy
             assert "maxProfit" in strategy
             assert "maxLoss" in strategy
-            assert "breakeven" in strategy
+            assert "breakevens" in strategy
 
     def test_strategies_have_legs(self, client: TestClient) -> None:
-        resp = client.get("/api/multi-leg-opportunities")
-        strategy = resp.json()["opportunities"][0]
+        resp = client.post(
+            "/api/multi-leg-scan",
+            json={"ticker": "SPY", "strategyType": "iron_condor"},
+        )
+        strategy = resp.json()["results"][0]
         assert len(strategy["legs"]) >= 2
 
     def test_strategy_types_present(self, client: TestClient) -> None:
-        resp = client.get("/api/multi-leg-opportunities")
-        types = {s["strategyType"] for s in resp.json()["opportunities"]}
+        resp = client.post(
+            "/api/multi-leg-scan",
+            json={"ticker": "META", "strategyType": "iron_condor"},
+        )
+        types = {s["strategyType"] for s in resp.json()["results"]}
         assert len(types) >= 1
-        # At least one of the known strategy types
-        assert types & {"BULL_CALL_SPREAD", "IRON_CONDOR", "BEAR_PUT_SPREAD"}
+        assert "iron_condor" in types

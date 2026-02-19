@@ -57,14 +57,14 @@ def trigger_client(
 class TestScanTrigger:
     """Integration tests for POST /api/scan/trigger."""
 
-    def test_trigger_no_provider(self, client: TestClient) -> None:
-        """Default conftest has no provider → returns 'no provider' message."""
+    def test_trigger_returns_live_results(self, client: TestClient) -> None:
+        """Default conftest now has MockProvider → returns live results."""
         resp = client.post("/api/scan/trigger")
         assert resp.status_code == 200
         data = resp.json()
         assert data["status"] == "ok"
-        assert data["source"] == "none"
-        assert data["resultsCount"] == 0
+        assert data["source"] == "live"
+        assert data["resultsCount"] > 0
 
     def test_trigger_with_mock_provider(self, trigger_client: TestClient) -> None:
         resp = trigger_client.post("/api/scan/trigger")

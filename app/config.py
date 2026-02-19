@@ -25,7 +25,7 @@ class Settings:
     scan_interval_minutes: int = 15
     scan_enabled: bool = True
     log_retention: int = 1000
-    market_data_provider: str = "mock"
+    market_data_provider: str = "yahoo"
     rate_limit_per_minute: int = 60
     circuit_breaker_threshold: int = 3
     circuit_breaker_timeout: int = 300
@@ -48,7 +48,7 @@ def get_settings() -> Settings:
     scan_interval = int(os.getenv("SCAN_INTERVAL_MINUTES", "15"))
     scan_enabled = os.getenv("SCAN_ENABLED", "true").lower() in ("true", "1", "yes")
     log_retention = int(os.getenv("LOG_RETENTION", "1000"))
-    market_data_provider = os.getenv("MARKET_DATA_PROVIDER", "mock").strip().lower()
+    market_data_provider = os.getenv("MARKET_DATA_PROVIDER", "yahoo").strip().lower()
     rate_limit_per_minute = int(os.getenv("RATE_LIMIT_PER_MINUTE", "60"))
     circuit_breaker_threshold = int(os.getenv("CIRCUIT_BREAKER_THRESHOLD", "3"))
     circuit_breaker_timeout = int(os.getenv("CIRCUIT_BREAKER_TIMEOUT", "300"))

@@ -8,7 +8,7 @@ from app.services.scan_service import ScanService
 
 
 class TestGetOpportunities:
-    def test_fallback_to_sample_data(self) -> None:
+    def test_no_data_returns_empty(self) -> None:
         repo = MagicMock(spec=ScanRepository)
         repo.get_latest.return_value = []  # empty = no persisted data
 
@@ -16,8 +16,8 @@ class TestGetOpportunities:
         result = svc.get_opportunities()
 
         assert result["status"] == "ok"
-        assert result["source"] == "sample"
-        assert len(result["opportunities"]) >= 1
+        assert result["source"] == "none"
+        assert len(result["opportunities"]) == 0
 
     def test_db_error_falls_back_gracefully(self) -> None:
         repo = MagicMock(spec=ScanRepository)
@@ -27,7 +27,7 @@ class TestGetOpportunities:
         result = svc.get_opportunities()
 
         assert result["status"] == "ok"
-        assert result["source"] == "sample"
+        assert result["source"] == "none"
 
     def test_db_results_returned_when_available(self) -> None:
         fake_opp = MagicMock()
@@ -42,16 +42,13 @@ class TestGetOpportunities:
 
 
 class TestGetMultiLegOpportunities:
-    def test_returns_sample_data(self) -> None:
+    def test_returns_empty_without_scan(self) -> None:
         repo = MagicMock(spec=ScanRepository)
         svc = ScanService(repo=repo)
         result = svc.get_multi_leg_opportunities()
 
         assert result["status"] == "ok"
-        assert len(result["opportunities"]) >= 1
-        # verify strategy types are present
-        types = {o.strategyType for o in result["opportunities"]}
-        assert "BULL_CALL_SPREAD" in types or "IRON_CONDOR" in types
+        assert len(result["opportunities"]) == 0
 
 
 class TestRunScanDeduplication:

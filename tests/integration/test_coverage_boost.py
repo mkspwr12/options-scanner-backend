@@ -195,7 +195,7 @@ class TestProviderCRUDIntegration:
         mock_provider_repo.get_by_id.return_value = {
             "id": "p1",
             "name": "Updated",
-            "type": "MOCK",
+            "type": "YAHOO_FINANCE",
             "base_url": "",
             "enabled": True,
             "priority": 1,
@@ -210,12 +210,12 @@ class TestProviderCRUDIntegration:
         mock_provider_repo.get_by_id.return_value = {
             "id": "p1",
             "name": "Old",
-            "type": "MOCK",
+            "type": "YAHOO_FINANCE",
         }
         # Return 2 providers so the last-provider guard doesn't trigger
         mock_provider_repo.get_all.return_value = [
-            {"id": "p1", "name": "Old", "type": "MOCK"},
-            {"id": "p2", "name": "Other", "type": "MOCK"},
+            {"id": "p1", "name": "Old", "type": "YAHOO_FINANCE"},
+            {"id": "p2", "name": "Other", "type": "YAHOO_FINANCE"},
         ]
         resp = client.delete("/api/providers/p1")
         assert resp.status_code == 204
@@ -225,12 +225,13 @@ class TestProviderCRUDIntegration:
     ) -> None:
         mock_provider_repo.get_by_id.return_value = {
             "id": "p1",
-            "type": "MOCK",
+            "type": "CUSTOM",
         }
         resp = client.post("/api/providers/p1/test")
         assert resp.status_code == 200
         data = resp.json()
-        assert data["result"]["success"] is True
+        # CUSTOM type is not implemented, so connection test fails
+        assert data["result"]["success"] is False
 
 
 class TestStrategyUpdateDelete:

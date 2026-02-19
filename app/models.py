@@ -284,7 +284,7 @@ class RateLimitConfig(BaseModel):
 class ProviderConfig(BaseModel):
     id: str
     name: str
-    type: str  # YAHOO_FINANCE, ALPACA, TRADIER, CUSTOM, MOCK
+    type: str  # YAHOO_FINANCE, ALPACA, TRADIER, CUSTOM
     apiKeyMasked: str | None = None
     baseUrl: str = ""
     enabled: bool = True

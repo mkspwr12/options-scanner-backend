@@ -1,13 +1,14 @@
 """Unit tests for Issue #11 — multi-leg scan service."""
 from __future__ import annotations
 
+from app.providers.mock_provider import MockProvider
 from app.schemas import MultiLegScanFilters, MultiLegScanRequest
 from app.services.multi_leg_scan_service import MultiLegScanService
 
 
 class TestMultiLegScanService:
     def setup_method(self) -> None:
-        self.svc = MultiLegScanService()
+        self.svc = MultiLegScanService(provider=MockProvider())
 
     def test_iron_condor_scan(self) -> None:
         req = MultiLegScanRequest(ticker="AAPL", strategyType="iron_condor")

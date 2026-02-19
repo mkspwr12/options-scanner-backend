@@ -2,8 +2,7 @@
 
 Delegates to a ``MarketDataProvider`` for real options chain data,
 calculates Greeks via Black-Scholes, scores opportunities, and
-persists results.  Falls back to sample data when no provider is
-available or the circuit breaker is open.
+persists results.  Returns empty results when no data is available.
 """
 from __future__ import annotations
 
@@ -73,7 +72,8 @@ class ScanService:
 
         Priority order:
         1. Database (latest persisted scan results)
-        2. Hardcoded sample data (Phase 1 fallback)
+        2. Live provider scan (if symbol provided)
+        3. Empty results (no data available)
         """
         try:
             db_results = self._repo.get_latest(
@@ -138,33 +138,13 @@ class ScanService:
             except Exception:
                 logger.warning("Live scan fallback failed for %s", symbol)
 
-        # Fallback: hardcoded sample data (apply filters in-memory)
-        samples = self._sample_opportunities()
-        filtered = self._filter_sample_opportunities(
-            samples,
-            symbol=symbol,
-            option_type=option_type,
-            min_confidence=min_confidence,
-            min_risk_reward=min_risk_reward,
-            moneyness=moneyness,
-            iv_min=iv_min,
-            iv_max=iv_max,
-            delta_min=delta_min,
-            delta_max=delta_max,
-            theta_min=theta_min,
-            theta_max=theta_max,
-            vega_min=vega_min,
-            vega_max=vega_max,
-        )
-        # Apply sort
-        sort_key = sort_by or "confidenceScore"
-        if hasattr(filtered[0], sort_key) if filtered else False:
-            filtered.sort(key=lambda o: getattr(o, sort_key, 0), reverse=True)
+        # No data available — return empty results
         return {
             "status": "ok",
-            "opportunities": filtered[:limit],
-            "source": "sample",
+            "opportunities": [],
+            "source": "none",
             "stale": False,
+            "message": "No scan data available. Trigger a scan first.",
         }
 
     def scan_single(
@@ -271,10 +251,11 @@ class ScanService:
         return {"results": results}
 
     def get_multi_leg_opportunities(self) -> dict[str, Any]:
-        """Return multi-leg strategies (hardcoded sample data)."""
+        """Return multi-leg strategies from database or empty list."""
         return {
             "status": "ok",
-            "opportunities": self._sample_multi_leg(),
+            "opportunities": [],
+            "message": "Use POST /api/multi-leg-scan for live multi-leg scanning.",
         }
 
     def run_scan(self, symbols: list[str] | None = None) -> dict[str, Any]:
@@ -350,62 +331,6 @@ class ScanService:
     # ------------------------------------------------------------------
     # Internal helpers
     # ------------------------------------------------------------------
-
-    @staticmethod
-    def _filter_sample_opportunities(
-        opportunities: list[OptionOpportunity],
-        *,
-        symbol: str | None = None,
-        option_type: str | None = None,
-        min_confidence: float = 0,
-        min_risk_reward: float = 0,
-        moneyness: str | None = None,
-        iv_min: float | None = None,
-        iv_max: float | None = None,
-        delta_min: float | None = None,
-        delta_max: float | None = None,
-        theta_min: float | None = None,
-        theta_max: float | None = None,
-        vega_min: float | None = None,
-        vega_max: float | None = None,
-    ) -> list[OptionOpportunity]:
-        """Apply all filters to sample/fallback opportunities in-memory."""
-        filtered: list[OptionOpportunity] = []
-        for opp in opportunities:
-            if symbol and opp.symbol.upper() != symbol.upper():
-                continue
-            if option_type and opp.optionType.upper() != option_type.upper():
-                continue
-            if min_confidence and opp.confidenceScore < min_confidence:
-                continue
-            if min_risk_reward and opp.riskRewardRatio < min_risk_reward:
-                continue
-            if iv_min is not None and (opp.impliedVolatility or 0) < iv_min:
-                continue
-            if iv_max is not None and (opp.impliedVolatility or 0) > iv_max:
-                continue
-            greeks = opp.greeks
-            if greeks:
-                if delta_min is not None and (greeks.delta or 0) < delta_min:
-                    continue
-                if delta_max is not None and (greeks.delta or 0) > delta_max:
-                    continue
-                if theta_min is not None and (greeks.theta or 0) < theta_min:
-                    continue
-                if theta_max is not None and (greeks.theta or 0) > theta_max:
-                    continue
-                if vega_min is not None and (greeks.vega or 0) < vega_min:
-                    continue
-                if vega_max is not None and (greeks.vega or 0) > vega_max:
-                    continue
-            if moneyness and moneyness.lower() != "all":
-                m = ScanService._classify_moneyness(
-                    opp.strikePrice, opp.underlyingPrice, opp.optionType
-                )
-                if m != moneyness.upper():
-                    continue
-            filtered.append(opp)
-        return filtered
 
     @staticmethod
     def _apply_in_memory_filters(
@@ -566,10 +491,10 @@ class ScanService:
             pass
         return {
             "status": "ok",
-            "opportunities": self._sample_opportunities(),
-            "source": "sample",
+            "opportunities": [],
+            "source": "none",
             "stale": True,
-            "message": "Provider unavailable — showing sample results",
+            "message": "Provider unavailable — no cached results available",
         }
 
     # ------------------------------------------------------------------
@@ -634,175 +559,3 @@ class ScanService:
         """
         prob = abs(delta) * 100
         return round(min(max(prob, 0), 100), 1)
-
-    # ------------------------------------------------------------------
-    # Hardcoded sample data (preserved from Phase 1)
-    # ------------------------------------------------------------------
-
-    @staticmethod
-    def _sample_opportunities() -> list[OptionOpportunity]:
-        now = int(datetime.now(timezone.utc).timestamp() * 1000)
-        exp1 = (datetime.now(timezone.utc) + timedelta(days=28)).strftime("%Y-%m-%d")
-        exp2 = (datetime.now(timezone.utc) + timedelta(days=21)).strftime("%Y-%m-%d")
-
-        # META CALL sample
-        meta_payout = ScanService._calculate_payout_chart(689.3, 690.0, 6.9, "CALL")
-        meta_breakeven = ScanService._calculate_breakeven(690.0, 6.9, "CALL")
-        meta_prob = ScanService._calculate_probability(0.42, "CALL")
-
-        # SPY PUT sample
-        spy_payout = ScanService._calculate_payout_chart(681.7, 690.0, 5.2, "PUT")
-        spy_breakeven = ScanService._calculate_breakeven(690.0, 5.2, "PUT")
-        spy_prob = ScanService._calculate_probability(-0.38, "PUT")
-
-        return [
-            OptionOpportunity(
-                id="opp-001",
-                symbol="META",
-                strikePrice=690.0,
-                expirationDate=exp1,
-                optionType="CALL",
-                currentPrice=6.9,
-                underlyingPrice=689.3,
-                impliedVolatility=0.31,
-                greeks=Greeks(delta=0.42, gamma=0.06, theta=-0.03, vega=0.12),
-                potentialGain=13.8,
-                potentialLoss=4.9,
-                riskRewardRatio=2.81,
-                confidenceScore=78,
-                timestamp=now,
-                payoutChart=PayoutChart(
-                    pricePoints=meta_payout["pricePoints"],
-                    profitPoints=meta_payout["profitPoints"],
-                ),
-                probability=meta_prob,
-                breakeven=meta_breakeven,
-                maxProfit=meta_payout["maxProfit"],
-                maxLoss=meta_payout["maxLoss"],
-                position="long",
-            ),
-            OptionOpportunity(
-                id="opp-002",
-                symbol="SPY",
-                strikePrice=690.0,
-                expirationDate=exp2,
-                optionType="PUT",
-                currentPrice=5.2,
-                underlyingPrice=681.7,
-                impliedVolatility=0.27,
-                greeks=Greeks(delta=-0.38, gamma=0.05, theta=-0.02, vega=0.11),
-                potentialGain=9.7,
-                potentialLoss=3.8,
-                riskRewardRatio=2.55,
-                confidenceScore=74,
-                timestamp=now,
-                payoutChart=PayoutChart(
-                    pricePoints=spy_payout["pricePoints"],
-                    profitPoints=spy_payout["profitPoints"],
-                ),
-                probability=spy_prob,
-                breakeven=spy_breakeven,
-                maxProfit=spy_payout["maxProfit"],
-                maxLoss=spy_payout["maxLoss"],
-                position="long",
-            ),
-        ]
-
-    @staticmethod
-    def _sample_multi_leg() -> list[MultiLegOpportunity]:
-        now = int(datetime.now(timezone.utc).timestamp() * 1000)
-        expiration = (datetime.now(timezone.utc) + timedelta(days=21)).strftime(
-            "%Y-%m-%d"
-        )
-        return [
-            MultiLegOpportunity(
-                id="ml-001",
-                symbol="SPY",
-                strategyType="BULL_CALL_SPREAD",
-                legs=[
-                    OptionOpportunity(
-                        id="leg-1",
-                        symbol="SPY",
-                        strikePrice=680.0,
-                        expirationDate=expiration,
-                        optionType="CALL",
-                        currentPrice=8.5,
-                        underlyingPrice=681.7,
-                        impliedVolatility=0.27,
-                        greeks=Greeks(delta=0.6, gamma=0.04, theta=-0.02, vega=0.10),
-                        potentialGain=5.0,
-                        potentialLoss=3.5,
-                        riskRewardRatio=1.43,
-                        confidenceScore=76,
-                        timestamp=now,
-                    ),
-                    OptionOpportunity(
-                        id="leg-2",
-                        symbol="SPY",
-                        strikePrice=690.0,
-                        expirationDate=expiration,
-                        optionType="CALL",
-                        currentPrice=3.2,
-                        underlyingPrice=681.7,
-                        impliedVolatility=0.25,
-                        greeks=Greeks(delta=0.35, gamma=0.05, theta=-0.01, vega=0.09),
-                        potentialGain=5.0,
-                        potentialLoss=1.8,
-                        riskRewardRatio=2.78,
-                        confidenceScore=74,
-                        timestamp=now,
-                    ),
-                ],
-                maxProfit=5.0,
-                maxLoss=1.8,
-                breakeven=681.8,
-                riskRewardRatio=2.78,
-                confidenceScore=75,
-                timestamp=now,
-            ),
-            MultiLegOpportunity(
-                id="ml-002",
-                symbol="META",
-                strategyType="IRON_CONDOR",
-                legs=[
-                    OptionOpportunity(
-                        id="leg-3",
-                        symbol="META",
-                        strikePrice=680.0,
-                        expirationDate=expiration,
-                        optionType="CALL",
-                        currentPrice=2.5,
-                        underlyingPrice=689.3,
-                        impliedVolatility=0.31,
-                        greeks=Greeks(delta=0.25, gamma=0.03, theta=-0.01, vega=0.08),
-                        potentialGain=2.5,
-                        potentialLoss=2.5,
-                        riskRewardRatio=1.0,
-                        confidenceScore=72,
-                        timestamp=now,
-                    ),
-                    OptionOpportunity(
-                        id="leg-4",
-                        symbol="META",
-                        strikePrice=700.0,
-                        expirationDate=expiration,
-                        optionType="CALL",
-                        currentPrice=0.8,
-                        underlyingPrice=689.3,
-                        impliedVolatility=0.28,
-                        greeks=Greeks(delta=0.10, gamma=0.02, theta=0.0, vega=0.05),
-                        potentialGain=0.8,
-                        potentialLoss=1.2,
-                        riskRewardRatio=0.67,
-                        confidenceScore=70,
-                        timestamp=now,
-                    ),
-                ],
-                maxProfit=3.3,
-                maxLoss=1.7,
-                breakeven=686.7,
-                riskRewardRatio=1.94,
-                confidenceScore=73,
-                timestamp=now,
-            ),
-        ]

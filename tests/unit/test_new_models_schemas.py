@@ -25,7 +25,7 @@ from app.schemas import (
 
 class TestProviderModels:
     def test_provider_config_defaults(self) -> None:
-        pc = ProviderConfig(id="p1", name="Test", type="MOCK")
+        pc = ProviderConfig(id="p1", name="Test", type="YAHOO_FINANCE")
         assert pc.enabled is True
         assert pc.priority == 1
         assert pc.rateLimit.maxPerHour == 2000
@@ -80,7 +80,7 @@ class TestProviderSchemas:
 
     def test_create_provider_missing_name(self) -> None:
         with pytest.raises(ValidationError):
-            CreateProviderRequest(type="MOCK")  # name is required
+            CreateProviderRequest(type="YAHOO_FINANCE")  # name is required
 
     def test_update_provider_partial(self) -> None:
         req = UpdateProviderRequest(name="Updated")

@@ -14,7 +14,7 @@ from ..repositories.provider_repository import ProviderRepository
 
 logger = logging.getLogger(__name__)
 
-_VALID_TYPES = {"YAHOO_FINANCE", "ALPACA", "TRADIER", "CUSTOM", "MOCK"}
+_VALID_TYPES = {"YAHOO_FINANCE", "ALPACA", "TRADIER", "CUSTOM"}
 
 
 class ProviderService:
@@ -155,11 +155,6 @@ class ProviderService:
                         p = YahooFinanceProvider()
                         result_container["available"] = p.is_available()
                         result_container["endpoint"] = f"{base_url or 'https://query1.finance.yahoo.com'}/v8/finance/chart/AAPL"
-                    elif provider_type == "MOCK":
-                        from ..providers.mock_provider import MockProvider
-                        p = MockProvider()
-                        result_container["available"] = p.is_available()
-                        result_container["endpoint"] = "mock://test"
                     elif provider_type == "ALPACA":
                         result_container["available"] = False
                         result_container["endpoint"] = f"{base_url or 'https://data.alpaca.markets'}/v2/account"

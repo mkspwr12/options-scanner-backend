@@ -60,12 +60,12 @@ class TestCreateProvider:
         mock_repo.get_by_id.return_value = {
             "id": "prov-test",
             "name": "Test",
-            "type": "MOCK",
+            "type": "YAHOO_FINANCE",
             "base_url": "",
             "enabled": True,
             "priority": 1,
         }
-        data = {"name": "Test", "type": "MOCK", "baseUrl": ""}
+        data = {"name": "Test", "type": "YAHOO_FINANCE", "baseUrl": ""}
         result = svc.create_provider(data)
         assert result.name == "Test"
         mock_repo.insert.assert_called_once()
@@ -90,7 +90,7 @@ class TestUpdateProvider:
         mock_repo.get_by_id.return_value = {
             "id": "p1",
             "name": "Old",
-            "type": "MOCK",
+            "type": "YAHOO_FINANCE",
             "base_url": "",
             "enabled": True,
             "priority": 1,
@@ -106,10 +106,10 @@ class TestDeleteProvider:
             svc.delete_provider("nonexistent")
 
     def test_delete_ok(self, svc: ProviderService, mock_repo: MagicMock, mock_reg: MagicMock) -> None:
-        mock_repo.get_by_id.return_value = {"id": "p1", "name": "X", "type": "MOCK"}
+        mock_repo.get_by_id.return_value = {"id": "p1", "name": "X", "type": "YAHOO_FINANCE"}
         mock_repo.get_all.return_value = [
-            {"id": "p1", "name": "X", "type": "MOCK"},
-            {"id": "p2", "name": "Y", "type": "MOCK"},
+            {"id": "p1", "name": "X", "type": "YAHOO_FINANCE"},
+            {"id": "p2", "name": "Y", "type": "YAHOO_FINANCE"},
         ]
         result = svc.delete_provider("p1")
         assert result["status"] == "deleted"
@@ -122,8 +122,8 @@ class TestTestConnection:
         with pytest.raises(NotFoundError):
             svc.test_connection("nonexistent")
 
-    def test_mock_provider_success(self, svc: ProviderService, mock_repo: MagicMock) -> None:
-        mock_repo.get_by_id.return_value = {"id": "p1", "type": "MOCK"}
+    def test_custom_provider_not_available(self, svc: ProviderService, mock_repo: MagicMock) -> None:
+        mock_repo.get_by_id.return_value = {"id": "p1", "type": "CUSTOM"}
         result = svc.test_connection("p1")
-        assert result.success is True
+        assert result.success is False
         assert result.latencyMs >= 0
