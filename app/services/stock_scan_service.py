@@ -59,14 +59,19 @@ class StockScanService:
         self._provider = provider
 
     def scan(self, request: StockScanRequest) -> dict[str, Any]:
-        """Execute a stock scan with optional filters and pagination."""
+        """Execute a stock scan with optional filters and pagination.
+        
+        If request.tickers is provided, scans those specific symbols.
+        Otherwise, scans the default universe.
+        """
         cache_key = self._build_cache_key(request)
         cached = self._get_cached(cache_key)
         if cached is not None:
             return self._paginate(cached, request.page, request.pageSize, source="cache")
 
-        # Fetch live data or fall back to mock
-        all_stocks = self._fetch_live_stocks()
+        # Fetch live data for requested or default symbols
+        tickers_to_scan = request.tickers if request.tickers else None
+        all_stocks = self._fetch_live_stocks(tickers_to_scan)
 
         # Apply filters
         filtered = self._apply_filters(all_stocks, request.filters)
@@ -222,9 +227,12 @@ class StockScanService:
     # Live data fetching
     # ------------------------------------------------------------------
 
-    def _fetch_live_stocks(self) -> list[StockScanResult]:
+    def _fetch_live_stocks(self, tickers: list[str] | None = None) -> list[StockScanResult]:
         """Fetch real stock data from Yahoo Finance.
-
+        
+        Args:
+            tickers: List of specific symbols to fetch. If None, uses _DEFAULT_TICKERS.
+        
         Returns empty list if the provider is unavailable.
         """
         if self._provider is None:
@@ -232,18 +240,18 @@ class StockScanService:
             return []
 
         try:
-            return self._fetch_from_yahoo()
+            return self._fetch_from_yahoo(tickers or _DEFAULT_TICKERS)
         except Exception:
             logger.exception("Live stock fetch failed — no data available")
             return []
 
-    def _fetch_from_yahoo(self) -> list[StockScanResult]:
-        """Fetch live data for all tickers using yfinance."""
+    def _fetch_from_yahoo(self, tickers: list[str]) -> list[StockScanResult]:
+        """Fetch live data for specified tickers using yfinance."""
         import yfinance as yf
 
         results: list[StockScanResult] = []
 
-        for ticker_sym in _DEFAULT_TICKERS:
+        for ticker_sym in tickers:
             try:
                 ticker = yf.Ticker(ticker_sym)
 

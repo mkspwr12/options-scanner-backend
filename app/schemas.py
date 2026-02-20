@@ -290,9 +290,21 @@ class StockScanFilters(BaseModel):
 class StockScanRequest(BaseModel):
     """Request body for POST /api/stock-scan."""
 
+    tickers: list[str] | None = Field(
+        default=None,
+        description="List of ticker symbols to scan (e.g., ['AAPL', 'MSFT']). If empty or null, defaults to pre-defined universe.",
+    )
     filters: StockScanFilters | None = None
     page: int = Field(default=1, ge=1)
     pageSize: int = Field(default=50, ge=1, le=200)
+
+    @field_validator("tickers", mode="before")
+    @classmethod
+    def normalize_tickers(cls, v: list[str] | None) -> list[str] | None:
+        """Convert tickers to uppercase and remove duplicates."""
+        if v is None:
+            return None
+        return [t.strip().upper() for t in v if t.strip()]
 
 
 # ---------------------------------------------------------------------------
