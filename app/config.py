@@ -45,7 +45,7 @@ def get_settings() -> Settings:
 
     api_key = os.getenv("API_KEY")
 
-    scan_interval = int(os.getenv("SCAN_INTERVAL_MINUTES", "15"))
+    scan_interval = int(os.getenv("SCAN_INTERVAL_MINUTES", "60"))
     scan_enabled = os.getenv("SCAN_ENABLED", "true").lower() in ("true", "1", "yes")
     log_retention = int(os.getenv("LOG_RETENTION", "1000"))
     market_data_provider = os.getenv("MARKET_DATA_PROVIDER", "massive").strip().lower()
