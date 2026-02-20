@@ -240,10 +240,56 @@ class StockScanService:
             return []
 
         try:
-            return self._fetch_from_yahoo(tickers or _DEFAULT_TICKERS)
+            resolved_tickers = tickers or _DEFAULT_TICKERS
+            if hasattr(self._provider, "get_stock_scan_data"):
+                return self._fetch_from_provider_scan_data(resolved_tickers)
+            return self._fetch_from_yahoo(resolved_tickers)
         except Exception:
             logger.exception("Live stock fetch failed — no data available")
             return []
+
+    def _fetch_from_provider_scan_data(self, tickers: list[str]) -> list[StockScanResult]:
+        """Fetch stock scan rows via provider-native scan data method (Polygon)."""
+        results: list[StockScanResult] = []
+
+        for ticker_sym in tickers:
+            try:
+                payload = self._provider.get_stock_scan_data(ticker_sym)  # type: ignore[attr-defined]
+                if not payload:
+                    continue
+
+                closes = payload.get("closes") or []
+                if len(closes) < 14:
+                    continue
+
+                current_price = float(payload.get("price") or 0.0)
+                prev_close = float(payload.get("prev_close") or current_price)
+                change_pct = round(
+                    ((current_price - prev_close) / prev_close) * 100, 2
+                ) if prev_close > 0 else 0.0
+
+                rsi = self._calculate_rsi(closes, period=14)
+                macd_data = self._calculate_macd(closes)
+
+                results.append(
+                    StockScanResult(
+                        ticker=ticker_sym,
+                        name=str(payload.get("name") or _COMPANY_NAMES.get(ticker_sym, ticker_sym)),
+                        price=round(current_price, 2),
+                        change=change_pct,
+                        volume=int(payload.get("volume") or 0),
+                        rsi=round(rsi, 1),
+                        macd=macd_data,
+                        pe=round(float(payload.get("pe_ratio") or 0.0), 1),
+                        marketCap=int(payload.get("market_cap") or 0),
+                        optionLiquidity="high",
+                    )
+                )
+            except Exception:
+                logger.exception("Provider scan data fetch failed for %s", ticker_sym)
+                continue
+
+        return results
 
     def _fetch_from_yahoo(self, tickers: list[str]) -> list[StockScanResult]:
         """Fetch live data for specified tickers using yfinance."""

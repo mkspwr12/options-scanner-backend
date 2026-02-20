@@ -189,4 +189,4 @@ class TestSettingsDataclass:
         assert s.scan_interval_minutes == 15
         assert s.scan_enabled is True
         assert s.log_retention == 1000
-        assert s.market_data_provider == "yahoo"
+        assert s.market_data_provider == "polygon"

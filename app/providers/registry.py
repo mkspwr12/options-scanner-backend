@@ -170,5 +170,8 @@ class ProviderRegistry:
         if pt in ("YAHOO_FINANCE", "YAHOO"):
             from .yahoo_provider import YahooFinanceProvider
             return YahooFinanceProvider()
+        if pt in ("POLYGON", "POLYGON_IO", "MASSIVE"):
+            from .polygon_provider import PolygonProvider
+            return PolygonProvider()
         logger.warning("Unsupported provider type '%s' — proxy calls will fail", provider_type)
         return None
