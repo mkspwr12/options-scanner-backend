@@ -27,7 +27,7 @@ class MassiveProvider:
     """Live options/quote data via Massive with rate limiting.
     
     Rate limiting strategy:
-    - Minimum delay between requests: 13s (~4.6 req/min, under free-tier 5/min limit)
+    - Minimum delay between requests: 3s (~20 req/min) with retry/backoff on 429
     - Exponential backoff on 429 errors (15s, 30s, 45s, 60s)
     - Max retries: 4
     """
@@ -36,7 +36,7 @@ class MassiveProvider:
         self,
         api_key: str | None = None,
         base_url: str | None = None,
-        min_request_interval: float = 13.0,  # 13s between requests (free tier ~5 req/min)
+        min_request_interval: float = 3.0,  # 3s between requests with retry on 429
         max_retries: int = 4,
     ) -> None:
         self._api_key = (api_key or os.getenv("MASSIVE_API_KEY") or "").strip()
