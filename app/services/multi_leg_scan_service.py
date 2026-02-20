@@ -1,7 +1,7 @@
 """Multi-leg scan service — generates multi-leg option strategy results.
 
 Issue #11: POST /api/multi-leg-scan endpoint.
-Uses Yahoo Finance (yfinance) for real options chain data.
+Uses Massive for real options chain data.
 Returns empty results when the provider is unavailable.
 """
 from __future__ import annotations

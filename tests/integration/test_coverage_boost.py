@@ -195,7 +195,7 @@ class TestProviderCRUDIntegration:
         mock_provider_repo.get_by_id.return_value = {
             "id": "p1",
             "name": "Updated",
-            "type": "YAHOO_FINANCE",
+            "type": "MASSIVE",
             "base_url": "",
             "enabled": True,
             "priority": 1,
@@ -210,12 +210,12 @@ class TestProviderCRUDIntegration:
         mock_provider_repo.get_by_id.return_value = {
             "id": "p1",
             "name": "Old",
-            "type": "YAHOO_FINANCE",
+            "type": "MASSIVE",
         }
         # Return 2 providers so the last-provider guard doesn't trigger
         mock_provider_repo.get_all.return_value = [
-            {"id": "p1", "name": "Old", "type": "YAHOO_FINANCE"},
-            {"id": "p2", "name": "Other", "type": "YAHOO_FINANCE"},
+            {"id": "p1", "name": "Old", "type": "MASSIVE"},
+            {"id": "p2", "name": "Other", "type": "MASSIVE"},
         ]
         resp = client.delete("/api/providers/p1")
         assert resp.status_code == 204

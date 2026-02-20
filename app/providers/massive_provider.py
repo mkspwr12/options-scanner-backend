@@ -1,7 +1,7 @@
-"""Massive (Polygon) market data provider.
+"""Massive market data provider.
 
 Implements the ``MarketDataProvider`` protocol for quotes, options chains,
-and expiration dates using Polygon REST APIs.
+and expiration dates using Massive REST APIs.
 """
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ import os
 from datetime import date, timedelta
 from typing import Any
 from urllib.error import HTTPError, URLError
-from urllib.parse import urlencode, urlparse, parse_qs
+from urllib.parse import parse_qs, urlencode, urlparse
 from urllib.request import urlopen
 
 from .base import OptionContract, Quote
@@ -19,34 +19,23 @@ from .base import OptionContract, Quote
 logger = logging.getLogger(__name__)
 
 
-class PolygonProvider:
-    """Live options/quote data via Massive (Polygon)."""
+class MassiveProvider:
+    """Live options/quote data via Massive."""
 
     def __init__(self, api_key: str | None = None, base_url: str | None = None) -> None:
-        self._api_key = (
-            api_key
-            or os.getenv("POLYGON_API_KEY")
-            or os.getenv("MASSIVE_API_KEY")
-            or ""
-        ).strip()
-        self._base_url = (
-            base_url
-            or os.getenv("POLYGON_BASE_URL")
-            or os.getenv("MASSIVE_BASE_URL")
-            or "https://api.massive.com"
-        ).rstrip("/")
+        self._api_key = (api_key or os.getenv("MASSIVE_API_KEY") or "").strip()
+        self._base_url = (base_url or os.getenv("MASSIVE_BASE_URL") or "https://api.massive.com").rstrip("/")
 
     def is_available(self) -> bool:
         if not self._api_key:
             return False
         try:
-            q = self.get_quote("SPY")
-            return q.price > 0
+            quote = self.get_quote("SPY")
+            return quote.price > 0
         except Exception:
             return False
 
     def get_quote(self, symbol: str) -> Quote:
-        """Fetch quote from previous-day aggregate bar endpoint."""
         sym = symbol.upper()
         payload = self._get_json(f"/v2/aggs/ticker/{sym}/prev", {"adjusted": "true"})
         rows = payload.get("results") or []
@@ -64,7 +53,6 @@ class PolygonProvider:
         )
 
     def get_expiration_dates(self, symbol: str) -> list[str]:
-        """List option expiration dates for underlying ticker."""
         sym = symbol.upper()
         params = {
             "underlying_ticker": sym,
@@ -83,7 +71,6 @@ class PolygonProvider:
         return sorted(expirations)
 
     def get_options_chain(self, symbol: str, expiration: str | None = None) -> list[OptionContract]:
-        """Fetch options chain from Polygon snapshots."""
         sym = symbol.upper()
         target_exp = expiration
         if not target_exp:
@@ -107,14 +94,8 @@ class PolygonProvider:
                 last_quote = item.get("last_quote") or {}
                 day = item.get("day") or {}
 
-                strike = self._safe_float(details.get("strike_price"))
-                exp = str(details.get("expiration_date") or target_exp)
                 ctype = str(details.get("contract_type") or "").upper()
-                if ctype == "CALL":
-                    opt_type = "CALL"
-                elif ctype == "PUT":
-                    opt_type = "PUT"
-                else:
+                if ctype not in ("CALL", "PUT"):
                     continue
 
                 bid = self._safe_float(last_quote.get("bid"))
@@ -125,9 +106,9 @@ class PolygonProvider:
                 contracts.append(
                     OptionContract(
                         symbol=sym,
-                        strike=strike,
-                        expiration=exp,
-                        option_type=opt_type,
+                        strike=self._safe_float(details.get("strike_price")),
+                        expiration=str(details.get("expiration_date") or target_exp),
+                        option_type=ctype,
                         bid=bid,
                         ask=ask,
                         last_price=last_price,
@@ -140,7 +121,6 @@ class PolygonProvider:
         return contracts
 
     def get_stock_scan_data(self, symbol: str, days: int = 90) -> dict[str, Any] | None:
-        """Return stock-scan data bundle for a single symbol."""
         sym = symbol.upper()
         end_date = date.today()
         start_date = end_date - timedelta(days=max(days, 30))
@@ -202,7 +182,7 @@ class PolygonProvider:
 
     def _get_json(self, path: str, params: dict[str, str] | None = None) -> dict[str, Any]:
         if not self._api_key:
-            raise RuntimeError("POLYGON_API_KEY is not configured")
+            raise RuntimeError("MASSIVE_API_KEY is not configured")
 
         query = dict(params or {})
         query["apiKey"] = self._api_key
@@ -214,9 +194,9 @@ class PolygonProvider:
                 payload: dict[str, Any] = json.loads(raw)
                 return payload
         except HTTPError as exc:
-            raise RuntimeError(f"Polygon HTTP {exc.code} for {path}") from exc
+            raise RuntimeError(f"Massive HTTP {exc.code} for {path}") from exc
         except URLError as exc:
-            raise RuntimeError(f"Polygon connection error for {path}: {exc.reason}") from exc
+            raise RuntimeError(f"Massive connection error for {path}: {exc.reason}") from exc
 
     @staticmethod
     def _safe_float(val: object, default: float = 0.0) -> float:

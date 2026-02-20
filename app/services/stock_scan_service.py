@@ -1,7 +1,7 @@
 """Stock scan service — server-side stock screening with in-memory caching.
 
 Issue #12: POST /api/stock-scan endpoint.
-Uses Yahoo Finance (yfinance) for live market data with TTL-based caching.
+Uses Massive provider for live market data with TTL-based caching.
 Returns empty results when the provider is unavailable.
 """
 from __future__ import annotations
@@ -27,7 +27,7 @@ _DEFAULT_TICKERS = [
     "BA", "COIN", "PLTR",
 ]
 
-# Company name map (yfinance info can be slow, cache common names)
+# Company name map fallback
 _COMPANY_NAMES: dict[str, str] = {
     "AAPL": "Apple Inc.",
     "MSFT": "Microsoft Corp.",
@@ -228,7 +228,7 @@ class StockScanService:
     # ------------------------------------------------------------------
 
     def _fetch_live_stocks(self, tickers: list[str] | None = None) -> list[StockScanResult]:
-        """Fetch real stock data from Yahoo Finance.
+        """Fetch real stock data from Massive.
         
         Args:
             tickers: List of specific symbols to fetch. If None, uses _DEFAULT_TICKERS.
@@ -243,13 +243,14 @@ class StockScanService:
             resolved_tickers = tickers or _DEFAULT_TICKERS
             if hasattr(self._provider, "get_stock_scan_data"):
                 return self._fetch_from_provider_scan_data(resolved_tickers)
-            return self._fetch_from_yahoo(resolved_tickers)
+            logger.warning("Provider does not implement stock scan data API")
+            return []
         except Exception:
             logger.exception("Live stock fetch failed — no data available")
             return []
 
     def _fetch_from_provider_scan_data(self, tickers: list[str]) -> list[StockScanResult]:
-        """Fetch stock scan rows via provider-native scan data method (Polygon)."""
+        """Fetch stock scan rows via provider-native scan data method (Massive)."""
         results: list[StockScanResult] = []
 
         for ticker_sym in tickers:
@@ -288,92 +289,6 @@ class StockScanService:
             except Exception:
                 logger.exception("Provider scan data fetch failed for %s", ticker_sym)
                 continue
-
-        return results
-
-    def _fetch_from_yahoo(self, tickers: list[str]) -> list[StockScanResult]:
-        """Fetch live data for specified tickers using yfinance."""
-        import yfinance as yf
-
-        results: list[StockScanResult] = []
-
-        for ticker_sym in tickers:
-            try:
-                ticker = yf.Ticker(ticker_sym)
-
-                # Get price history (60 days for RSI/MACD calculations)
-                hist = ticker.history(period="3mo")
-                if hist.empty or len(hist) < 14:
-                    logger.warning("Insufficient history for %s, skipping", ticker_sym)
-                    continue
-
-                close = hist["Close"]
-                volume_series = hist["Volume"]
-
-                # Current price and change
-                current_price = float(close.iloc[-1])
-                prev_close = float(close.iloc[-2]) if len(close) >= 2 else current_price
-                change_pct = round(
-                    ((current_price - prev_close) / prev_close) * 100, 2
-                ) if prev_close > 0 else 0.0
-
-                # Current volume
-                current_volume = int(volume_series.iloc[-1])
-
-                # RSI (14-period)
-                rsi = self._calculate_rsi(close.tolist(), period=14)
-
-                # MACD (12, 26, 9)
-                macd_data = self._calculate_macd(close.tolist())
-
-                # Market cap and PE from fast_info / info
-                info = ticker.fast_info
-                market_cap = int(getattr(info, "market_cap", 0) or 0)
-
-                # PE ratio — fast_info doesn't always have it, try info dict
-                pe_ratio = 0.0
-                try:
-                    pe_ratio = float(getattr(info, "pe_ratio", 0) or 0)
-                except Exception:
-                    pass
-                if pe_ratio == 0:
-                    try:
-                        full_info = ticker.info
-                        pe_ratio = float(full_info.get("trailingPE", 0) or 0)
-                    except Exception:
-                        pass
-
-                # Option liquidity — based on options availability and volume
-                option_liq = self._assess_option_liquidity(ticker)
-
-                name = _COMPANY_NAMES.get(ticker_sym, ticker_sym)
-
-                results.append(
-                    StockScanResult(
-                        ticker=ticker_sym,
-                        name=name,
-                        price=round(current_price, 2),
-                        change=change_pct,
-                        volume=current_volume,
-                        rsi=round(rsi, 1),
-                        macd=macd_data,
-                        pe=round(pe_ratio, 1),
-                        marketCap=market_cap,
-                        optionLiquidity=option_liq,
-                    )
-                )
-                logger.info(
-                    "Fetched live data for %s: $%.2f (RSI=%.1f)",
-                    ticker_sym, current_price, rsi,
-                )
-
-            except Exception:
-                logger.exception("Failed to fetch data for %s", ticker_sym)
-                continue
-
-        if not results:
-            logger.warning("No live data fetched — returning empty list")
-            return []
 
         return results
 
@@ -438,16 +353,3 @@ class StockScanService:
             histogram=round(histogram[-1], 4),
         )
 
-    @staticmethod
-    def _assess_option_liquidity(ticker: object) -> str:
-        """Assess option liquidity for a ticker. Returns 'high', 'medium', or 'low'."""
-        try:
-            expirations = ticker.options  # type: ignore[attr-defined]
-            if len(expirations) >= 12:
-                return "high"
-            elif len(expirations) >= 6:
-                return "medium"
-            else:
-                return "low"
-        except Exception:
-            return "low"

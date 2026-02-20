@@ -43,9 +43,9 @@ class TestListProviders:
         mock_repo.get_all.return_value = [
             {
                 "id": "p1",
-                "name": "Yahoo",
-                "type": "YAHOO_FINANCE",
-                "base_url": "https://yahoo.com",
+                "name": "Massive",
+                "type": "MASSIVE",
+                "base_url": "https://api.massive.com",
                 "enabled": True,
                 "priority": 1,
             }
@@ -60,12 +60,12 @@ class TestCreateProvider:
         mock_repo.get_by_id.return_value = {
             "id": "prov-test",
             "name": "Test",
-            "type": "YAHOO_FINANCE",
+            "type": "MASSIVE",
             "base_url": "",
             "enabled": True,
             "priority": 1,
         }
-        data = {"name": "Test", "type": "YAHOO_FINANCE", "baseUrl": ""}
+        data = {"name": "Test", "type": "MASSIVE", "baseUrl": ""}
         result = svc.create_provider(data)
         assert result.name == "Test"
         mock_repo.insert.assert_called_once()
@@ -90,7 +90,7 @@ class TestUpdateProvider:
         mock_repo.get_by_id.return_value = {
             "id": "p1",
             "name": "Old",
-            "type": "YAHOO_FINANCE",
+            "type": "MASSIVE",
             "base_url": "",
             "enabled": True,
             "priority": 1,
@@ -106,10 +106,10 @@ class TestDeleteProvider:
             svc.delete_provider("nonexistent")
 
     def test_delete_ok(self, svc: ProviderService, mock_repo: MagicMock, mock_reg: MagicMock) -> None:
-        mock_repo.get_by_id.return_value = {"id": "p1", "name": "X", "type": "YAHOO_FINANCE"}
+        mock_repo.get_by_id.return_value = {"id": "p1", "name": "X", "type": "MASSIVE"}
         mock_repo.get_all.return_value = [
-            {"id": "p1", "name": "X", "type": "YAHOO_FINANCE"},
-            {"id": "p2", "name": "Y", "type": "YAHOO_FINANCE"},
+            {"id": "p1", "name": "X", "type": "MASSIVE"},
+            {"id": "p2", "name": "Y", "type": "MASSIVE"},
         ]
         result = svc.delete_provider("p1")
         assert result["status"] == "deleted"

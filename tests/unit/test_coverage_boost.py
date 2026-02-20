@@ -62,7 +62,7 @@ class TestProviderRepoUpdate:
         conn, cursor = _mock_db()
         _patch_cm(mock_fn, conn)
         # get_by_id is called internally — simulate found row
-        cursor.fetchone.return_value = ("p1", "Old", "YAHOO_FINANCE", None, None, "", 1, 1, 2000, 20000, 0)
+        cursor.fetchone.return_value = ("p1", "Old", "MASSIVE", None, None, "", 1, 1, 2000, 20000, 0)
         cursor.description = [
             ("id",), ("name",), ("type",), ("api_key_encrypted",),
             ("api_secret_encrypted",), ("base_url",), ("enabled",),
@@ -79,7 +79,7 @@ class TestProviderRepoUpdate:
     def test_update_no_changes(self, mock_fn: MagicMock) -> None:
         conn, cursor = _mock_db()
         _patch_cm(mock_fn, conn)
-        cursor.fetchone.return_value = ("p1", "Name", "YAHOO_FINANCE", None, None, "", 1, 1, 2000, 20000, 0)
+        cursor.fetchone.return_value = ("p1", "Name", "MASSIVE", None, None, "", 1, 1, 2000, 20000, 0)
         cursor.description = [
             ("id",), ("name",), ("type",), ("api_key_encrypted",),
             ("api_secret_encrypted",), ("base_url",), ("enabled",),
@@ -99,7 +99,7 @@ class TestProviderRepoDelete:
         _patch_cm(mock_fn, conn)
         # get_by_id returns a row, count check returns 2 (more than 1)
         cursor.fetchone.side_effect = [
-            ("p1", "Yahoo", "YAHOO_FINANCE", None, None, "", 1, 1, 2000, 20000, 0),
+            ("p1", "Massive", "MASSIVE", None, None, "", 1, 1, 2000, 20000, 0),
             (2,),  # COUNT(*) > 1
         ]
         cursor.description = [
@@ -118,7 +118,7 @@ class TestProviderRepoDelete:
         conn, cursor = _mock_db()
         _patch_cm(mock_fn, conn)
         cursor.fetchone.side_effect = [
-            ("p1", "Yahoo", "YAHOO_FINANCE", None, None, "", 1, 1, 2000, 20000, 0),
+            ("p1", "Massive", "MASSIVE", None, None, "", 1, 1, 2000, 20000, 0),
             (1,),  # COUNT(*) == 1
         ]
         cursor.description = [
@@ -144,7 +144,7 @@ class TestProviderRepoInsert:
         result = repo.insert({
             "id": "prov-new",
             "name": "New Provider",
-            "type": "YAHOO_FINANCE",
+            "type": "MASSIVE",
             "base_url": "",
             "enabled": True,
             "priority": 1,
@@ -361,14 +361,14 @@ class TestMetricsRepoSummary:
         conn, cursor = _mock_db()
         _patch_cm(mock_fn, conn)
         cursor.fetchall.return_value = [
-            ("yahoo", 200, 10, 50),
+            ("massive", 200, 10, 50),
             ("mock", 100, 2, 30),
         ]
 
         repo = MetricsRepository()
         result = repo.get_all_providers_summary("month")
         assert len(result) == 2
-        assert result[0]["providerId"] == "yahoo"
+        assert result[0]["providerId"] == "massive"
         assert result[0]["totalCalls"] == 200
 
     @patch("app.repositories.metrics_repository.get_connection")
@@ -391,7 +391,7 @@ class TestProviderServiceUpdate:
         mock_repo.get_by_id.return_value = {
             "id": "p1",
             "name": "Old",
-            "type": "YAHOO_FINANCE",
+            "type": "MASSIVE",
             "base_url": "",
             "enabled": True,
             "priority": 1,
@@ -409,7 +409,7 @@ class TestProviderServiceUpdate:
         mock_repo.get_by_id.return_value = {
             "id": "p1",
             "name": "Old",
-            "type": "YAHOO_FINANCE",
+            "type": "MASSIVE",
             "base_url": "",
             "enabled": True,
             "priority": 1,
@@ -428,7 +428,7 @@ class TestProviderServiceUpdate:
         mock_repo.get_by_id.return_value = {
             "id": "p1",
             "name": "Old",
-            "type": "YAHOO_FINANCE",
+            "type": "MASSIVE",
             "base_url": "",
             "enabled": True,
             "priority": 1,
@@ -467,10 +467,10 @@ class TestProviderServiceConnectionTest:
         mock_reg = MagicMock(spec=ProviderRegistry)
         mock_repo.get_by_id.return_value = {
             "id": "p1",
-            "type": "YAHOO_FINANCE",
+            "type": "MASSIVE",
         }
         svc = ProviderService(repo=mock_repo, registry=mock_reg)
-        # Yahoo provider may fail in test env; the service catches the exception
+        # Massive provider may fail in test env; the service catches the exception
         result = svc.test_connection("p1")
         # Either success or graceful failure — no exception raised
         assert isinstance(result.latencyMs, int)
@@ -483,7 +483,7 @@ class TestProviderServiceCreate:
         mock_repo.get_by_id.return_value = {
             "id": "prov-test",
             "name": "Secure",
-            "type": "YAHOO_FINANCE",
+            "type": "MASSIVE",
             "api_key_encrypted": "encrypted_data",
             "base_url": "",
             "enabled": True,
@@ -492,7 +492,7 @@ class TestProviderServiceCreate:
         svc = ProviderService(repo=mock_repo, registry=mock_reg)
         result = svc.create_provider({
             "name": "Secure",
-            "type": "YAHOO_FINANCE",
+            "type": "MASSIVE",
             "apiKey": "my-secret-key",
         })
         # API key should be masked in the result
@@ -536,18 +536,18 @@ class TestRegistryEdgeCases:
     def test_len(self) -> None:
         reg = ProviderRegistry()
         assert len(reg) == 0
-        reg.register("p1", {"type": "YAHOO_FINANCE", "enabled": True, "priority": 1})
+        reg.register("p1", {"type": "MASSIVE", "enabled": True, "priority": 1})
         assert len(reg) == 1
 
     def test_provider_ids(self) -> None:
         reg = ProviderRegistry()
-        reg.register("a", {"type": "YAHOO_FINANCE", "enabled": True, "priority": 1})
-        reg.register("b", {"type": "YAHOO_FINANCE", "enabled": True, "priority": 2})
+        reg.register("a", {"type": "MASSIVE", "enabled": True, "priority": 1})
+        reg.register("b", {"type": "MASSIVE", "enabled": True, "priority": 2})
         assert sorted(reg.provider_ids) == ["a", "b"]
 
     def test_is_rate_limited(self) -> None:
         reg = ProviderRegistry()
-        reg.register("p1", {"type": "YAHOO_FINANCE", "enabled": True, "priority": 1, "rate_limit_max_per_hour": 2})
+        reg.register("p1", {"type": "MASSIVE", "enabled": True, "priority": 1, "rate_limit_max_per_hour": 2})
         reg.record_call("p1")
         reg.record_call("p1")
         assert reg.is_rate_limited("p1") is True

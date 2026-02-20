@@ -19,7 +19,7 @@ class TestProviderRepository:
         conn = MagicMock()
         cursor = MagicMock()
         cursor.description = [("id",), ("name",), ("type",)]
-        cursor.fetchall.return_value = [("p1", "Yahoo", "YAHOO_FINANCE")]
+        cursor.fetchall.return_value = [("p1", "Massive", "MASSIVE")]
         conn.cursor.return_value = cursor
         mock_conn_fn.return_value.__enter__ = MagicMock(return_value=conn)
         mock_conn_fn.return_value.__exit__ = MagicMock(return_value=False)
@@ -53,7 +53,7 @@ class TestProviderRepository:
 
         repo = ProviderRepository()
         with pytest.raises(ConflictError, match="already exists"):
-            repo.insert({"id": "p1", "name": "Dup", "type": "YAHOO_FINANCE"})
+            repo.insert({"id": "p1", "name": "Dup", "type": "MASSIVE"})
 
 
 class TestStrategyRepository:

@@ -47,21 +47,10 @@ def _get_provider() -> MarketDataProvider | None:
         return None
 
     name = settings.market_data_provider
-    if name in ("polygon", "polygon_io", "massive"):
-        from .providers.polygon_provider import PolygonProvider
+    from .providers.massive_provider import MassiveProvider
 
-        _provider = PolygonProvider()
-        logger.info("Market data provider: Polygon")
-    elif name in ("yahoo_finance", "yahoo"):
-        from .providers.yahoo_provider import YahooFinanceProvider
-
-        _provider = YahooFinanceProvider()
-        logger.info("Market data provider: YahooFinance")
-    else:
-        from .providers.yahoo_provider import YahooFinanceProvider
-
-        _provider = YahooFinanceProvider()
-        logger.info("Market data provider: YahooFinance (default)")
+    _provider = MassiveProvider()
+    logger.info("Market data provider: Massive (configured=%s)", name)
     return _provider
 
 
@@ -90,13 +79,10 @@ def _get_registry() -> ProviderRegistry:
     _registry = ProviderRegistry()
     try:
         settings = get_settings()
-        name = settings.market_data_provider
-        if name in ("polygon", "polygon_io", "massive"):
-            ptype = "POLYGON"
-        else:
-            ptype = "YAHOO_FINANCE"
+        _ = settings.market_data_provider
+        ptype = "MASSIVE"
     except Exception:
-        ptype = "YAHOO_FINANCE"
+        ptype = "MASSIVE"
 
     _registry.register(
         "default",

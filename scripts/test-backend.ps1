@@ -78,11 +78,11 @@ Test-Endpoint -Name "Provider CRUD API" -IssueNumber "#2" -TestBlock {
 # Test 3: Connection Testing (Issue #3)
 Test-Endpoint -Name "Connection Testing" -IssueNumber "#3" -TestBlock {
     $body = @{ 
-        type = 'YAHOO_FINANCE'
-        baseUrl = 'https://query1.finance.yahoo.com'
+        type = 'MASSIVE'
+        baseUrl = 'https://api.massive.com'
     } | ConvertTo-Json
     
-    $r = Invoke-WebRequest -Uri "$BaseUrl/api/providers/yahoo-default/test" `
+    $r = Invoke-WebRequest -Uri "$BaseUrl/api/providers/massive-default/test" `
         -Method POST `
         -Body $body `
         -ContentType 'application/json' `
@@ -97,13 +97,13 @@ Test-Endpoint -Name "Connection Testing" -IssueNumber "#3" -TestBlock {
 # Test 4: Provider Proxy (Issue #4)
 Test-Endpoint -Name "Provider Proxy" -IssueNumber "#4" -TestBlock {
     try {
-        $r = Invoke-WebRequest -Uri "$BaseUrl/api/providers/yahoo-default/proxy/options?symbol=MSFT" `
+        $r = Invoke-WebRequest -Uri "$BaseUrl/api/providers/massive-default/proxy/options?symbol=MSFT" `
             -UseBasicParsing `
             -TimeoutSec $Timeout
         Write-Host "  Data: Proxy returned $($r.StatusCode)" -ForegroundColor Gray
         return $r.StatusCode -eq 200
     } catch {
-        # 502/503 means the proxy route IS working but upstream Yahoo API is rate-limited or circuit breaker tripped
+        # 502/503 means the proxy route IS working but upstream Massive API is rate-limited or circuit breaker tripped
         $statusCode = $_.Exception.Response.StatusCode.value__
         if ($statusCode -eq 502 -or $statusCode -eq 503) {
             Write-Host "  Data: Proxy route works (upstream unavailable, HTTP $statusCode)" -ForegroundColor Gray
@@ -159,7 +159,7 @@ Test-Endpoint -Name "Multi-Leg Strategy Tracking" -IssueNumber "#6" -TestBlock {
 
 # Test 7: Provider Metrics (Issue #7)
 Test-Endpoint -Name "Server-Side Provider Metrics" -IssueNumber "#7" -TestBlock {
-    $r = Invoke-WebRequest -Uri "$BaseUrl/api/providers/yahoo-default/metrics" `
+    $r = Invoke-WebRequest -Uri "$BaseUrl/api/providers/massive-default/metrics" `
         -UseBasicParsing `
         -TimeoutSec $Timeout
     

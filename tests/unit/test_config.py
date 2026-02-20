@@ -39,14 +39,14 @@ class TestGetSettings:
             "SCAN_INTERVAL_MINUTES": "15",
             "SCAN_ENABLED": "true",
             "LOG_RETENTION": "1000",
-            "MARKET_DATA_PROVIDER": "yahoo",
+            "MARKET_DATA_PROVIDER": "massive",
         }
         with patch.dict(os.environ, env, clear=False):
             s = get_settings()
             assert s.sql_connection_string == "Server=test;Database=test;"
             assert s.scan_interval_minutes == 15
             assert s.scan_enabled is True
-            assert s.market_data_provider == "yahoo"
+            assert s.market_data_provider == "massive"
 
     def test_scan_disabled(self) -> None:
         env = {
@@ -150,11 +150,11 @@ class TestGetSettings:
     def test_market_data_provider_normalized(self) -> None:
         env = {
             "SQL_CONNECTION_STRING": "Server=test;Database=test;",
-            "MARKET_DATA_PROVIDER": "  Yahoo  ",
+            "MARKET_DATA_PROVIDER": "  MASSIVE  ",
         }
         with patch.dict(os.environ, env, clear=False):
             s = get_settings()
-            assert s.market_data_provider == "yahoo"
+            assert s.market_data_provider == "massive"
 
     def test_default_origins_when_env_empty(self) -> None:
         env = {
@@ -189,4 +189,4 @@ class TestSettingsDataclass:
         assert s.scan_interval_minutes == 15
         assert s.scan_enabled is True
         assert s.log_retention == 1000
-        assert s.market_data_provider == "polygon"
+        assert s.market_data_provider == "massive"

@@ -13,7 +13,7 @@ class TestProviderRegistry:
         self.registry = ProviderRegistry()
 
     def test_register_mock_provider(self) -> None:
-        self.registry.register("test-1", {"type": "YAHOO_FINANCE", "enabled": True, "priority": 1})
+        self.registry.register("test-1", {"type": "MASSIVE", "enabled": True, "priority": 1})
         pid, provider = self.registry.get_best_provider()
         assert pid == "test-1"
         assert provider is not None
@@ -26,14 +26,14 @@ class TestProviderRegistry:
         assert entry.provider is None
 
     def test_get_best_provider_priority_order(self) -> None:
-        self.registry.register("low", {"type": "YAHOO_FINANCE", "enabled": True, "priority": 10})
-        self.registry.register("high", {"type": "YAHOO_FINANCE", "enabled": True, "priority": 1})
+        self.registry.register("low", {"type": "MASSIVE", "enabled": True, "priority": 10})
+        self.registry.register("high", {"type": "MASSIVE", "enabled": True, "priority": 1})
         pid, _ = self.registry.get_best_provider()
         assert pid == "high"
 
     def test_get_best_provider_skips_disabled(self) -> None:
-        self.registry.register("disabled", {"type": "YAHOO_FINANCE", "enabled": False, "priority": 1})
-        self.registry.register("active", {"type": "YAHOO_FINANCE", "enabled": True, "priority": 2})
+        self.registry.register("disabled", {"type": "MASSIVE", "enabled": False, "priority": 1})
+        self.registry.register("active", {"type": "MASSIVE", "enabled": True, "priority": 2})
         pid, _ = self.registry.get_best_provider()
         assert pid == "active"
 
@@ -42,23 +42,23 @@ class TestProviderRegistry:
             self.registry.get_best_provider()
 
     def test_unregister(self) -> None:
-        self.registry.register("removeme", {"type": "YAHOO_FINANCE", "enabled": True, "priority": 1})
+        self.registry.register("removeme", {"type": "MASSIVE", "enabled": True, "priority": 1})
         self.registry.unregister("removeme")
         with pytest.raises(ProviderError):
             self.registry.get_best_provider()
 
     def test_record_success(self) -> None:
-        self.registry.register("p1", {"type": "YAHOO_FINANCE", "enabled": True, "priority": 1})
+        self.registry.register("p1", {"type": "MASSIVE", "enabled": True, "priority": 1})
         self.registry.record_success("p1")  # should not raise
 
     def test_record_failure(self) -> None:
-        self.registry.register("p1", {"type": "YAHOO_FINANCE", "enabled": True, "priority": 1})
+        self.registry.register("p1", {"type": "MASSIVE", "enabled": True, "priority": 1})
         self.registry.record_failure("p1")  # should not raise
 
     def test_get_rate_limit_info(self) -> None:
         self.registry.register(
             "p1",
-            {"type": "YAHOO_FINANCE", "enabled": True, "priority": 1, "rate_limit_max_per_hour": 100},
+            {"type": "MASSIVE", "enabled": True, "priority": 1, "rate_limit_max_per_hour": 100},
         )
         self.registry.record_call("p1")
         info = self.registry.get_rate_limit_info("p1")
@@ -70,7 +70,7 @@ class TestProviderRegistry:
         assert prov is None
 
     def test_clear(self) -> None:
-        self.registry.register("a", {"type": "YAHOO_FINANCE", "enabled": True, "priority": 1})
+        self.registry.register("a", {"type": "MASSIVE", "enabled": True, "priority": 1})
         self.registry.clear()
         with pytest.raises(ProviderError):
             self.registry.get_best_provider()

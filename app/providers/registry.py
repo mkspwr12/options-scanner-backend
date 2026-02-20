@@ -167,11 +167,9 @@ class ProviderRegistry:
         — the infrastructure is ready but the implementations don't exist yet.
         """
         pt = provider_type.upper()
-        if pt in ("YAHOO_FINANCE", "YAHOO"):
-            from .yahoo_provider import YahooFinanceProvider
-            return YahooFinanceProvider()
-        if pt in ("POLYGON", "POLYGON_IO", "MASSIVE"):
-            from .polygon_provider import PolygonProvider
-            return PolygonProvider()
+        if pt == "MASSIVE":
+            from .massive_provider import MassiveProvider
+
+            return MassiveProvider()
         logger.warning("Unsupported provider type '%s' — proxy calls will fail", provider_type)
         return None

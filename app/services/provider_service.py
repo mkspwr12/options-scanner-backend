@@ -14,7 +14,7 @@ from ..repositories.provider_repository import ProviderRepository
 
 logger = logging.getLogger(__name__)
 
-_VALID_TYPES = {"YAHOO_FINANCE", "POLYGON", "MASSIVE", "ALPACA", "TRADIER", "CUSTOM"}
+_VALID_TYPES = {"MASSIVE", "ALPACA", "TRADIER", "CUSTOM"}
 
 
 class ProviderService:
@@ -150,17 +150,12 @@ class ProviderService:
 
             def _do_test() -> None:
                 try:
-                    if provider_type == "YAHOO_FINANCE":
-                        from ..providers.yahoo_provider import YahooFinanceProvider
-                        p = YahooFinanceProvider()
-                        result_container["available"] = p.is_available()
-                        result_container["endpoint"] = f"{base_url or 'https://query1.finance.yahoo.com'}/v8/finance/chart/AAPL"
-                    elif provider_type in ("POLYGON", "MASSIVE"):
-                        from ..providers.polygon_provider import PolygonProvider
+                    if provider_type == "MASSIVE":
+                        from ..providers.massive_provider import MassiveProvider
 
-                        p = PolygonProvider()
+                        p = MassiveProvider()
                         result_container["available"] = p.is_available()
-                        result_container["endpoint"] = f"{base_url or 'https://api.polygon.io'}/v2/aggs/ticker/AAPL/prev"
+                        result_container["endpoint"] = f"{base_url or 'https://api.massive.com'}/v2/aggs/ticker/AAPL/prev"
                     elif provider_type == "ALPACA":
                         result_container["available"] = False
                         result_container["endpoint"] = f"{base_url or 'https://data.alpaca.markets'}/v2/account"

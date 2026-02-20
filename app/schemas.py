@@ -83,8 +83,8 @@ class CreateProviderRequest(BaseModel):
 
     name: str = Field(..., min_length=1, max_length=100)
     type: Literal[
-        "YAHOO_FINANCE", "POLYGON", "MASSIVE", "ALPACA", "TRADIER", "CUSTOM"
-    ] = Field(..., description="YAHOO_FINANCE, POLYGON/MASSIVE, ALPACA, TRADIER, CUSTOM")
+        "MASSIVE", "ALPACA", "TRADIER", "CUSTOM"
+    ] = Field(..., description="MASSIVE, ALPACA, TRADIER, CUSTOM")
     apiKey: str | None = Field(default=None, description="API key (encrypted at rest)")
     apiSecret: str | None = Field(default=None, description="API secret")
     baseUrl: str = Field(default="", description="Provider base URL")
