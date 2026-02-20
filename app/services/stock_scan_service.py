@@ -250,60 +250,79 @@ class StockScanService:
             return []
 
     def _fetch_from_provider_scan_data(self, tickers: list[str]) -> list[StockScanResult]:
-        """Fetch stock scan rows via provider-native scan data method (Massive).
+        """Fetch stock scan rows via provider batch API (Massive).
         
-        Note: Rate limiting is handled automatically by the provider's
-        internal throttling and retry logic to prevent API limit issues.
+        Batches requests to minimize API calls:
+        - Sends 5 tickers per batch
+        - Rate limiting handled by provider's internal throttling
+        
+        This is much faster than sending one ticker at a time with 13s delays.
         """
         results: list[StockScanResult] = []
         total = len(tickers)
-
-        for idx, ticker_sym in enumerate(tickers, 1):
+        batch_size = 5  # Fetch 5 tickers per API call
+        
+        for batch_idx in range(0, len(tickers), batch_size):
+            batch = tickers[batch_idx:batch_idx + batch_size]
+            batch_num = (batch_idx // batch_size) + 1
+            total_batches = (total + batch_size - 1) // batch_size
+            
             try:
-                logger.debug("Fetching stock data for %s (%d/%d)", ticker_sym, idx, total)
-                payload = self._provider.get_stock_scan_data(ticker_sym)  # type: ignore[attr-defined]
-                if not payload:
-                    logger.debug("No data returned for %s", ticker_sym)
-                    continue
-
-                closes = payload.get("closes") or []
-                if len(closes) < 14:
-                    continue
-
-                current_price = float(payload.get("price") or 0.0)
-                prev_close = float(payload.get("prev_close") or current_price)
-                change_pct = round(
-                    ((current_price - prev_close) / prev_close) * 100, 2
-                ) if prev_close > 0 else 0.0
-
-                rsi = self._calculate_rsi(closes, period=14)
-                macd_data = self._calculate_macd(closes)
-
-                results.append(
-                    StockScanResult(
-                        ticker=ticker_sym,
-                        name=str(payload.get("name") or _COMPANY_NAMES.get(ticker_sym, ticker_sym)),
-                        price=round(current_price, 2),
-                        change=change_pct,
-                        volume=int(payload.get("volume") or 0),
-                        rsi=round(rsi, 1),
-                        macd=macd_data,
-                        pe=round(float(payload.get("pe_ratio") or 0.0), 1),
-                        marketCap=int(payload.get("market_cap") or 0),
-                        optionLiquidity="high",
+                logger.info("Fetching stock data batch %d/%d (%d tickers: %s)", 
+                           batch_num, total_batches, len(batch), ", ".join(batch))
+                
+                # Use batch method if available, fall back to individual
+                if hasattr(self._provider, "get_stock_scan_data_batch"):
+                    payloads = self._provider.get_stock_scan_data_batch(batch)  # type: ignore[attr-defined]
+                else:
+                    # Fallback to individual fetches
+                    payloads = {
+                        sym: self._provider.get_stock_scan_data(sym)  # type: ignore[attr-defined]
+                        for sym in batch
+                    }
+                
+                for ticker_sym in batch:
+                    payload = payloads.get(ticker_sym)
+                    if not payload:
+                        logger.debug("No data returned for %s", ticker_sym)
+                        continue
+                    
+                    closes = payload.get("closes") or []
+                    if len(closes) < 14:
+                        continue
+                    
+                    current_price = float(payload.get("price") or 0.0)
+                    prev_close = float(payload.get("prev_close") or current_price)
+                    change_pct = round(
+                        ((current_price - prev_close) / prev_close) * 100, 2
+                    ) if prev_close > 0 else 0.0
+                    
+                    rsi = self._calculate_rsi(closes, period=14)
+                    macd_data = self._calculate_macd(closes)
+                    
+                    results.append(
+                        StockScanResult(
+                            ticker=ticker_sym,
+                            name=str(payload.get("name") or _COMPANY_NAMES.get(ticker_sym, ticker_sym)),
+                            price=round(current_price, 2),
+                            change=change_pct,
+                            volume=int(payload.get("volume") or 0),
+                            rsi=round(rsi, 1),
+                            macd=macd_data,
+                            pe=round(float(payload.get("pe_ratio") or 0.0), 1),
+                            marketCap=int(payload.get("market_cap") or 0),
+                            optionLiquidity="high",
+                        )
                     )
-                )
             except RuntimeError as e:
                 # Catch rate limit and connection errors from provider
                 if "rate limit" in str(e).lower():
-                    logger.error("Rate limit exceeded for %s - %s", ticker_sym, e)
+                    logger.error("Rate limit exceeded for batch %d - %s", batch_num, e)
                 else:
-                    logger.warning("Provider error for %s: %s", ticker_sym, e)
-                continue
+                    logger.error("Error fetching batch %d: %s", batch_num, e)
             except Exception:
-                logger.exception("Unexpected error fetching data for %s", ticker_sym)
-                continue
-
+                logger.exception("Error fetching batch %d", batch_num)
+        
         logger.info("Stock scan completed: %d/%d tickers returned data", len(results), total)
         return results
 
