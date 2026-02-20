@@ -1,7 +1,7 @@
 """Scan router."""
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, BackgroundTasks, Depends, Query
 
 from ..dependencies import get_multi_leg_scan_service, get_scan_service, get_stock_scan_service, get_watchlist_service
 from ..schemas import MultiLegScanRequest, SingleScanRequest, StockScanRequest
@@ -83,12 +83,22 @@ def scan_post(
 
 @router.post("/scan/trigger")
 def trigger_scan(
+    background_tasks: BackgroundTasks,
     scan_svc: ScanService = Depends(get_scan_service),
     wl_svc: WatchlistService = Depends(get_watchlist_service),
 ) -> dict:
-    """Manually trigger a live scan for watchlist symbols."""
+    """Manually trigger a live scan for watchlist symbols.
+
+    Runs the scan asynchronously in the background to avoid HTTP gateway
+    timeouts (the throttled scan takes several minutes).
+    """
     symbols = wl_svc.get_symbols()
-    return scan_svc.run_scan(symbols)
+    background_tasks.add_task(scan_svc.run_scan, symbols)
+    return {
+        "status": "ok",
+        "message": f"Scan triggered for {len(symbols)} symbols. Running in background with rate limiting. Check /api/scan for results in a few minutes.",
+        "symbols": symbols,
+    }
 
 
 @router.get("/multi-leg-opportunities")
