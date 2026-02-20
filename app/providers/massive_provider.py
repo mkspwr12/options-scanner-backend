@@ -89,7 +89,16 @@ class MassiveProvider:
                     expirations.add(str(exp))
         return sorted(expirations)
 
-    def get_options_chain(self, symbol: str, expiration: str | None = None) -> list[OptionContract]:
+    def get_options_chain(self, symbol: str, expiration: str | None = None, underlying_price: float | None = None) -> list[OptionContract]:
+        """Fetch options chain using free-tier endpoints.
+
+        Uses /v3/reference/options/contracts for contract metadata and
+        /v2/aggs/ticker/{contract}/prev for pricing (since /v3/snapshot/options
+        requires a paid plan and returns 403 on free tier).
+
+        To stay within rate limits, limits to ATM contracts (3 calls + 3 puts)
+        near the underlying price.
+        """
         sym = symbol.upper()
         target_exp = expiration
         if not target_exp:
@@ -98,46 +107,105 @@ class MassiveProvider:
                 return []
             target_exp = dates[0]
 
+        # Get all contracts for this expiration
         params = {
+            "underlying_ticker": sym,
             "expiration_date": target_exp,
+            "expired": "false",
             "limit": "250",
             "sort": "strike_price",
             "order": "asc",
         }
-        payloads = self._paginate_json(f"/v3/snapshot/options/{sym}", params)
-        contracts: list[OptionContract] = []
-
+        payloads = self._paginate_json("/v3/reference/options/contracts", params)
+        all_contracts: list[dict] = []
         for payload in payloads:
             for item in payload.get("results") or []:
-                details = item.get("details") or {}
-                last_quote = item.get("last_quote") or {}
-                day = item.get("day") or {}
+                ctype = str(item.get("contract_type") or "").upper()
+                if ctype in ("CALL", "PUT"):
+                    all_contracts.append(item)
 
-                ctype = str(details.get("contract_type") or "").upper()
-                if ctype not in ("CALL", "PUT"):
-                    continue
+        if not all_contracts:
+            return []
 
-                bid = self._safe_float(last_quote.get("bid"))
-                ask = self._safe_float(last_quote.get("ask"))
-                close_price = self._safe_float(day.get("close"))
-                last_price = close_price if close_price > 0 else ((bid + ask) / 2 if (bid > 0 or ask > 0) else 0.0)
+        # Filter to ATM contracts near the underlying price
+        # to minimize API calls for pricing
+        atm_contracts = self._filter_atm_contracts(all_contracts, underlying_price or 0, max_per_type=5)
 
-                contracts.append(
-                    OptionContract(
-                        symbol=sym,
-                        strike=self._safe_float(details.get("strike_price")),
-                        expiration=str(details.get("expiration_date") or target_exp),
-                        option_type=ctype,
-                        bid=bid,
-                        ask=ask,
-                        last_price=last_price,
-                        volume=self._safe_int(day.get("volume")),
-                        open_interest=self._safe_int(item.get("open_interest")),
-                        implied_volatility=self._safe_float(item.get("implied_volatility")),
-                    )
+        logger.info(
+            "Options chain for %s exp=%s: %d total contracts, %d ATM selected for pricing",
+            sym, target_exp, len(all_contracts), len(atm_contracts),
+        )
+
+        # Fetch pricing for each selected contract via /v2/aggs/ticker/{ticker}/prev
+        contracts: list[OptionContract] = []
+        for ref in atm_contracts:
+            contract_ticker = ref.get("ticker", "")
+            ctype = str(ref.get("contract_type") or "").upper()
+            strike = self._safe_float(ref.get("strike_price"))
+            exp_date = str(ref.get("expiration_date") or target_exp)
+
+            # Get prev-day pricing for the contract
+            try:
+                pricing = self._get_json(f"/v2/aggs/ticker/{contract_ticker}/prev", {"adjusted": "true"})
+                rows = pricing.get("results") or []
+                if rows:
+                    row = rows[0]
+                    close_price = self._safe_float(row.get("c"))
+                    high = self._safe_float(row.get("h"))
+                    low = self._safe_float(row.get("l"))
+                    # Estimate bid/ask from high/low
+                    bid = low if low > 0 else close_price * 0.95
+                    ask = high if high > 0 else close_price * 1.05
+                    volume = self._safe_int(row.get("v"))
+                else:
+                    close_price = 0.0
+                    bid = 0.0
+                    ask = 0.0
+                    volume = 0
+            except Exception:
+                logger.debug("Could not get pricing for %s", contract_ticker)
+                close_price = 0.0
+                bid = 0.0
+                ask = 0.0
+                volume = 0
+
+            last_price = close_price if close_price > 0 else ((bid + ask) / 2 if (bid > 0 or ask > 0) else 0.0)
+
+            contracts.append(
+                OptionContract(
+                    symbol=sym,
+                    strike=strike,
+                    expiration=exp_date,
+                    option_type=ctype,
+                    bid=bid,
+                    ask=ask,
+                    last_price=last_price,
+                    volume=volume,
+                    open_interest=0,
+                    implied_volatility=0.0,
                 )
+            )
 
         return contracts
+
+    @staticmethod
+    def _filter_atm_contracts(contracts: list[dict], underlying_price: float, max_per_type: int = 5) -> list[dict]:
+        """Select contracts nearest to the underlying price, up to max_per_type calls + puts."""
+        if underlying_price <= 0:
+            # No price info — take the middle contracts
+            mid = len(contracts) // 2
+            start = max(0, mid - max_per_type)
+            end = min(len(contracts), mid + max_per_type)
+            return contracts[start:end]
+
+        calls = [c for c in contracts if str(c.get("contract_type", "")).upper() == "CALL"]
+        puts = [c for c in contracts if str(c.get("contract_type", "")).upper() == "PUT"]
+
+        def nearest(items: list[dict], n: int) -> list[dict]:
+            scored = sorted(items, key=lambda c: abs(float(c.get("strike_price", 0)) - underlying_price))
+            return scored[:n]
+
+        return nearest(calls, max_per_type) + nearest(puts, max_per_type)
 
     def get_stock_scan_data(self, symbol: str, days: int = 90) -> dict[str, Any] | None:
         sym = symbol.upper()

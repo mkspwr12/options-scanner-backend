@@ -38,7 +38,7 @@ class MarketDataProvider(Protocol):
     """Protocol that all market data providers must implement."""
 
     def get_options_chain(
-        self, symbol: str, expiration: str | None = None
+        self, symbol: str, expiration: str | None = None, underlying_price: float | None = None
     ) -> list[OptionContract]:
         """Fetch options chain for a symbol.
 

@@ -290,7 +290,7 @@ class ScanService:
             )
             try:
                 quote = self._provider.get_quote(sym)
-                contracts = self._provider.get_options_chain(sym)
+                contracts = self._provider.get_options_chain(sym, underlying_price=quote.price)
                 self._cb.record_success()
 
                 for c in contracts:
