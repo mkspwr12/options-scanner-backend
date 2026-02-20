@@ -250,13 +250,20 @@ class StockScanService:
             return []
 
     def _fetch_from_provider_scan_data(self, tickers: list[str]) -> list[StockScanResult]:
-        """Fetch stock scan rows via provider-native scan data method (Massive)."""
+        """Fetch stock scan rows via provider-native scan data method (Massive).
+        
+        Note: Rate limiting is handled automatically by the provider's
+        internal throttling and retry logic to prevent API limit issues.
+        """
         results: list[StockScanResult] = []
+        total = len(tickers)
 
-        for ticker_sym in tickers:
+        for idx, ticker_sym in enumerate(tickers, 1):
             try:
+                logger.debug("Fetching stock data for %s (%d/%d)", ticker_sym, idx, total)
                 payload = self._provider.get_stock_scan_data(ticker_sym)  # type: ignore[attr-defined]
                 if not payload:
+                    logger.debug("No data returned for %s", ticker_sym)
                     continue
 
                 closes = payload.get("closes") or []
@@ -286,10 +293,18 @@ class StockScanService:
                         optionLiquidity="high",
                     )
                 )
+            except RuntimeError as e:
+                # Catch rate limit and connection errors from provider
+                if "rate limit" in str(e).lower():
+                    logger.error("Rate limit exceeded for %s - %s", ticker_sym, e)
+                else:
+                    logger.warning("Provider error for %s: %s", ticker_sym, e)
+                continue
             except Exception:
-                logger.exception("Provider scan data fetch failed for %s", ticker_sym)
+                logger.exception("Unexpected error fetching data for %s", ticker_sym)
                 continue
 
+        logger.info("Stock scan completed: %d/%d tickers returned data", len(results), total)
         return results
 
     # ------------------------------------------------------------------

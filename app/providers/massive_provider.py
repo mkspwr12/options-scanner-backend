@@ -2,12 +2,16 @@
 
 Implements the ``MarketDataProvider`` protocol for quotes, options chains,
 and expiration dates using Massive REST APIs.
+
+Rate limiting: Implements exponential backoff with configurable request delays
+to prevent hitting API rate limits.
 """
 from __future__ import annotations
 
 import json
 import logging
 import os
+import time
 from datetime import date, timedelta
 from typing import Any
 from urllib.error import HTTPError, URLError
@@ -20,11 +24,26 @@ logger = logging.getLogger(__name__)
 
 
 class MassiveProvider:
-    """Live options/quote data via Massive."""
+    """Live options/quote data via Massive with rate limiting.
+    
+    Rate limiting strategy:
+    - Minimum delay between requests: 0.1s (10 req/sec max)
+    - Exponential backoff on 429 errors (1s, 2s, 4s, 8s)
+    - Max retries: 3
+    """
 
-    def __init__(self, api_key: str | None = None, base_url: str | None = None) -> None:
+    def __init__(
+        self,
+        api_key: str | None = None,
+        base_url: str | None = None,
+        min_request_interval: float = 0.1,  # 100ms between requests
+        max_retries: int = 3,
+    ) -> None:
         self._api_key = (api_key or os.getenv("MASSIVE_API_KEY") or "").strip()
         self._base_url = (base_url or os.getenv("MASSIVE_BASE_URL") or "https://api.massive.com").rstrip("/")
+        self._min_request_interval = min_request_interval
+        self._max_retries = max_retries
+        self._last_request_time: float = 0.0
 
     def is_available(self) -> bool:
         if not self._api_key:
@@ -180,7 +199,18 @@ class MassiveProvider:
             next_params = {k: v[-1] for k, v in qs.items() if v}
         return payloads
 
+    def _rate_limit_delay(self) -> None:
+        """Enforce minimum delay between API requests."""
+        if self._last_request_time > 0:
+            elapsed = time.time() - self._last_request_time
+            if elapsed < self._min_request_interval:
+                sleep_time = self._min_request_interval - elapsed
+                logger.debug("Rate limiting: sleeping %.3fs", sleep_time)
+                time.sleep(sleep_time)
+        self._last_request_time = time.time()
+
     def _get_json(self, path: str, params: dict[str, str] | None = None) -> dict[str, Any]:
+        """Fetch JSON from Massive API with rate limiting and retry logic."""
         if not self._api_key:
             raise RuntimeError("MASSIVE_API_KEY is not configured")
 
@@ -188,15 +218,47 @@ class MassiveProvider:
         query["apiKey"] = self._api_key
         url = f"{self._base_url}{path}?{urlencode(query)}"
 
-        try:
-            with urlopen(url, timeout=20) as resp:  # noqa: S310
-                raw = resp.read().decode("utf-8")
-                payload: dict[str, Any] = json.loads(raw)
-                return payload
-        except HTTPError as exc:
-            raise RuntimeError(f"Massive HTTP {exc.code} for {path}") from exc
-        except URLError as exc:
-            raise RuntimeError(f"Massive connection error for {path}: {exc.reason}") from exc
+        last_error: Exception | None = None
+        for attempt in range(self._max_retries):
+            try:
+                # Enforce rate limiting
+                self._rate_limit_delay()
+
+                with urlopen(url, timeout=20) as resp:  # noqa: S310
+                    raw = resp.read().decode("utf-8")
+                    payload: dict[str, Any] = json.loads(raw)
+                    return payload
+
+            except HTTPError as exc:
+                if exc.code == 429:
+                    # Rate limit hit - exponential backoff
+                    backoff_time = 2 ** attempt  # 1s, 2s, 4s
+                    logger.warning(
+                        "Massive rate limit hit (429) for %s, attempt %d/%d - backing off %ds",
+                        path,
+                        attempt + 1,
+                        self._max_retries,
+                        backoff_time,
+                    )
+                    if attempt < self._max_retries - 1:
+                        time.sleep(backoff_time)
+                        last_error = exc
+                        continue
+                    raise RuntimeError(f"Massive rate limit exceeded after {self._max_retries} retries") from exc
+                else:
+                    # Other HTTP errors are not retryable
+                    raise RuntimeError(f"Massive HTTP {exc.code} for {path}") from exc
+
+            except URLError as exc:
+                last_error = exc
+                if attempt < self._max_retries - 1:
+                    logger.warning("Massive connection error for %s, retrying... (%s)", path, exc.reason)
+                    time.sleep(1)
+                    continue
+                raise RuntimeError(f"Massive connection error for {path}: {exc.reason}") from exc
+
+        # Should not reach here, but handle it gracefully
+        raise RuntimeError(f"Max retries exceeded for {path}") from last_error
 
     @staticmethod
     def _safe_float(val: object, default: float = 0.0) -> float:
