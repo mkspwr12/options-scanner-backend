@@ -1,0 +1,5 @@
+<step title="Incoming Request" date="2026-02-18T21:24:07.998" instance="10ec71" url="/logstream/http" method="GET" type="request" pid="774,1,7" Host="options-scanner-backend-2exk6s.scm.azurewebsites.net" User-Agent="AZURECLI/2.83.0 (MSI)" Accept-Encoding="identity" Authorization="Bea..." x-ms-client-request-id="f29a3eec-0d0f-11f1-a398-84b1e26ffc70" X-ARR-LOG-ID="f29a3eec-0d0f-11f1-a398-84b1e26ffc70" CLIENT-IP="20.236.11.29:24880" X-SITE-DEPLOYMENT-ID="options-scanner-backend-2exk6s" WAS-DEFAULT-HOSTNAME="options-scanner-backend-2exk6s.scm.azurewebsites.net" X-Forwarded-Proto="https" X-AppService-Proto="https" X-Forwarded-TlsVersion="1.3" X-WAWS-Unencoded-URL="/logstream/http" X-Client-IP="20.236.11.29" X-Client-Port="24880" >
+  <step title="LogStreamHandlerMiddleware.Invoke" date="2026-02-18T21:24:08.074" /><!-- duration: 2634ms -->
+  <step title="Error occurred" date="2026-02-18T21:31:10.924" type="error" text="LogStreamManager: ProcessRequest end" /><!-- duration: 11ms -->
+  <step title="Outgoing response" date="2026-02-18T21:31:10.983" type="response" statusCode="200" statusText="OK" /><!-- duration: 4ms -->
+</step><!-- duration: 422994ms -->

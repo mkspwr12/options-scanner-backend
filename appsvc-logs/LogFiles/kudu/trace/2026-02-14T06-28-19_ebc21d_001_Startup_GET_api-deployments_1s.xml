@@ -1,0 +1,5 @@
+<step title="Startup Request" date="2026-02-14T06:28:19.135" instance="ebc21d" url="/api/deployments/?$orderby=ReceivedTime%20desc&amp;$top=20&amp;api-version=2022-03-01" method="GET" type="request" pid="770,1,7" ScmType="None" SCM_DO_BUILD_DURING_DEPLOYMENT="true" >
+  <step title="Cleanup Xml Logs" date="2026-02-14T06:28:19.253" >
+    <step title="Cleanup Infos" date="2026-02-14T06:28:19.504" totalFiles="304" totalCleanup="144" /><!-- duration: 267ms -->
+  </step><!-- duration: 560ms -->
+</step><!-- duration: 698ms -->

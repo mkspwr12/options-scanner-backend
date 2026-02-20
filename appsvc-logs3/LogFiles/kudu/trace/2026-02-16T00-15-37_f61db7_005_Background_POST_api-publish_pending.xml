@@ -1,0 +1,37 @@
+<step title="BackgroundTrace" date="2026-02-16T00:15:37.508" instance="f61db7" url="/api/publish" method="POST" >
+  <step title="Creating temporary deployment - FetchDeploymentManager" date="2026-02-16T00:15:37.654" /><!-- duration: 4ms -->
+  <step title="Creating temporary deployment" date="2026-02-16T00:15:37.661" /><!-- duration: 218ms -->
+  <step title="Performing fetch based deployment" date="2026-02-16T00:15:38.046" >
+    <step title="Cleaning up temp folders from previous zip deployments and extracting pushed zip file /tmp/zipdeploy/f7f7ab7b-2465-447c-8e1a-5474a497b10c.zip (0.13 MB) to /tmp/zipdeploy/extracted" date="2026-02-16T00:15:39.338" >
+      <step title="ChmodRecursive Process exited with total time taken in ms: 130" date="2026-02-16T00:15:39.755" /><!-- duration: 4ms -->
+    </step><!-- duration: 428ms -->
+    <step title="Deployment timer started" date="2026-02-16T00:15:41.826" >
+      <step title="DeploymentManager.Deploy(id:ff9ce94a-616b-415c-99ae-4e1b80c7bdd3)" date="2026-02-16T00:15:41.842" >
+        <step title="Collecting changeset information" date="2026-02-16T00:15:41.864" /><!-- duration: 133ms -->
+        <step title="Updating submodules" date="2026-02-16T00:15:42.004" /><!-- duration: 1176ms -->
+        <step title="Determining deployment builder" date="2026-02-16T00:15:43.695" >
+          <step title="Builder is OryxBuilder" date="2026-02-16T00:15:43.784" /><!-- duration: 20ms -->
+        </step><!-- duration: 121ms -->
+        <step title="PreDeployment: context.CleanOutputPath False" date="2026-02-16T00:15:43.950" >
+          <step title="PreDeployment: context.OutputPath /home/site/wwwroot" date="2026-02-16T00:15:44.293" >
+            <step title="Building" date="2026-02-16T00:15:44.657" >
+              <step title="Executing external process" date="2026-02-16T00:15:46.258" type="process" path="bash" arguments="-c &quot;oryx build /tmp/zipdeploy/extracted -o /home/site/wwwroot --platform python --platform-version 3.11 -p virtualenv_name=antenv --log-file /tmp/build-debug.log  -i /tmp/8de6cf0868bedcf --compress-destination-dir | tee /tmp/oryx-build.log ; exit $PIPESTATUS &quot;" >
+                <step title="Cpu: gzip(1016,4.310s)+tar(1015,2.390s)+build.sh(1001,0.020s)+oryx(972,7.320s)+tee(973,0.000s)+bash(971,0.000s)=total(14.040s)" date="2026-02-16T00:17:34.418" /><!-- duration: 203ms -->
+                <step title="bash: no io activity for 60s, prev-cpu=-1.000s, current-cpu=14.040s" date="2026-02-16T00:17:34.675" /><!-- duration: 84ms -->
+              </step><!-- duration: 194610ms -->
+              <step title="Using PythonDeploymentLogParser" date="2026-02-16T00:19:01.493" /><!-- duration: 14ms -->
+              <step title="Modified file to trigger a restart of the app container." date="2026-02-16T00:19:03.152" /><!-- duration: 6ms -->
+              <step title="Skip function trigger and logicapp sync because function is not enabled." date="2026-02-16T00:19:03.179" /><!-- duration: 30ms -->
+              <step title="Purge deployment items" date="2026-02-16T00:19:04.966" >
+                <step title="Remove f9ffb4e8-, Success, received at 02/14/2026 06:19:38" date="2026-02-16T00:19:05.027" /><!-- duration: 4ms -->
+              </step><!-- duration: 67ms -->
+            </step><!-- duration: 200473ms -->
+          </step><!-- duration: 200851ms -->
+          <step title="Cleaning up temp files" date="2026-02-16T00:19:05.147" /><!-- duration: 809ms -->
+          <step title="Cleaning up temp files" date="2026-02-16T00:19:05.960" /><!-- duration: 514ms -->
+          <step title="Reloading status file with latest updates" date="2026-02-16T00:19:06.519" >
+            <step title="WebHooksManager.PublishEventAsync: PostDeployment" date="2026-02-16T00:19:06.531" /><!-- duration: 121ms -->
+          </step><!-- duration: 137ms -->
+          <step title="Cleaning up temporary deployment - fetch deployment was successful" date="2026-02-16T00:19:06.662" /><!-- duration: 4ms -->
+        </step><!-- duration: 202772ms -->
+      </step><!-- duration: 204900ms -->

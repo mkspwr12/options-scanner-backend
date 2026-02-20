@@ -1,0 +1,51 @@
+<step title="BackgroundTrace" date="2026-02-16T17:26:40.946" instance="f61db7" url="/api/zipdeploy" method="POST" >
+  <step title="Cleanup Xml Logs" date="2026-02-16T17:26:41.054" >
+    <step title="Cleanup Infos" date="2026-02-16T17:26:41.427" totalFiles="1159" totalCleanup="999" /><!-- duration: 148ms -->
+  </step><!-- duration: 610ms -->
+  <step title="Creating temporary deployment - FetchDeploymentManager" date="2026-02-16T17:26:43.531" /><!-- duration: 119ms -->
+  <step title="Creating temporary deployment" date="2026-02-16T17:26:43.888" /><!-- duration: 1289ms -->
+  <step title="Performing fetch based deployment" date="2026-02-16T17:26:48.131" >
+    <step title="Cleaning up temp folders from previous zip deployments and extracting pushed zip file /tmp/zipdeploy/09938f9a-8e4b-4c28-9f4c-fd73799b7d98.zip (10.88 MB) to /tmp/zipdeploy/extracted" date="2026-02-16T17:26:51.237" >
+      <step title="ChmodRecursive Process exited with total time taken in ms: 963" date="2026-02-16T17:27:12.716" /><!-- duration: 101ms -->
+    </step><!-- duration: 21651ms -->
+    <step title="Deployment timer started" date="2026-02-16T17:27:15.142" >
+      <step title="DeploymentManager.Deploy(id:403082ab-6749-49ec-9cd0-2b8702834eaf)" date="2026-02-16T17:27:15.244" >
+        <step title="Collecting changeset information" date="2026-02-16T17:27:15.344" /><!-- duration: 1276ms -->
+        <step title="Updating submodules" date="2026-02-16T17:27:16.650" /><!-- duration: 1399ms -->
+        <step title="Determining deployment builder" date="2026-02-16T17:27:18.681" >
+          <step title="Builder is OryxBuilder" date="2026-02-16T17:27:18.820" /><!-- duration: 31ms -->
+        </step><!-- duration: 265ms -->
+        <step title="PreDeployment: context.CleanOutputPath False" date="2026-02-16T17:27:19.176" >
+          <step title="PreDeployment: context.OutputPath /home/site/wwwroot" date="2026-02-16T17:27:19.471" >
+            <step title="Building" date="2026-02-16T17:27:19.739" >
+              <step title="Executing external process" date="2026-02-16T17:27:22.007" type="process" path="bash" arguments="-c &quot;oryx build /tmp/zipdeploy/extracted -o /home/site/wwwroot --platform python --platform-version 3.11 -p virtualenv_name=antenv --log-file /tmp/build-debug.log  -i /tmp/8de6d80a2ea206c --compress-destination-dir | tee /tmp/oryx-build.log ; exit $PIPESTATUS &quot;" >
+                <step title="Error occurred" date="2026-02-16T17:31:05.120" type="error" text="GetParentProcessLinux (1034) failed.: Could not find a part of the path &apos;/proc/1034/stat&apos;." stackTrace="   at Interop.ThrowExceptionForIoErrno(ErrorInfo errorInfo, String path, Boolean isDirError)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, UnixFileMode openPermissions, Int64&amp; fileLength, UnixFileMode&amp; filePermissions, Boolean failForSymlink, Boolean&amp; wasSymlink, Func`4 createOpenException)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at System.IO.StreamReader.ValidateArgsAndOpenPath(String path, Encoding encoding, Int32 bufferSize)
+   at System.IO.File.ReadLines(String path)
+   at Kudu.Core.Infrastructure.ProcessExtensions.GetParentProcessLinux(Process process, ITracer tracer) in /tmp/KuduLite/Kudu.Core/Infrastructure/ProcessExtensions.cs:line 155" /><!-- duration: 172ms -->
+                <step title="Cpu: python3(1025,15.520s)+uv(978,8.090s)+ts(979,0.110s)+build.sh(977,0.000s)+build.sh(976,0.000s)+build.sh(859,0.070s)+oryx(822,9.410s)+tee(823,0.020s)+bash(821,0.010s)=total(33.220s)" date="2026-02-16T17:31:06.059" /><!-- duration: 19ms -->
+                <step title="bash: no io activity for 60s, prev-cpu=-1.000s, current-cpu=33.220s" date="2026-02-16T17:31:06.107" /><!-- duration: 277ms -->
+                <step title="Cpu: python3(1025,24.790s)+uv(978,8.420s)+ts(979,0.110s)+build.sh(977,0.000s)+build.sh(976,0.000s)+build.sh(859,0.070s)+oryx(822,9.470s)+tee(823,0.020s)+bash(821,0.010s)=total(42.880s)" date="2026-02-16T17:32:07.843" /><!-- duration: 41ms -->
+                <step title="bash: no io activity for 125s, prev-cpu=33.220s, current-cpu=42.880s" date="2026-02-16T17:32:08.089" /><!-- duration: 129ms -->
+              </step><!-- duration: 368406ms -->
+              <step title="Using PythonDeploymentLogParser" date="2026-02-16T17:33:30.886" /><!-- duration: 11ms -->
+              <step title="Triggering recycle (preview mode disabled)." date="2026-02-16T17:33:32.148" /><!-- duration: 18ms -->
+              <step title="Modified file to trigger a restart of the app container." date="2026-02-16T17:33:32.217" /><!-- duration: 4ms -->
+              <step title="Skip function trigger and logicapp sync because function is not enabled." date="2026-02-16T17:33:32.243" /><!-- duration: 13ms -->
+              <step title="Purge deployment items" date="2026-02-16T17:33:33.753" >
+                <step title="Remove temp-52e6, Pending, received at 02/16/2026 17:26:44" date="2026-02-16T17:33:33.830" /><!-- duration: 3ms -->
+                <step title="Remove temp-a522, Pending, received at 02/16/2026 17:25:21" date="2026-02-16T17:33:33.900" /><!-- duration: 4ms -->
+                <step title="Remove 57081bb5-, Success, received at 02/16/2026 00:00:40" date="2026-02-16T17:33:33.959" /><!-- duration: 4ms -->
+              </step><!-- duration: 214ms -->
+            </step><!-- duration: 374334ms -->
+          </step><!-- duration: 374606ms -->
+          <step title="Cleaning up temp files" date="2026-02-16T17:33:34.081" /><!-- duration: 1826ms -->
+          <step title="Cleaning up temp files" date="2026-02-16T17:33:35.919" /><!-- duration: 715ms -->
+          <step title="Reloading status file with latest updates" date="2026-02-16T17:33:36.713" >
+            <step title="WebHooksManager.PublishEventAsync: PostDeployment" date="2026-02-16T17:33:36.773" /><!-- duration: 969ms -->
+          </step><!-- duration: 1148ms -->
+          <step title="Cleaning up temporary deployment - fetch deployment was successful" date="2026-02-16T17:33:37.921" /><!-- duration: 37ms -->
+        </step><!-- duration: 378852ms -->
+      </step><!-- duration: 382865ms -->

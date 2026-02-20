@@ -1,0 +1,31 @@
+<step title="BackgroundTrace" date="2026-02-18T06:36:11.606" instance="72443b" url="/api/zipdeploy" method="POST" >
+  <step title="Cleanup Xml Logs" date="2026-02-18T06:36:11.609" >
+    <step title="Cleanup Infos" date="2026-02-18T06:36:11.638" totalFiles="1570" totalCleanup="1410" /><!-- duration: 5ms -->
+  </step><!-- duration: 37ms -->
+  <step title="Creating temporary deployment - FetchDeploymentManager" date="2026-02-18T06:36:11.698" /><!-- duration: 2ms -->
+  <step title="Creating temporary deployment" date="2026-02-18T06:36:11.703" /><!-- duration: 39ms -->
+  <step title="Performing fetch based deployment" date="2026-02-18T06:36:11.779" >
+    <step title="Cleaning up temp folders from previous zip deployments and extracting pushed zip file /tmp/zipdeploy/be1ba7df-72f5-425f-a102-83863b93872a.zip (22.20 MB) to /tmp/zipdeploy/extracted" date="2026-02-18T06:36:12.984" >
+      <step title="ChmodRecursive Process exited with total time taken in ms: 406" date="2026-02-18T06:36:17.196" /><!-- duration: 9ms -->
+    </step><!-- duration: 4229ms -->
+    <step title="Deployment timer started" date="2026-02-18T06:36:19.242" >
+      <step title="DeploymentManager.Deploy(id:a0a90fb2-911e-470b-91f6-d1158d72a2bd)" date="2026-02-18T06:36:19.250" >
+        <step title="Collecting changeset information" date="2026-02-18T06:36:19.267" /><!-- duration: 111ms -->
+        <step title="Updating submodules" date="2026-02-18T06:36:19.390" /><!-- duration: 1143ms -->
+        <step title="Determining deployment builder" date="2026-02-18T06:36:20.804" >
+          <step title="Builder is OryxBuilder" date="2026-02-18T06:36:20.816" /><!-- duration: 3ms -->
+        </step><!-- duration: 20ms -->
+        <step title="PreDeployment: context.CleanOutputPath False" date="2026-02-18T06:36:20.877" >
+          <step title="PreDeployment: context.OutputPath /home/site/wwwroot" date="2026-02-18T06:36:21.012" >
+            <step title="Building" date="2026-02-18T06:36:21.160" >
+              <step title="Executing external process" date="2026-02-18T06:36:21.464" type="process" path="bash" arguments="-c &quot;oryx build /tmp/zipdeploy/extracted -o /home/site/wwwroot --platform python --platform-version 3.11 -p virtualenv_name=antenv --log-file /tmp/build-debug.log  -i /tmp/8de6eb807465fd0 --compress-destination-dir | tee /tmp/oryx-build.log ; exit $PIPESTATUS &quot;" >
+                <step title="Cpu: python(929,8.300s)+ts(930,0.060s)+build.sh(928,0.000s)+build.sh(927,0.000s)+build.sh(819,0.030s)+oryx(801,2.010s)+tee(802,0.000s)+bash(800,0.000s)=total(10.400s)" date="2026-02-18T06:38:02.290" /><!-- duration: 5ms -->
+                <step title="bash: no io activity for 61s, prev-cpu=-1.000s, current-cpu=10.400s" date="2026-02-18T06:38:02.309" /><!-- duration: 3ms -->
+                <step title="Process dump" date="2026-02-18T06:39:25.422" exitCode="2" type="processOutput" /><!-- duration: 5ms -->
+              </step><!-- duration: 183970ms -->
+              <step title="Error occurred" date="2026-02-18T06:39:25.465" type="error" text="gzip: stdout: No space left on device
+tar: Child returned status 1
+tar: Error is not recoverable: exiting now
+/bin/bash -c &quot;oryx build /tmp/zipdeploy/extracted -o /home/site/wwwroot --platform python --platform-version 3.11 -p virtualenv_name=antenv --log-file /tmp/build-debug.log  -i /tmp/8de6eb807465fd0 --compress-destination-dir | tee /tmp/oryx-build.log ; exit $PIPESTATUS &quot;" stackTrace="   at Kudu.Core.Infrastructure.Executable.ExecuteInternal(ITracer tracer, Func`2 onWriteOutput, Func`2 onWriteError, CancellationToken token, Encoding encoding, String arguments, Object[] args) in /tmp/KuduLite/Kudu.Core/Infrastructure/Executable.cs:line 239
+   at Kudu.Core.Infrastructure.Executable.ExecuteWithProgressWriter(ILogger logger, ITracer tracer, CancellationToken token, String arguments, Object[] args) in /tmp/KuduLite/Kudu.Core/Infrastructure/Executable.cs:line 118
+   at Kudu.Core.Deployment.Generator.ExternalCommandBuilder.RunCommand(DeploymentContext context, String command, Boolean ignoreManifest, CancellationTok

@@ -1,0 +1,578 @@
+2026-02-20T04:26:39.7070622Z State: Starting, Action: EstablishingSiteNetworks, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-20T04:26:40.4705090Z State: Starting, Action: StartingMsiContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-20T04:26:45.1106070Z State: Starting, Action: StartingSiteContainers, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-20T04:26:45.1109069Z Container start method called.
+2026-02-20T04:26:45.1109756Z State: Starting, Action: PullingImage, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pulling image 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T04:26:45.1111073Z Establishing network.
+2026-02-20T04:26:45.1112722Z Pulling image: appsvc/python:3.11_20260203.2.tuxprod.
+2026-02-20T04:27:31.6159947Z Image appsvc/python:3.11_20260203.2.tuxprod is pulled from registry 10.1.0.4:13209
+2026-02-20T04:27:31.6161614Z Container is starting.
+2026-02-20T04:27:31.7230644Z State: Starting, Action: MountingVolumes, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Mounting volumes for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T04:27:31.7233818Z Establishing user namespace if not established already.
+2026-02-20T04:27:31.7235462Z Establishing network if not established already.
+2026-02-20T04:27:31.7236838Z Mounting volumes.
+2026-02-20T04:27:31.7541046Z Nested mountpoint 
+2026-02-20T04:27:31.7609046Z Nested mountpoint volatile/logs
+2026-02-20T04:27:31.7991394Z Nested mountpoint 
+2026-02-20T04:27:31.8429188Z Nested mountpoint 
+2026-02-20T04:27:31.8436371Z Nested mountpoint 
+2026-02-20T04:27:33.2351100Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Finished pulling container image and mounting volumes for options-scanner-backend-2exk6s. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-02-20T04:27:33.2352774Z Creating container.
+2026-02-20T04:27:33.2353665Z Creating pipes for streaming container io.
+2026-02-20T04:27:33.2354632Z Creating stdout named pipe at /podr/container/pipe/8fc337df5054_options-scanner-backend-2exk6s/stdout_8236713b3f014df4a5dabf878db5bc0d.
+2026-02-20T04:27:33.2507236Z Successfully created stdout named pipe at: /podr/container/pipe/8fc337df5054_options-scanner-backend-2exk6s/stdout_8236713b3f014df4a5dabf878db5bc0d.
+2026-02-20T04:27:33.2508953Z Opening named pipe /podr/container/pipe/8fc337df5054_options-scanner-backend-2exk6s/stdout_8236713b3f014df4a5dabf878db5bc0d for reading in non-blocking mode.
+2026-02-20T04:27:33.2510237Z Successfully opened named pipe: /podr/container/pipe/8fc337df5054_options-scanner-backend-2exk6s/stdout_8236713b3f014df4a5dabf878db5bc0d.
+2026-02-20T04:27:33.2511157Z Successfully removed non-blocking flag from /podr/container/pipe/8fc337df5054_options-scanner-backend-2exk6s/stdout_8236713b3f014df4a5dabf878db5bc0d.
+2026-02-20T04:27:33.2512812Z Creating stderr named pipe at /podr/container/pipe/8fc337df5054_options-scanner-backend-2exk6s/stderr_c0e8efb2eef348c78a70ca3b9872e6a8.
+2026-02-20T04:27:33.2514182Z Successfully created stderr named pipe at: /podr/container/pipe/8fc337df5054_options-scanner-backend-2exk6s/stderr_c0e8efb2eef348c78a70ca3b9872e6a8.
+2026-02-20T04:27:33.2515041Z Opening named pipe /podr/container/pipe/8fc337df5054_options-scanner-backend-2exk6s/stderr_c0e8efb2eef348c78a70ca3b9872e6a8 for reading in non-blocking mode.
+2026-02-20T04:27:33.2516082Z Successfully opened named pipe: /podr/container/pipe/8fc337df5054_options-scanner-backend-2exk6s/stderr_c0e8efb2eef348c78a70ca3b9872e6a8.
+2026-02-20T04:27:33.2516911Z Successfully removed non-blocking flag from /podr/container/pipe/8fc337df5054_options-scanner-backend-2exk6s/stderr_c0e8efb2eef348c78a70ca3b9872e6a8.
+2026-02-20T04:27:33.2518849Z Creating container with image: appsvc/python:3.11_20260203.2.tuxprod from registry: 10.1.0.4:13209 and fully qualified image name: 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod
+2026-02-20T04:27:34.0747168Z Starting container: 8fc337df5054_options-scanner-backend-2exk6s.
+2026-02-20T04:27:34.1228975Z Starting watchers and probes.
+2026-02-20T04:27:34.1251144Z Starting metrics collection.
+2026-02-20T04:27:34.1252861Z Container is running.
+2026-02-20T04:27:34.1253520Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T04:27:34.1455318Z Container start method finished after 49034 ms.
+2026-02-20T04:27:34.1467664Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T04:27:34.1468055Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-02-20T04:27:59.0638983Z Site startup probe succeeded after 24.8784868 seconds.
+2026-02-20T04:27:59.2158430Z State: Starting, Action: WarmUpProbeSucceeded, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site startup probe succeeded after 24.8784868 seconds., DetailsLevel: INFO
+2026-02-20T04:27:59.2769401Z Site is running with deployment version: 78642dd8-a19a-48cf-8066-bf9005d434e6
+2026-02-20T04:27:59.2795468Z Site started.
+2026-02-20T04:27:59.2796306Z State: Started, Action: None, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site started at 02/20/2026 04:27:59 (UTC), DetailsLevel: INFO
+2026-02-20T04:27:59.4014406Z Site is running with patch version PYTHON 3.11.14
+2026-02-20T04:42:39.3911098Z State: Starting, Action: EstablishingSiteNetworks, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-20T04:42:40.9053071Z State: Starting, Action: StartingMsiContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-20T04:42:44.8431407Z State: Starting, Action: StartingSiteContainers, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-20T04:42:44.8433323Z Container start method called.
+2026-02-20T04:42:44.8433899Z State: Starting, Action: PullingImage, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pulling image 10.1.0.5:13209/appsvc/python:3.11_20260203.2.tuxprod for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T04:42:44.8434914Z Establishing network.
+2026-02-20T04:42:44.8435919Z Pulling image: appsvc/python:3.11_20260203.2.tuxprod.
+2026-02-20T04:43:14.7355700Z Container is starting.
+2026-02-20T04:43:14.7449377Z State: Starting, Action: MountingVolumes, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Mounting volumes for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T04:43:14.7458017Z Establishing user namespace if not established already.
+2026-02-20T04:43:14.7462617Z Establishing network if not established already.
+2026-02-20T04:43:14.7480715Z Mounting volumes.
+2026-02-20T04:43:14.7493508Z Nested mountpoint 
+2026-02-20T04:43:14.7622802Z Nested mountpoint volatile/logs
+2026-02-20T04:43:14.7771012Z Nested mountpoint 
+2026-02-20T04:43:14.7789206Z Nested mountpoint 
+2026-02-20T04:43:14.7893574Z Nested mountpoint 
+2026-02-20T04:43:14.9401110Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Finished pulling container image and mounting volumes for options-scanner-backend-2exk6s. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-02-20T04:43:14.9472666Z Creating container.
+2026-02-20T04:43:14.9473959Z Creating pipes for streaming container io.
+2026-02-20T04:43:14.9475095Z Creating stdout named pipe at /podr/container/pipe/753677944f70_options-scanner-backend-2exk6s/stdout_d937e7e898b5412b9ae616b0a3dcbe99.
+2026-02-20T04:43:14.9482162Z Successfully created stdout named pipe at: /podr/container/pipe/753677944f70_options-scanner-backend-2exk6s/stdout_d937e7e898b5412b9ae616b0a3dcbe99.
+2026-02-20T04:43:14.9483242Z Opening named pipe /podr/container/pipe/753677944f70_options-scanner-backend-2exk6s/stdout_d937e7e898b5412b9ae616b0a3dcbe99 for reading in non-blocking mode.
+2026-02-20T04:43:14.9485635Z Successfully opened named pipe: /podr/container/pipe/753677944f70_options-scanner-backend-2exk6s/stdout_d937e7e898b5412b9ae616b0a3dcbe99.
+2026-02-20T04:43:14.9486761Z Successfully removed non-blocking flag from /podr/container/pipe/753677944f70_options-scanner-backend-2exk6s/stdout_d937e7e898b5412b9ae616b0a3dcbe99.
+2026-02-20T04:43:14.9495685Z Creating stderr named pipe at /podr/container/pipe/753677944f70_options-scanner-backend-2exk6s/stderr_37adad4a163445759a08ae8b055d0c4b.
+2026-02-20T04:43:14.9497531Z Successfully created stderr named pipe at: /podr/container/pipe/753677944f70_options-scanner-backend-2exk6s/stderr_37adad4a163445759a08ae8b055d0c4b.
+2026-02-20T04:43:14.9498747Z Opening named pipe /podr/container/pipe/753677944f70_options-scanner-backend-2exk6s/stderr_37adad4a163445759a08ae8b055d0c4b for reading in non-blocking mode.
+2026-02-20T04:43:14.9499908Z Successfully opened named pipe: /podr/container/pipe/753677944f70_options-scanner-backend-2exk6s/stderr_37adad4a163445759a08ae8b055d0c4b.
+2026-02-20T04:43:14.9501113Z Successfully removed non-blocking flag from /podr/container/pipe/753677944f70_options-scanner-backend-2exk6s/stderr_37adad4a163445759a08ae8b055d0c4b.
+2026-02-20T04:43:14.9502866Z Creating container with image: appsvc/python:3.11_20260203.2.tuxprod from registry: 10.1.0.4:13209 and fully qualified image name: 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod
+2026-02-20T04:43:20.1658138Z Starting container: 753677944f70_options-scanner-backend-2exk6s.
+2026-02-20T04:43:20.2107766Z Starting watchers and probes.
+2026-02-20T04:43:20.2111872Z Starting metrics collection.
+2026-02-20T04:43:20.2113939Z Container is running.
+2026-02-20T04:43:20.2115145Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T04:43:20.2581857Z Container start method finished after 35414 ms.
+2026-02-20T04:43:20.2617139Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T04:43:20.2957719Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-02-20T04:44:16.5828175Z Container has finished running with exit code: 127.
+2026-02-20T04:44:16.6055435Z Container is terminating. Grace period: 5 seconds.
+2026-02-20T04:44:18.1542458Z Stop and delete container. Retry count = 0
+2026-02-20T04:44:18.1700704Z Stopping container: 753677944f70_options-scanner-backend-2exk6s.
+2026-02-20T04:44:20.7994318Z Deleting container: 753677944f70_options-scanner-backend-2exk6s. Retry count = 0
+2026-02-20T04:44:23.7534425Z Container spec TerminationMessagePolicy  path 
+2026-02-20T04:44:23.7816758Z Container is terminated. Total time elapsed: 6725 ms.
+2026-02-20T04:44:23.7855289Z Site container: options-scanner-backend-2exk6s terminated during site startup.
+2026-02-20T04:44:23.9585256Z State: Stopping, Action: CancellingStartup, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T04:44:31.6033745Z Site startup probe failed after 71.2985839 seconds.
+2026-02-20T04:44:33.3541634Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T04:44:33.5348879Z Failed to start site. Revert by stopping site.
+2026-02-20T04:44:33.7727463Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T04:44:33.9678366Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T04:44:33.9734141Z Site: options-scanner-backend-2exk6s stopped.
+2026-02-20T04:45:24.6210372Z State: Stopping, Action: StoppingSite, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site started at 02/20/2026 04:27:59 (UTC), DetailsLevel: INFO
+2026-02-20T04:45:24.6275832Z State: Stopping, Action: StoppingSiteContainers, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site started at 02/20/2026 04:27:59 (UTC), DetailsLevel: INFO
+2026-02-20T04:45:24.6286851Z Container is terminating. Grace period: 5 seconds.
+2026-02-20T04:45:24.6808359Z Stop and delete container. Retry count = 0
+2026-02-20T04:45:24.6811463Z Stopping container: 8fc337df5054_options-scanner-backend-2exk6s.
+2026-02-20T04:45:30.1987664Z Deleting container: 8fc337df5054_options-scanner-backend-2exk6s. Retry count = 0
+2026-02-20T04:45:38.5893157Z Container spec TerminationMessagePolicy  path 
+2026-02-20T04:45:38.5906540Z Container is terminated. Total time elapsed: 13961 ms.
+2026-02-20T04:45:38.5912410Z Site: options-scanner-backend-2exk6s stopped.
+2026-02-20T04:44:34.6627426Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T04:44:59.9068093Z Site container: options-scanner-backend-2exk6s_managedIdentity terminated during site startup.
+2026-02-20T04:44:59.9522899Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T04:45:00.2438998Z State: Stopping, Action: StoppingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T04:45:03.9241367Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 04:45:03 (UTC), DetailsLevel: ERR
+2026-02-20T04:45:03.9514351Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 04:45:03 (UTC), DetailsLevel: ERR
+2026-02-20T04:46:30.3045807Z State: Starting, Action: EstablishingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 04:45:03 (UTC), DetailsLevel: ERR
+2026-02-20T04:46:31.8955646Z State: Starting, Action: StartingMsiContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 04:45:03 (UTC), DetailsLevel: ERR
+2026-02-20T04:46:38.3040403Z State: Starting, Action: StartingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 04:45:03 (UTC), DetailsLevel: ERR
+2026-02-20T04:46:38.3048660Z Container start method called.
+2026-02-20T04:46:38.3049366Z State: Starting, Action: PullingImage, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pulling image 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T04:46:38.3050423Z Establishing network.
+2026-02-20T04:46:38.3059501Z Pulling image: appsvc/python:3.11_20260203.2.tuxprod.
+2026-02-20T04:46:59.3147447Z Container is starting.
+2026-02-20T04:46:59.3152812Z State: Starting, Action: MountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Mounting volumes for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T04:46:59.3168078Z Establishing user namespace if not established already.
+2026-02-20T04:46:59.3201845Z Establishing network if not established already.
+2026-02-20T04:46:59.3208648Z Mounting volumes.
+2026-02-20T04:46:59.3212721Z Nested mountpoint 
+2026-02-20T04:46:59.3266391Z Nested mountpoint volatile/logs
+2026-02-20T04:46:59.3338230Z Nested mountpoint 
+2026-02-20T04:46:59.3380555Z Nested mountpoint 
+2026-02-20T04:46:59.3386157Z Nested mountpoint 
+2026-02-20T04:46:59.4688889Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Finished pulling container image and mounting volumes for options-scanner-backend-2exk6s. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-02-20T04:46:59.4690019Z Creating container.
+2026-02-20T04:46:59.4690824Z Creating pipes for streaming container io.
+2026-02-20T04:46:59.4691750Z Creating stdout named pipe at /podr/container/pipe/ac33089e9d2a_options-scanner-backend-2exk6s/stdout_23b53a58169e4469be9e0ded7445c4a1.
+2026-02-20T04:46:59.4693859Z Successfully created stdout named pipe at: /podr/container/pipe/ac33089e9d2a_options-scanner-backend-2exk6s/stdout_23b53a58169e4469be9e0ded7445c4a1.
+2026-02-20T04:46:59.4694636Z Opening named pipe /podr/container/pipe/ac33089e9d2a_options-scanner-backend-2exk6s/stdout_23b53a58169e4469be9e0ded7445c4a1 for reading in non-blocking mode.
+2026-02-20T04:46:59.4695599Z Successfully opened named pipe: /podr/container/pipe/ac33089e9d2a_options-scanner-backend-2exk6s/stdout_23b53a58169e4469be9e0ded7445c4a1.
+2026-02-20T04:46:59.4696403Z Successfully removed non-blocking flag from /podr/container/pipe/ac33089e9d2a_options-scanner-backend-2exk6s/stdout_23b53a58169e4469be9e0ded7445c4a1.
+2026-02-20T04:46:59.4698510Z Creating stderr named pipe at /podr/container/pipe/ac33089e9d2a_options-scanner-backend-2exk6s/stderr_b01bc048ba8f4cfdbc7ad896a72f2bc7.
+2026-02-20T04:46:59.4699848Z Successfully created stderr named pipe at: /podr/container/pipe/ac33089e9d2a_options-scanner-backend-2exk6s/stderr_b01bc048ba8f4cfdbc7ad896a72f2bc7.
+2026-02-20T04:46:59.4700649Z Opening named pipe /podr/container/pipe/ac33089e9d2a_options-scanner-backend-2exk6s/stderr_b01bc048ba8f4cfdbc7ad896a72f2bc7 for reading in non-blocking mode.
+2026-02-20T04:46:59.4701637Z Successfully opened named pipe: /podr/container/pipe/ac33089e9d2a_options-scanner-backend-2exk6s/stderr_b01bc048ba8f4cfdbc7ad896a72f2bc7.
+2026-02-20T04:46:59.4702438Z Successfully removed non-blocking flag from /podr/container/pipe/ac33089e9d2a_options-scanner-backend-2exk6s/stderr_b01bc048ba8f4cfdbc7ad896a72f2bc7.
+2026-02-20T04:46:59.4789726Z Creating container with image: appsvc/python:3.11_20260203.2.tuxprod from registry: 10.1.0.4:13209 and fully qualified image name: 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod
+2026-02-20T04:46:59.7991093Z Starting container: ac33089e9d2a_options-scanner-backend-2exk6s.
+2026-02-20T04:46:59.8128835Z Starting watchers and probes.
+2026-02-20T04:46:59.8137043Z Starting metrics collection.
+2026-02-20T04:46:59.8138390Z Container is running.
+2026-02-20T04:46:59.8139074Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T04:46:59.8519854Z Container start method finished after 21547 ms.
+2026-02-20T04:46:59.8534821Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T04:46:59.8540794Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-02-20T04:47:55.2943695Z Site startup probe succeeded after 55.408346 seconds.
+2026-02-20T04:47:56.0228264Z State: Starting, Action: WarmUpProbeSucceeded, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site startup probe succeeded after 55.408346 seconds., DetailsLevel: INFO
+2026-02-20T04:47:56.3527217Z Site is running with deployment version: 3f15c67f-9b1c-419d-a160-88cd08b131fe
+2026-02-20T04:47:56.3547551Z Site started.
+2026-02-20T04:47:56.3555718Z State: Started, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site started at 02/20/2026 04:47:56 (UTC), DetailsLevel: INFO
+2026-02-20T04:47:56.4155407Z Site is running with patch version PYTHON 3.11.14
+2026-02-20T05:08:18.7274315Z State: Starting, Action: EstablishingSiteNetworks, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-20T05:08:20.0778222Z State: Starting, Action: StartingMsiContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-20T05:08:24.8365311Z State: Starting, Action: StartingSiteContainers, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-20T05:08:24.8367185Z Container start method called.
+2026-02-20T05:08:24.8368805Z State: Starting, Action: PullingImage, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pulling image 10.1.0.5:13209/appsvc/python:3.11_20260203.2.tuxprod for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T05:08:24.8370698Z Establishing network.
+2026-02-20T05:08:24.8372633Z Pulling image: appsvc/python:3.11_20260203.2.tuxprod.
+2026-02-20T05:08:47.6298983Z Container is starting.
+2026-02-20T05:08:47.6367928Z State: Starting, Action: MountingVolumes, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Mounting volumes for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T05:08:47.6373459Z Establishing user namespace if not established already.
+2026-02-20T05:08:47.6374682Z Establishing network if not established already.
+2026-02-20T05:08:47.6384383Z Mounting volumes.
+2026-02-20T05:08:47.6405938Z Nested mountpoint 
+2026-02-20T05:08:47.6688782Z Nested mountpoint volatile/logs
+2026-02-20T05:08:47.6765505Z Nested mountpoint 
+2026-02-20T05:08:47.7228173Z Nested mountpoint 
+2026-02-20T05:08:47.7326115Z Nested mountpoint 
+2026-02-20T05:08:47.9002280Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Finished pulling container image and mounting volumes for options-scanner-backend-2exk6s. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-02-20T05:08:47.9003000Z Creating container.
+2026-02-20T05:08:47.9003533Z Creating pipes for streaming container io.
+2026-02-20T05:08:47.9006193Z Creating stdout named pipe at /podr/container/pipe/8b00367b02c6_options-scanner-backend-2exk6s/stdout_c561b558b2164f699f79e9bb55109542.
+2026-02-20T05:08:47.9008489Z Successfully created stdout named pipe at: /podr/container/pipe/8b00367b02c6_options-scanner-backend-2exk6s/stdout_c561b558b2164f699f79e9bb55109542.
+2026-02-20T05:08:47.9009727Z Opening named pipe /podr/container/pipe/8b00367b02c6_options-scanner-backend-2exk6s/stdout_c561b558b2164f699f79e9bb55109542 for reading in non-blocking mode.
+2026-02-20T05:08:47.9010791Z Successfully opened named pipe: /podr/container/pipe/8b00367b02c6_options-scanner-backend-2exk6s/stdout_c561b558b2164f699f79e9bb55109542.
+2026-02-20T05:08:47.9011613Z Successfully removed non-blocking flag from /podr/container/pipe/8b00367b02c6_options-scanner-backend-2exk6s/stdout_c561b558b2164f699f79e9bb55109542.
+2026-02-20T05:08:47.9022175Z Creating stderr named pipe at /podr/container/pipe/8b00367b02c6_options-scanner-backend-2exk6s/stderr_750a64c73e0d421584072a686b1365df.
+2026-02-20T05:08:47.9023483Z Successfully created stderr named pipe at: /podr/container/pipe/8b00367b02c6_options-scanner-backend-2exk6s/stderr_750a64c73e0d421584072a686b1365df.
+2026-02-20T05:08:47.9024374Z Opening named pipe /podr/container/pipe/8b00367b02c6_options-scanner-backend-2exk6s/stderr_750a64c73e0d421584072a686b1365df for reading in non-blocking mode.
+2026-02-20T05:08:47.9025308Z Successfully opened named pipe: /podr/container/pipe/8b00367b02c6_options-scanner-backend-2exk6s/stderr_750a64c73e0d421584072a686b1365df.
+2026-02-20T05:08:47.9026106Z Successfully removed non-blocking flag from /podr/container/pipe/8b00367b02c6_options-scanner-backend-2exk6s/stderr_750a64c73e0d421584072a686b1365df.
+2026-02-20T05:08:47.9034580Z Creating container with image: appsvc/python:3.11_20260203.2.tuxprod from registry: 10.1.0.4:13209 and fully qualified image name: 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod
+2026-02-20T05:08:48.1882785Z Starting container: 8b00367b02c6_options-scanner-backend-2exk6s.
+2026-02-20T05:08:48.2449815Z Starting watchers and probes.
+2026-02-20T05:08:48.2453108Z Starting metrics collection.
+2026-02-20T05:08:48.2454748Z Container is running.
+2026-02-20T05:08:48.2455409Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T05:08:48.3222356Z Container start method finished after 23484 ms.
+2026-02-20T05:08:48.3238380Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T05:08:48.3238846Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-02-20T05:09:00.3856278Z Container has finished running with exit code: 127.
+2026-02-20T05:09:00.3902996Z Container is terminating. Grace period: 5 seconds.
+2026-02-20T05:09:00.3946738Z Stop and delete container. Retry count = 0
+2026-02-20T05:09:00.3958004Z Stopping container: 8b00367b02c6_options-scanner-backend-2exk6s.
+2026-02-20T05:09:00.4310278Z Deleting container: 8b00367b02c6_options-scanner-backend-2exk6s. Retry count = 0
+2026-02-20T05:09:00.5462786Z Container spec TerminationMessagePolicy  path 
+2026-02-20T05:09:00.5477600Z Container is terminated. Total time elapsed: 155 ms.
+2026-02-20T05:09:00.5479036Z Site container: options-scanner-backend-2exk6s terminated during site startup.
+2026-02-20T05:09:00.5479940Z State: Stopping, Action: CancellingStartup, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:09:02.5013972Z Site startup probe failed after 14.1576492 seconds.
+2026-02-20T05:09:02.6824187Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:09:02, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:09:02.6908337Z Failed to start site. Revert by stopping site.
+2026-02-20T05:09:02.6950924Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:09:02, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:09:02.6974578Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:09:02, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:09:02.6995103Z Site: options-scanner-backend-2exk6s stopped.
+2026-02-20T05:09:23.6842746Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site started at 02/20/2026 04:47:56 (UTC), DetailsLevel: INFO
+2026-02-20T05:09:23.6853002Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 04:44:33, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site started at 02/20/2026 04:47:56 (UTC), DetailsLevel: INFO
+2026-02-20T05:09:23.6855608Z Container is terminating. Grace period: 5 seconds.
+2026-02-20T05:09:23.6952551Z Stop and delete container. Retry count = 0
+2026-02-20T05:09:23.6953742Z Stopping container: ac33089e9d2a_options-scanner-backend-2exk6s.
+2026-02-20T05:09:28.8268517Z Deleting container: ac33089e9d2a_options-scanner-backend-2exk6s. Retry count = 0
+2026-02-20T05:09:29.9339425Z Container spec TerminationMessagePolicy  path 
+2026-02-20T05:09:29.9341302Z Container is terminated. Total time elapsed: 6248 ms.
+2026-02-20T05:09:29.9342693Z Site: options-scanner-backend-2exk6s stopped.
+2026-02-20T05:09:02.7101603Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:09:02, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:09:03.3786124Z Site container: options-scanner-backend-2exk6s_managedIdentity terminated during site startup.
+2026-02-20T05:09:03.3786910Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:09:02, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:09:03.3958930Z State: Stopping, Action: StoppingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:09:02, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:09:03.5462676Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:09:02, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:09:03 (UTC), DetailsLevel: ERR
+2026-02-20T05:09:03.5552729Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:09:02, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:09:03 (UTC), DetailsLevel: ERR
+2026-02-20T05:14:28.9626632Z State: Starting, Action: EstablishingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:09:02, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:09:03 (UTC), DetailsLevel: ERR
+2026-02-20T05:14:30.6518552Z State: Starting, Action: StartingMsiContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:09:02, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:09:03 (UTC), DetailsLevel: ERR
+2026-02-20T05:14:39.3523621Z State: Starting, Action: StartingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:09:02, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:09:03 (UTC), DetailsLevel: ERR
+2026-02-20T05:14:39.3529057Z Container start method called.
+2026-02-20T05:14:39.3529865Z State: Starting, Action: PullingImage, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:09:02, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pulling image 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T05:14:39.3531159Z Establishing network.
+2026-02-20T05:14:39.3533414Z Pulling image: appsvc/python:3.11_20260203.2.tuxprod.
+2026-02-20T05:15:07.1225785Z Container is starting.
+2026-02-20T05:15:07.1248131Z State: Starting, Action: MountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:09:02, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Mounting volumes for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T05:15:07.1249974Z Establishing user namespace if not established already.
+2026-02-20T05:15:07.1253057Z Establishing network if not established already.
+2026-02-20T05:15:07.1255873Z Mounting volumes.
+2026-02-20T05:15:07.1263490Z Nested mountpoint 
+2026-02-20T05:15:07.1437737Z Nested mountpoint volatile/logs
+2026-02-20T05:15:07.1496079Z Nested mountpoint 
+2026-02-20T05:15:07.1612076Z Nested mountpoint 
+2026-02-20T05:15:07.1662123Z Nested mountpoint 
+2026-02-20T05:15:07.4553512Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:09:02, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Finished pulling container image and mounting volumes for options-scanner-backend-2exk6s. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-02-20T05:15:07.4559758Z Creating container.
+2026-02-20T05:15:07.4561869Z Creating pipes for streaming container io.
+2026-02-20T05:15:07.4566107Z Creating stdout named pipe at /podr/container/pipe/18adcacb626f_options-scanner-backend-2exk6s/stdout_68645e6708b94d5b8d0aea4332ff610c.
+2026-02-20T05:15:07.4628807Z Successfully created stdout named pipe at: /podr/container/pipe/18adcacb626f_options-scanner-backend-2exk6s/stdout_68645e6708b94d5b8d0aea4332ff610c.
+2026-02-20T05:15:07.4629829Z Opening named pipe /podr/container/pipe/18adcacb626f_options-scanner-backend-2exk6s/stdout_68645e6708b94d5b8d0aea4332ff610c for reading in non-blocking mode.
+2026-02-20T05:15:07.4635772Z Successfully opened named pipe: /podr/container/pipe/18adcacb626f_options-scanner-backend-2exk6s/stdout_68645e6708b94d5b8d0aea4332ff610c.
+2026-02-20T05:15:07.4637897Z Successfully removed non-blocking flag from /podr/container/pipe/18adcacb626f_options-scanner-backend-2exk6s/stdout_68645e6708b94d5b8d0aea4332ff610c.
+2026-02-20T05:15:07.4642064Z Creating stderr named pipe at /podr/container/pipe/18adcacb626f_options-scanner-backend-2exk6s/stderr_bf8fe3a48cc247f1ae36448ab57c0221.
+2026-02-20T05:15:07.4807098Z Successfully created stderr named pipe at: /podr/container/pipe/18adcacb626f_options-scanner-backend-2exk6s/stderr_bf8fe3a48cc247f1ae36448ab57c0221.
+2026-02-20T05:15:07.4811024Z Opening named pipe /podr/container/pipe/18adcacb626f_options-scanner-backend-2exk6s/stderr_bf8fe3a48cc247f1ae36448ab57c0221 for reading in non-blocking mode.
+2026-02-20T05:15:07.4814910Z Successfully opened named pipe: /podr/container/pipe/18adcacb626f_options-scanner-backend-2exk6s/stderr_bf8fe3a48cc247f1ae36448ab57c0221.
+2026-02-20T05:15:07.4818378Z Successfully removed non-blocking flag from /podr/container/pipe/18adcacb626f_options-scanner-backend-2exk6s/stderr_bf8fe3a48cc247f1ae36448ab57c0221.
+2026-02-20T05:15:07.4907411Z Creating container with image: appsvc/python:3.11_20260203.2.tuxprod from registry: 10.1.0.4:13209 and fully qualified image name: 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod
+2026-02-20T05:15:09.1505110Z Starting container: 18adcacb626f_options-scanner-backend-2exk6s.
+2026-02-20T05:15:09.2170808Z Starting watchers and probes.
+2026-02-20T05:15:09.2225848Z Starting metrics collection.
+2026-02-20T05:15:09.2234672Z Container is running.
+2026-02-20T05:15:09.2242004Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:09:02, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T05:15:09.2525851Z Container start method finished after 29899 ms.
+2026-02-20T05:15:09.2551375Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:09:02, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T05:15:09.2597394Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:09:02, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-02-20T05:15:18.4331762Z Container has finished running with exit code: 127.
+2026-02-20T05:15:18.4354560Z Container is terminating. Grace period: 5 seconds.
+2026-02-20T05:15:18.4390791Z Stop and delete container. Retry count = 0
+2026-02-20T05:15:18.4427852Z Stopping container: 18adcacb626f_options-scanner-backend-2exk6s.
+2026-02-20T05:15:18.4989282Z Deleting container: 18adcacb626f_options-scanner-backend-2exk6s. Retry count = 0
+2026-02-20T05:15:18.6130378Z Container spec TerminationMessagePolicy  path 
+2026-02-20T05:15:18.6134090Z Container is terminated. Total time elapsed: 177 ms.
+2026-02-20T05:15:18.6135286Z Site container: options-scanner-backend-2exk6s terminated during site startup.
+2026-02-20T05:15:18.6136204Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:09:02, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:15:22.2343101Z Site startup probe failed after 12.9480014 seconds.
+2026-02-20T05:15:23.0355809Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:15:23.4072209Z Failed to start site. Revert by stopping site.
+2026-02-20T05:15:23.4284924Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:15:23.4297310Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:15:23.4909075Z Site: options-scanner-backend-2exk6s stopped.
+2026-02-20T05:15:23.5002791Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:15:24.2166843Z Site container: options-scanner-backend-2exk6s_managedIdentity terminated during site startup.
+2026-02-20T05:15:24.2170282Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:15:24.2437944Z State: Stopping, Action: StoppingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:15:24.4402176Z Site: options-scanner-backend-2exk6s will be blocked for 1 minutes till 02/20/2026 05:16:24
+2026-02-20T05:15:24.4414363Z State: Blocked, Action: StoppingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site: options-scanner-backend-2exk6s will be blocked for 1 minutes till 02/20/2026 05:16:24, DetailsLevel: WARN
+2026-02-20T05:15:24.5010467Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:15:24 (UTC), DetailsLevel: WARN
+2026-02-20T05:15:24.5717597Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:15:24 (UTC), DetailsLevel: WARN
+2026-02-20T05:15:26.4511242Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 02/20/2026 05:16:24, DetailsLevel: WARN
+2026-02-20T05:15:26.4511663Z Start site prohibitted because the site is being blocked.
+2026-02-20T05:15:26.6218323Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 02/20/2026 05:16:24, DetailsLevel: WARN
+2026-02-20T05:15:26.6235114Z Start site prohibitted because the site is being blocked.
+2026-02-20T05:16:24.4412696Z Site: options-scanner-backend-2exk6s is unblocked.
+2026-02-20T05:16:32.6352108Z State: Starting, Action: EstablishingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 02/20/2026 05:16:24, DetailsLevel: WARN
+2026-02-20T05:16:34.7540297Z State: Starting, Action: StartingMsiContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 02/20/2026 05:16:24, DetailsLevel: WARN
+2026-02-20T05:16:40.4230852Z State: Starting, Action: StartingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 02/20/2026 05:16:24, DetailsLevel: WARN
+2026-02-20T05:16:40.4235135Z Container start method called.
+2026-02-20T05:16:40.4235705Z State: Starting, Action: PullingImage, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pulling image 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T05:16:40.4236736Z Establishing network.
+2026-02-20T05:16:40.4237764Z Pulling image: appsvc/python:3.11_20260203.2.tuxprod.
+2026-02-20T05:17:07.7165863Z Container is starting.
+2026-02-20T05:17:07.7211588Z State: Starting, Action: MountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Mounting volumes for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T05:17:07.7215234Z Establishing user namespace if not established already.
+2026-02-20T05:17:07.7219928Z Establishing network if not established already.
+2026-02-20T05:17:07.7221970Z Mounting volumes.
+2026-02-20T05:17:07.7224248Z Nested mountpoint 
+2026-02-20T05:17:07.7282472Z Nested mountpoint volatile/logs
+2026-02-20T05:17:07.7365876Z Nested mountpoint 
+2026-02-20T05:17:07.7401170Z Nested mountpoint 
+2026-02-20T05:17:07.7419425Z Nested mountpoint 
+2026-02-20T05:17:08.0871944Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Finished pulling container image and mounting volumes for options-scanner-backend-2exk6s. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-02-20T05:17:08.0873480Z Creating container.
+2026-02-20T05:17:08.0874578Z Creating pipes for streaming container io.
+2026-02-20T05:17:08.0875496Z Creating stdout named pipe at /podr/container/pipe/1f7848ecfb50_options-scanner-backend-2exk6s/stdout_35c9ebc739e044c289f001cc1546afb7.
+2026-02-20T05:17:08.0877350Z Successfully created stdout named pipe at: /podr/container/pipe/1f7848ecfb50_options-scanner-backend-2exk6s/stdout_35c9ebc739e044c289f001cc1546afb7.
+2026-02-20T05:17:08.0878267Z Opening named pipe /podr/container/pipe/1f7848ecfb50_options-scanner-backend-2exk6s/stdout_35c9ebc739e044c289f001cc1546afb7 for reading in non-blocking mode.
+2026-02-20T05:17:08.0879275Z Successfully opened named pipe: /podr/container/pipe/1f7848ecfb50_options-scanner-backend-2exk6s/stdout_35c9ebc739e044c289f001cc1546afb7.
+2026-02-20T05:17:08.0880158Z Successfully removed non-blocking flag from /podr/container/pipe/1f7848ecfb50_options-scanner-backend-2exk6s/stdout_35c9ebc739e044c289f001cc1546afb7.
+2026-02-20T05:17:08.0881968Z Creating stderr named pipe at /podr/container/pipe/1f7848ecfb50_options-scanner-backend-2exk6s/stderr_f1153fed77424e0c831b8ddbf8b19c2d.
+2026-02-20T05:17:08.0883243Z Successfully created stderr named pipe at: /podr/container/pipe/1f7848ecfb50_options-scanner-backend-2exk6s/stderr_f1153fed77424e0c831b8ddbf8b19c2d.
+2026-02-20T05:17:08.0886669Z Opening named pipe /podr/container/pipe/1f7848ecfb50_options-scanner-backend-2exk6s/stderr_f1153fed77424e0c831b8ddbf8b19c2d for reading in non-blocking mode.
+2026-02-20T05:17:08.0888082Z Successfully opened named pipe: /podr/container/pipe/1f7848ecfb50_options-scanner-backend-2exk6s/stderr_f1153fed77424e0c831b8ddbf8b19c2d.
+2026-02-20T05:17:08.0889026Z Successfully removed non-blocking flag from /podr/container/pipe/1f7848ecfb50_options-scanner-backend-2exk6s/stderr_f1153fed77424e0c831b8ddbf8b19c2d.
+2026-02-20T05:17:08.0895510Z Creating container with image: appsvc/python:3.11_20260203.2.tuxprod from registry: 10.1.0.4:13209 and fully qualified image name: 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod
+2026-02-20T05:17:11.0117621Z Starting container: 1f7848ecfb50_options-scanner-backend-2exk6s.
+2026-02-20T05:17:11.1648508Z Starting watchers and probes.
+2026-02-20T05:17:11.1651868Z Starting metrics collection.
+2026-02-20T05:17:11.1653413Z Container is running.
+2026-02-20T05:17:11.1654342Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T05:17:11.3811856Z Container start method finished after 30957 ms.
+2026-02-20T05:17:11.3813491Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T05:17:11.3813696Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-02-20T05:17:35.9113452Z Container has finished running with exit code: 127.
+2026-02-20T05:17:35.9114665Z Container is terminating. Grace period: 5 seconds.
+2026-02-20T05:17:35.9133673Z Stop and delete container. Retry count = 0
+2026-02-20T05:17:35.9141362Z Stopping container: 1f7848ecfb50_options-scanner-backend-2exk6s.
+2026-02-20T05:17:35.9627251Z Deleting container: 1f7848ecfb50_options-scanner-backend-2exk6s. Retry count = 0
+2026-02-20T05:17:36.0945482Z Container spec TerminationMessagePolicy  path 
+2026-02-20T05:17:36.0955834Z Container is terminated. Total time elapsed: 183 ms.
+2026-02-20T05:17:36.0956979Z Site container: options-scanner-backend-2exk6s terminated during site startup.
+2026-02-20T05:17:36.0958086Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:15:22, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:17:36.7700974Z Site startup probe failed after 25.3823199 seconds.
+2026-02-20T05:17:36.8650435Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:17:36, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:17:36.8855972Z Failed to start site. Revert by stopping site.
+2026-02-20T05:17:36.9014750Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:17:36, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:17:36.9062958Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:17:36, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:17:36.9066697Z Site: options-scanner-backend-2exk6s stopped.
+2026-02-20T05:18:23.9539704Z State: Starting, Action: EstablishingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:17:36, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:17:37 (UTC), DetailsLevel: WARN
+2026-02-20T05:18:25.3474721Z State: Starting, Action: StartingMsiContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:17:36, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:17:37 (UTC), DetailsLevel: WARN
+2026-02-20T05:18:28.2276287Z State: Starting, Action: StartingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:17:36, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:17:37 (UTC), DetailsLevel: WARN
+2026-02-20T05:18:28.2297046Z Container start method called.
+2026-02-20T05:18:28.2297707Z State: Starting, Action: PullingImage, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:17:36, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pulling image 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T05:18:28.2299120Z Establishing network.
+2026-02-20T05:18:28.2300628Z Pulling image: appsvc/python:3.11_20260203.2.tuxprod.
+2026-02-20T05:18:28.3102761Z Container is starting.
+2026-02-20T05:18:28.3103405Z State: Starting, Action: MountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:17:36, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Mounting volumes for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T05:18:28.3104716Z Establishing user namespace if not established already.
+2026-02-20T05:18:28.3106018Z Establishing network if not established already.
+2026-02-20T05:18:28.3107092Z Mounting volumes.
+2026-02-20T05:18:28.3108540Z Nested mountpoint 
+2026-02-20T05:18:28.3136728Z Nested mountpoint volatile/logs
+2026-02-20T05:18:28.3145116Z Nested mountpoint 
+2026-02-20T05:18:28.3188532Z Nested mountpoint 
+2026-02-20T05:18:28.3195633Z Nested mountpoint 
+2026-02-20T05:18:28.4451381Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:17:36, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Finished pulling container image and mounting volumes for options-scanner-backend-2exk6s. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-02-20T05:18:28.4452646Z Creating container.
+2026-02-20T05:18:28.4453650Z Creating pipes for streaming container io.
+2026-02-20T05:18:28.4454985Z Creating stdout named pipe at /podr/container/pipe/70c8f73fc7e7_options-scanner-backend-2exk6s/stdout_5dbed8304cc841c6bd6b67d7b8d2abd9.
+2026-02-20T05:18:28.4458536Z Successfully created stdout named pipe at: /podr/container/pipe/70c8f73fc7e7_options-scanner-backend-2exk6s/stdout_5dbed8304cc841c6bd6b67d7b8d2abd9.
+2026-02-20T05:18:28.4459704Z Opening named pipe /podr/container/pipe/70c8f73fc7e7_options-scanner-backend-2exk6s/stdout_5dbed8304cc841c6bd6b67d7b8d2abd9 for reading in non-blocking mode.
+2026-02-20T05:18:28.4460848Z Successfully opened named pipe: /podr/container/pipe/70c8f73fc7e7_options-scanner-backend-2exk6s/stdout_5dbed8304cc841c6bd6b67d7b8d2abd9.
+2026-02-20T05:18:28.4461704Z Successfully removed non-blocking flag from /podr/container/pipe/70c8f73fc7e7_options-scanner-backend-2exk6s/stdout_5dbed8304cc841c6bd6b67d7b8d2abd9.
+2026-02-20T05:18:28.4557032Z Creating stderr named pipe at /podr/container/pipe/70c8f73fc7e7_options-scanner-backend-2exk6s/stderr_354855d26b604a92be87470194777691.
+2026-02-20T05:18:28.4562510Z Successfully created stderr named pipe at: /podr/container/pipe/70c8f73fc7e7_options-scanner-backend-2exk6s/stderr_354855d26b604a92be87470194777691.
+2026-02-20T05:18:28.4587488Z Opening named pipe /podr/container/pipe/70c8f73fc7e7_options-scanner-backend-2exk6s/stderr_354855d26b604a92be87470194777691 for reading in non-blocking mode.
+2026-02-20T05:18:28.4589441Z Successfully opened named pipe: /podr/container/pipe/70c8f73fc7e7_options-scanner-backend-2exk6s/stderr_354855d26b604a92be87470194777691.
+2026-02-20T05:18:28.4591293Z Successfully removed non-blocking flag from /podr/container/pipe/70c8f73fc7e7_options-scanner-backend-2exk6s/stderr_354855d26b604a92be87470194777691.
+2026-02-20T05:18:28.4593387Z Creating container with image: appsvc/python:3.11_20260203.2.tuxprod from registry: 10.1.0.4:13209 and fully qualified image name: 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod
+2026-02-20T05:18:28.6424627Z Starting container: 70c8f73fc7e7_options-scanner-backend-2exk6s.
+2026-02-20T05:18:28.6683385Z Starting watchers and probes.
+2026-02-20T05:18:28.6703653Z Starting metrics collection.
+2026-02-20T05:18:28.6707330Z Container is running.
+2026-02-20T05:18:28.6708172Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:17:36, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T05:18:28.6848159Z Container start method finished after 454 ms.
+2026-02-20T05:18:28.6860159Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:17:36, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T05:18:28.6860556Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:17:36, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-02-20T05:18:35.5708302Z Container has finished running with exit code: 1.
+2026-02-20T05:18:35.5709784Z Container is terminating. Grace period: 5 seconds.
+2026-02-20T05:18:35.5728050Z Stop and delete container. Retry count = 0
+2026-02-20T05:18:35.5733166Z Stopping container: 70c8f73fc7e7_options-scanner-backend-2exk6s.
+2026-02-20T05:18:35.5875974Z Deleting container: 70c8f73fc7e7_options-scanner-backend-2exk6s. Retry count = 0
+2026-02-20T05:18:35.6437951Z Container spec TerminationMessagePolicy  path 
+2026-02-20T05:18:35.6439966Z Container is terminated. Total time elapsed: 72 ms.
+2026-02-20T05:18:35.6441238Z Site container: options-scanner-backend-2exk6s terminated during site startup.
+2026-02-20T05:18:35.6442197Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:17:36, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:18:35.6451217Z Site startup probe failed after 6.9569172 seconds.
+2026-02-20T05:18:35.6736117Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:35, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:18:35.6834564Z Failed to start site. Revert by stopping site.
+2026-02-20T05:18:35.6837786Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:35, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:18:35.6841257Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:35, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:18:35.6841416Z Site: options-scanner-backend-2exk6s stopped.
+2026-02-20T05:18:35.6855748Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:35, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:18:35.9652361Z Site container: options-scanner-backend-2exk6s_managedIdentity terminated during site startup.
+2026-02-20T05:18:35.9653082Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:35, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:18:35.9729438Z State: Stopping, Action: StoppingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:35, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:18:36.1968068Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:35, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:18:36 (UTC), DetailsLevel: ERR
+2026-02-20T05:18:36.2130640Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:35, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:18:36 (UTC), DetailsLevel: ERR
+2026-02-20T05:18:36.9377107Z State: Starting, Action: EstablishingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:35, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:18:36 (UTC), DetailsLevel: ERR
+2026-02-20T05:18:37.8413950Z State: Starting, Action: StartingMsiContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:35, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:18:36 (UTC), DetailsLevel: ERR
+2026-02-20T05:18:40.7130141Z State: Starting, Action: StartingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:35, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:18:36 (UTC), DetailsLevel: ERR
+2026-02-20T05:18:40.7132941Z Container start method called.
+2026-02-20T05:18:40.7170485Z State: Starting, Action: PullingImage, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:35, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pulling image 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T05:18:40.7175611Z Establishing network.
+2026-02-20T05:18:40.7180327Z Pulling image: appsvc/python:3.11_20260203.2.tuxprod.
+2026-02-20T05:18:40.7848015Z Container is starting.
+2026-02-20T05:18:40.7849449Z State: Starting, Action: MountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:35, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Mounting volumes for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T05:18:40.7850707Z Establishing user namespace if not established already.
+2026-02-20T05:18:40.7851911Z Establishing network if not established already.
+2026-02-20T05:18:40.7852990Z Mounting volumes.
+2026-02-20T05:18:40.7855457Z Nested mountpoint 
+2026-02-20T05:18:40.7876485Z Nested mountpoint volatile/logs
+2026-02-20T05:18:40.7968980Z Nested mountpoint 
+2026-02-20T05:18:40.7992312Z Nested mountpoint 
+2026-02-20T05:18:40.7999253Z Nested mountpoint 
+2026-02-20T05:18:40.8650405Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:35, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Finished pulling container image and mounting volumes for options-scanner-backend-2exk6s. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-02-20T05:18:40.8651997Z Creating container.
+2026-02-20T05:18:40.8654300Z Creating pipes for streaming container io.
+2026-02-20T05:18:40.8655411Z Creating stdout named pipe at /podr/container/pipe/600e78e1794f_options-scanner-backend-2exk6s/stdout_00949bfde8e74ce38bc635ca6e6a44d2.
+2026-02-20T05:18:40.8657283Z Successfully created stdout named pipe at: /podr/container/pipe/600e78e1794f_options-scanner-backend-2exk6s/stdout_00949bfde8e74ce38bc635ca6e6a44d2.
+2026-02-20T05:18:40.8659505Z Opening named pipe /podr/container/pipe/600e78e1794f_options-scanner-backend-2exk6s/stdout_00949bfde8e74ce38bc635ca6e6a44d2 for reading in non-blocking mode.
+2026-02-20T05:18:40.8661142Z Successfully opened named pipe: /podr/container/pipe/600e78e1794f_options-scanner-backend-2exk6s/stdout_00949bfde8e74ce38bc635ca6e6a44d2.
+2026-02-20T05:18:40.8662040Z Successfully removed non-blocking flag from /podr/container/pipe/600e78e1794f_options-scanner-backend-2exk6s/stdout_00949bfde8e74ce38bc635ca6e6a44d2.
+2026-02-20T05:18:40.8665331Z Creating stderr named pipe at /podr/container/pipe/600e78e1794f_options-scanner-backend-2exk6s/stderr_cdd106925ec646d68222e12a31015cec.
+2026-02-20T05:18:40.8667040Z Successfully created stderr named pipe at: /podr/container/pipe/600e78e1794f_options-scanner-backend-2exk6s/stderr_cdd106925ec646d68222e12a31015cec.
+2026-02-20T05:18:40.8668006Z Opening named pipe /podr/container/pipe/600e78e1794f_options-scanner-backend-2exk6s/stderr_cdd106925ec646d68222e12a31015cec for reading in non-blocking mode.
+2026-02-20T05:18:40.8671038Z Successfully opened named pipe: /podr/container/pipe/600e78e1794f_options-scanner-backend-2exk6s/stderr_cdd106925ec646d68222e12a31015cec.
+2026-02-20T05:18:40.8672092Z Successfully removed non-blocking flag from /podr/container/pipe/600e78e1794f_options-scanner-backend-2exk6s/stderr_cdd106925ec646d68222e12a31015cec.
+2026-02-20T05:18:40.8673368Z Creating container with image: appsvc/python:3.11_20260203.2.tuxprod from registry: 10.1.0.4:13209 and fully qualified image name: 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod
+2026-02-20T05:18:41.0451620Z Starting container: 600e78e1794f_options-scanner-backend-2exk6s.
+2026-02-20T05:18:41.0808755Z Starting watchers and probes.
+2026-02-20T05:18:41.0825914Z Starting metrics collection.
+2026-02-20T05:18:41.0835736Z Container is running.
+2026-02-20T05:18:41.0839641Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:35, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T05:18:41.1189625Z Container start method finished after 405 ms.
+2026-02-20T05:18:41.1192202Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:35, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T05:18:41.1192608Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:35, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-02-20T05:18:47.7987950Z Container has finished running with exit code: 1.
+2026-02-20T05:18:47.7990891Z Container is terminating. Grace period: 5 seconds.
+2026-02-20T05:18:47.7994986Z Stop and delete container. Retry count = 0
+2026-02-20T05:18:47.7996244Z Stopping container: 600e78e1794f_options-scanner-backend-2exk6s.
+2026-02-20T05:18:47.8266876Z Deleting container: 600e78e1794f_options-scanner-backend-2exk6s. Retry count = 0
+2026-02-20T05:18:47.9890366Z Container spec TerminationMessagePolicy  path 
+2026-02-20T05:18:47.9894284Z Container is terminated. Total time elapsed: 189 ms.
+2026-02-20T05:18:47.9896636Z Site container: options-scanner-backend-2exk6s terminated during site startup.
+2026-02-20T05:18:47.9897323Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:35, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:18:47.9959829Z Site startup probe failed after 6.8759699 seconds.
+2026-02-20T05:18:48.0422426Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:18:48.0486972Z Failed to start site. Revert by stopping site.
+2026-02-20T05:18:48.0490150Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:18:48.0499529Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:18:48.0501838Z Site: options-scanner-backend-2exk6s stopped.
+2026-02-20T05:26:54.9271232Z State: Starting, Action: EstablishingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 02/20/2026 05:19:48, DetailsLevel: WARN
+2026-02-20T05:26:57.3406076Z State: Starting, Action: StartingMsiContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 02/20/2026 05:19:48, DetailsLevel: WARN
+2026-02-20T05:27:00.9792561Z State: Starting, Action: StartingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 02/20/2026 05:19:48, DetailsLevel: WARN
+2026-02-20T05:27:00.9795581Z Container start method called.
+2026-02-20T05:27:00.9796086Z State: Starting, Action: PullingImage, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pulling image 10.1.0.5:13209/appsvc/python:3.11_20260203.2.tuxprod for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T05:27:00.9797925Z Establishing network.
+2026-02-20T05:27:00.9799408Z Pulling image: appsvc/python:3.11_20260203.2.tuxprod.
+2026-02-20T05:27:41.3995201Z Container is starting.
+2026-02-20T05:27:41.4024342Z State: Starting, Action: MountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Mounting volumes for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T05:27:41.4025926Z Establishing user namespace if not established already.
+2026-02-20T05:27:41.4026991Z Establishing network if not established already.
+2026-02-20T05:27:41.4027980Z Mounting volumes.
+2026-02-20T05:27:41.4029687Z Nested mountpoint 
+2026-02-20T05:27:41.4080245Z Nested mountpoint volatile/logs
+2026-02-20T05:27:41.4121369Z Nested mountpoint 
+2026-02-20T05:27:41.4147366Z Nested mountpoint 
+2026-02-20T05:27:41.4155892Z Nested mountpoint 
+2026-02-20T05:27:41.4919178Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Finished pulling container image and mounting volumes for options-scanner-backend-2exk6s. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-02-20T05:27:41.4920237Z Creating container.
+2026-02-20T05:27:41.4921123Z Creating pipes for streaming container io.
+2026-02-20T05:27:41.4921949Z Creating stdout named pipe at /podr/container/pipe/ed41895c8eee_options-scanner-backend-2exk6s/stdout_2013ad4daa9c4163b0b47bf897b2fc5a.
+2026-02-20T05:27:41.5008471Z Successfully created stdout named pipe at: /podr/container/pipe/ed41895c8eee_options-scanner-backend-2exk6s/stdout_2013ad4daa9c4163b0b47bf897b2fc5a.
+2026-02-20T05:27:41.5031316Z Opening named pipe /podr/container/pipe/ed41895c8eee_options-scanner-backend-2exk6s/stdout_2013ad4daa9c4163b0b47bf897b2fc5a for reading in non-blocking mode.
+2026-02-20T05:27:41.5038268Z Successfully opened named pipe: /podr/container/pipe/ed41895c8eee_options-scanner-backend-2exk6s/stdout_2013ad4daa9c4163b0b47bf897b2fc5a.
+2026-02-20T05:27:41.5039413Z Successfully removed non-blocking flag from /podr/container/pipe/ed41895c8eee_options-scanner-backend-2exk6s/stdout_2013ad4daa9c4163b0b47bf897b2fc5a.
+2026-02-20T05:27:41.5043796Z Creating stderr named pipe at /podr/container/pipe/ed41895c8eee_options-scanner-backend-2exk6s/stderr_d6e90482a0bd412ba649526a6c1ac737.
+2026-02-20T05:27:41.5060010Z Successfully created stderr named pipe at: /podr/container/pipe/ed41895c8eee_options-scanner-backend-2exk6s/stderr_d6e90482a0bd412ba649526a6c1ac737.
+2026-02-20T05:27:41.5066906Z Opening named pipe /podr/container/pipe/ed41895c8eee_options-scanner-backend-2exk6s/stderr_d6e90482a0bd412ba649526a6c1ac737 for reading in non-blocking mode.
+2026-02-20T05:27:41.5072315Z Successfully opened named pipe: /podr/container/pipe/ed41895c8eee_options-scanner-backend-2exk6s/stderr_d6e90482a0bd412ba649526a6c1ac737.
+2026-02-20T05:27:41.5075813Z Successfully removed non-blocking flag from /podr/container/pipe/ed41895c8eee_options-scanner-backend-2exk6s/stderr_d6e90482a0bd412ba649526a6c1ac737.
+2026-02-20T05:27:41.5082431Z Creating container with image: appsvc/python:3.11_20260203.2.tuxprod from registry: 10.1.0.4:13209 and fully qualified image name: 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod
+2026-02-20T05:27:41.8022776Z Starting container: ed41895c8eee_options-scanner-backend-2exk6s.
+2026-02-20T05:27:41.8740233Z Starting watchers and probes.
+2026-02-20T05:27:41.8743516Z Starting metrics collection.
+2026-02-20T05:27:41.8745316Z Container is running.
+2026-02-20T05:27:41.8745880Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T05:27:41.9122050Z Container start method finished after 40932 ms.
+2026-02-20T05:27:41.9125283Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T05:27:41.9125714Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-02-20T05:27:48.2612469Z Container has finished running with exit code: 127.
+2026-02-20T05:27:48.2619163Z Container is terminating. Grace period: 5 seconds.
+2026-02-20T05:27:48.2636917Z Stop and delete container. Retry count = 0
+2026-02-20T05:27:48.2642191Z Stopping container: ed41895c8eee_options-scanner-backend-2exk6s.
+2026-02-20T05:27:48.2762900Z Deleting container: ed41895c8eee_options-scanner-backend-2exk6s. Retry count = 0
+2026-02-20T05:27:48.4969111Z Container spec TerminationMessagePolicy  path 
+2026-02-20T05:27:48.4978733Z Container is terminated. Total time elapsed: 235 ms.
+2026-02-20T05:27:48.4981753Z Site container: options-scanner-backend-2exk6s terminated during site startup.
+2026-02-20T05:27:48.4982392Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:18:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:27:48.5228023Z Site startup probe failed after 6.6015249 seconds.
+2026-02-20T05:27:48.5504617Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:27:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:27:48.5614619Z Failed to start site. Revert by stopping site.
+2026-02-20T05:27:48.5635061Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:27:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:27:48.5647758Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:27:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:27:48.5648006Z Site: options-scanner-backend-2exk6s stopped.
+2026-02-20T05:27:48.5656784Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:27:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:27:49.0305026Z Site container: options-scanner-backend-2exk6s_managedIdentity terminated during site startup.
+2026-02-20T05:27:49.0305980Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:27:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:27:49.0418825Z State: Stopping, Action: StoppingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:27:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:27:49.3158850Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:27:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:27:49 (UTC), DetailsLevel: ERR
+2026-02-20T05:27:49.3459692Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:27:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:27:49 (UTC), DetailsLevel: ERR
+2026-02-20T05:31:34.3340200Z State: Starting, Action: EstablishingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:27:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:27:49 (UTC), DetailsLevel: ERR
+2026-02-20T05:31:36.6729611Z State: Starting, Action: StartingMsiContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:27:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:27:49 (UTC), DetailsLevel: ERR
+2026-02-20T05:31:41.2205602Z State: Starting, Action: StartingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:27:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/20/2026 05:27:49 (UTC), DetailsLevel: ERR
+2026-02-20T05:31:41.2211421Z Container start method called.
+2026-02-20T05:31:41.2215961Z State: Starting, Action: PullingImage, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:27:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pulling image 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T05:31:41.2226784Z Establishing network.
+2026-02-20T05:31:41.2233956Z Pulling image: appsvc/python:3.11_20260203.2.tuxprod.
+2026-02-20T05:32:04.5805026Z Container is starting.
+2026-02-20T05:32:04.5816148Z State: Starting, Action: MountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:27:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Mounting volumes for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-20T05:32:04.5818805Z Establishing user namespace if not established already.
+2026-02-20T05:32:04.5821080Z Establishing network if not established already.
+2026-02-20T05:32:04.5823553Z Mounting volumes.
+2026-02-20T05:32:04.5825549Z Nested mountpoint 
+2026-02-20T05:32:04.5939389Z Nested mountpoint volatile/logs
+2026-02-20T05:32:04.5985597Z Nested mountpoint 
+2026-02-20T05:32:04.5991149Z Nested mountpoint 
+2026-02-20T05:32:04.5998082Z Nested mountpoint 
+2026-02-20T05:32:04.7446750Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:27:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Finished pulling container image and mounting volumes for options-scanner-backend-2exk6s. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-02-20T05:32:04.7447792Z Creating container.
+2026-02-20T05:32:04.7448764Z Creating pipes for streaming container io.
+2026-02-20T05:32:04.7449627Z Creating stdout named pipe at /podr/container/pipe/65a476a81280_options-scanner-backend-2exk6s/stdout_70e9be12b5f2457897e5e9187bcd0da5.
+2026-02-20T05:32:04.7451770Z Successfully created stdout named pipe at: /podr/container/pipe/65a476a81280_options-scanner-backend-2exk6s/stdout_70e9be12b5f2457897e5e9187bcd0da5.
+2026-02-20T05:32:04.7452661Z Opening named pipe /podr/container/pipe/65a476a81280_options-scanner-backend-2exk6s/stdout_70e9be12b5f2457897e5e9187bcd0da5 for reading in non-blocking mode.
+2026-02-20T05:32:04.7453599Z Successfully opened named pipe: /podr/container/pipe/65a476a81280_options-scanner-backend-2exk6s/stdout_70e9be12b5f2457897e5e9187bcd0da5.
+2026-02-20T05:32:04.7454472Z Successfully removed non-blocking flag from /podr/container/pipe/65a476a81280_options-scanner-backend-2exk6s/stdout_70e9be12b5f2457897e5e9187bcd0da5.
+2026-02-20T05:32:04.7455888Z Creating stderr named pipe at /podr/container/pipe/65a476a81280_options-scanner-backend-2exk6s/stderr_24505444f7a64c65b9f50d42a240bc4c.
+2026-02-20T05:32:04.7457231Z Successfully created stderr named pipe at: /podr/container/pipe/65a476a81280_options-scanner-backend-2exk6s/stderr_24505444f7a64c65b9f50d42a240bc4c.
+2026-02-20T05:32:04.7458084Z Opening named pipe /podr/container/pipe/65a476a81280_options-scanner-backend-2exk6s/stderr_24505444f7a64c65b9f50d42a240bc4c for reading in non-blocking mode.
+2026-02-20T05:32:04.7460938Z Successfully opened named pipe: /podr/container/pipe/65a476a81280_options-scanner-backend-2exk6s/stderr_24505444f7a64c65b9f50d42a240bc4c.
+2026-02-20T05:32:04.7462514Z Successfully removed non-blocking flag from /podr/container/pipe/65a476a81280_options-scanner-backend-2exk6s/stderr_24505444f7a64c65b9f50d42a240bc4c.
+2026-02-20T05:32:04.7464009Z Creating container with image: appsvc/python:3.11_20260203.2.tuxprod from registry: 10.1.0.4:13209 and fully qualified image name: 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod
+2026-02-20T05:32:04.9666699Z Starting container: 65a476a81280_options-scanner-backend-2exk6s.
+2026-02-20T05:32:04.9835610Z Starting watchers and probes.
+2026-02-20T05:32:04.9857588Z Starting metrics collection.
+2026-02-20T05:32:04.9859219Z Container is running.
+2026-02-20T05:32:04.9860080Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:27:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T05:32:05.0150369Z Container start method finished after 23793 ms.
+2026-02-20T05:32:05.0152834Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:27:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-20T05:32:05.0153035Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:27:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-02-20T05:32:33.6158061Z Container has finished running with exit code: 127.
+2026-02-20T05:32:33.6159059Z Container is terminating. Grace period: 5 seconds.
+2026-02-20T05:32:33.6162131Z Stop and delete container. Retry count = 0
+2026-02-20T05:32:33.6162992Z Stopping container: 65a476a81280_options-scanner-backend-2exk6s.
+2026-02-20T05:32:33.6775703Z Deleting container: 65a476a81280_options-scanner-backend-2exk6s. Retry count = 0
+2026-02-20T05:32:34.0257756Z Container spec TerminationMessagePolicy  path 
+2026-02-20T05:32:34.0552214Z Container is terminated. Total time elapsed: 439 ms.
+2026-02-20T05:32:34.0554501Z Site container: options-scanner-backend-2exk6s terminated during site startup.
+2026-02-20T05:32:34.0613060Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:27:48, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:32:34.0807201Z Site startup probe failed after 29.0649488 seconds.
+2026-02-20T05:32:34.1525382Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:32:34, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:32:34.2443228Z Failed to start site. Revert by stopping site.
+2026-02-20T05:32:34.2463428Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:32:34, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:32:34.2468449Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/20/2026 05:32:34, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-20T05:32:34.2468617Z Site: options-scanner-backend-2exk6s stopped.

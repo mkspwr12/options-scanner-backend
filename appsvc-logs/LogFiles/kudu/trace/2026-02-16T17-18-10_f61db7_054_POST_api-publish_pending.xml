@@ -1,0 +1,14 @@
+<step title="Incoming Request" date="2026-02-16T17:18:10.396" instance="f61db7" url="/api/publish?type=zip&amp;clean=True" method="POST" type="request" pid="770,1,15" Accept="*/*" Host="options-scanner-backend-2exk6s.scm.azurewebsites.net" User-Agent="AZURECLI/2.83.0 (MSI)" Accept-Encoding="gzip, deflate" Authorization="Bea..." Cache-Control="no-cache" Content-Type="application/octet-stream" Cookie="ARRAffinity=f61db71164c7fbc96a48b8334d6a4273c48541f982080ae5a71433a0e2a8d849; ARRAffinitySameSite=f61db71164c7fbc96a48b8334d6a4273c48541f982080ae5a71433a0e2a8d849" Content-Length="818872" x-ms-client-request-id="71850eac-0b5b-11f1-b472-84b1e26ffc70" x-ms-artifact-checksum="484ab35db134a6c5c26851c6a012aa5de3d8a1e0f435dd8c1fd9fa5d47ac9fc1" X-ARR-LOG-ID="71850eac-0b5b-11f1-b472-84b1e26ffc70" CLIENT-IP="50.47.228.37:56346" X-SITE-DEPLOYMENT-ID="options-scanner-backend-2exk6s" WAS-DEFAULT-HOSTNAME="options-scanner-backend-2exk6s.scm.azurewebsites.net" X-Forwarded-Proto="https" X-AppService-Proto="https" X-Forwarded-TlsVersion="1.3" X-WAWS-Unencoded-URL="/api/publish?type=zip&amp;clean=True" X-Client-IP="50.47.228.37" X-Client-Port="56346" >
+  <step title="OneDeploy" date="2026-02-16T17:18:10.794" >
+    <step title="Starting PushDeployAsync" date="2026-02-16T17:18:11.058" /><!-- duration: 61ms -->
+    <step title="Writing artifact to /tmp/zipdeploy/d75a17bd-adc7-4549-a073-00b44c55a2f3.zip" date="2026-02-16T17:18:11.325" >
+      <step title="Writing multipart request body to /tmp/zipdeploy/d75a17bd-adc7-4549-a073-00b44c55a2f3.zip" date="2026-02-16T17:18:11.455" /><!-- duration: 100ms -->
+    </step><!-- duration: 1901ms -->
+    <step title="Removing previous build artifact&apos;s manifest file" date="2026-02-16T17:18:13.313" >
+      <step title="Attempting to fetch target branch HEAD" date="2026-02-16T17:18:13.534" /><!-- duration: 29ms -->
+      <step title="Acquiring Deployment Lock" date="2026-02-16T17:18:13.592" /><!-- duration: 99ms -->
+      <step title="Cannot Acquire Deployment Lock already held" date="2026-02-16T17:18:13.782" /><!-- duration: 22ms -->
+      <step title="There is a deployment currently in progress. Please try again when it completes." date="2026-02-16T17:18:13.934" /><!-- duration: 46ms -->
+    </step><!-- duration: 727ms -->
+    <step title="Outgoing response" date="2026-02-16T17:18:14.198" type="response" statusCode="409" statusText="Conflict" /><!-- duration: 69ms -->
+  </step><!-- duration: 3614ms -->

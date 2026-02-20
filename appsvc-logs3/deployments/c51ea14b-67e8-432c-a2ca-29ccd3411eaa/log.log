@@ -1,0 +1,46 @@
+2026-02-20T05:20:22.9699119Z,Updating submodules.,0035eb00-c4b0-438e-948b-3854baf2c7da,0
+2026-02-20T05:20:24.0914287Z,Preparing deployment for commit id 'c51ea14b-6'.,ab376b87-7e8a-4f59-aa77-1f3221569d90,0
+2026-02-20T05:20:24.3969876Z,PreDeployment: context.CleanOutputPath False,53848f51-ed62-4383-a075-319418cc8fb5,0
+2026-02-20T05:20:24.5271087Z,PreDeployment: context.OutputPath /home/site/wwwroot,66667ea4-59bc-442a-8cde-c18b23255127,0
+2026-02-20T05:20:24.6819637Z,Repository path is /tmp/zipdeploy/extracted,6c00d417-5c44-465e-8db6-2ea41342f4fd,0
+2026-02-20T05:20:24.8083760Z,Running oryx build...,ef73e2cd-2887-4316-947c-07772883e88c,0
+	2026-02-20T05:20:24.8293388Z,Command: oryx build /tmp/zipdeploy/extracted -o /home/site/wwwroot --platform python --platform-version 3.11 -p virtualenv_name=antenv --log-file /tmp/build-debug.log  -i /tmp/8de703fc02c2ad3 --compress-destination-dir | tee /tmp/oryx-build.log,,0
+	2026-02-20T05:20:25.8596885Z,Operation performed by Microsoft Oryx&comma; https://github.com/Microsoft/Oryx,,0
+	2026-02-20T05:20:25.8815501Z,You can report issues at https://github.com/Microsoft/Oryx/issues,,0
+	2026-02-20T05:20:25.9036527Z,,,0
+	2026-02-20T05:20:25.9158785Z,Oryx Version: 0.2.20260204.1+0fdbe200b286be083841ff7fa201c6c2316dc6b9&comma; Commit: 0fdbe200b286be083841ff7fa201c6c2316dc6b9&comma; ReleaseTagName: 20260204.1,,0
+	2026-02-20T05:20:25.9338680Z,,,0
+	2026-02-20T05:20:25.9566070Z,Build Operation ID: d2f7a9108dda1495,,0
+	2026-02-20T05:20:25.9737305Z,Repository Commit : c51ea14b-67e8-432c-a2ca-29ccd3411eaa,,0
+	2026-02-20T05:20:25.9858422Z,OS Type           : bullseye,,0
+	2026-02-20T05:20:25.9951812Z,Image Type        : githubactions,,0
+	2026-02-20T05:20:26.0067181Z,,,0
+	2026-02-20T05:20:26.0221429Z,Primary SDK Storage URL: https://oryx-cdn.microsoft.io,,0
+	2026-02-20T05:20:26.0319713Z,Backup SDK Storage URL: ,,0
+	2026-02-20T05:20:26.0422567Z,Detecting platforms...,,0
+	2026-02-20T05:20:26.0502539Z,External SDK provider is enabled.,,0
+	2026-02-20T05:20:26.0630349Z,Requesting metadata for platform python from external SDK provider,,0
+	2026-02-20T05:20:27.7000144Z,Requesting metadata for platform python from external SDK provider,,0
+	2026-02-20T05:20:28.0535643Z,Detected following platforms:,,0
+	2026-02-20T05:20:28.0662478Z,  python: 3.11.14,,0
+	2026-02-20T05:20:28.0827421Z,Requesting metadata for platform python from external SDK provider,,0
+	2026-02-20T05:20:29.9952105Z,Version '3.11.14' of platform 'python' is not installed. Generating script to install it...,,0
+	2026-02-20T05:20:30.1618021Z,,,0
+	2026-02-20T05:20:30.2069950Z,Using intermediate directory '/tmp/8de703fc02c2ad3'.,,0
+	2026-02-20T05:20:30.2366389Z,,,0
+	2026-02-20T05:20:30.2463895Z,Copying files to the intermediate directory...,,0
+	2026-02-20T05:20:30.4859032Z,Copying files to intermediate directory done in 0 sec(s).,,0
+	2026-02-20T05:20:30.5056998Z,,,0
+	2026-02-20T05:20:30.5261308Z,Source directory     : /tmp/8de703fc02c2ad3,,0
+	2026-02-20T05:20:30.5462749Z,Destination directory: /home/site/wwwroot,,0
+	2026-02-20T05:20:30.5548827Z,,,0
+	2026-02-20T05:20:30.5650574Z,Installing platform...,,0
+	2026-02-20T05:20:30.5750928Z,,,0
+	2026-02-20T05:20:30.5859511Z,Downloading and extracting 'python' version '3.11.14' to '/tmp/oryx/platforms/python/3.11.14'...,,0
+	2026-02-20T05:20:30.5957883Z,Detected image debian flavor: bullseye.,,0
+	2026-02-20T05:20:30.6103842Z,Skipping download of python version 3.11.14 as it is available in external sdk provider cache...,,0
+	2026-02-20T05:20:30.6417791Z,Extracting contents...,,0
+	2026-02-20T05:20:44.0723081Z,Successfully extracted python version 3.11.14 from external sdk provider cache...,,0
+	2026-02-20T05:20:44.2352792Z,,,0
+	2026-02-20T05:20:44.2563483Z,image detector file exists&comma; platform is python..,,0
+	2026-02-20T05:20:44.2819448Z,OS detector file exists&comma; OS is bullseye..,,0

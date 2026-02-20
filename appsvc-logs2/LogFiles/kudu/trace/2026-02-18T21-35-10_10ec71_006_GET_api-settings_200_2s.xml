@@ -1,0 +1,6 @@
+<step title="Incoming Request" date="2026-02-18T21:35:10.404" instance="10ec71" url="/api/settings" method="GET" type="request" pid="774,1,19" Host="options-scanner-backend-2exk6s.scm.azurewebsites.net" User-Agent="GITHUBACTIONS_DeployWebAppToAzure_1bac1de709833053b85ab0d60063d021becbab353b8d246140a86507d9e31133" Authorization="Bea..." Content-Type="application/json; charset=utf-8" Content-Length="0" X-ARR-LOG-ID="0122a409-3951-46d4-bf78-115f922c610e" CLIENT-IP="4.236.173.16:29696" X-SITE-DEPLOYMENT-ID="options-scanner-backend-2exk6s" WAS-DEFAULT-HOSTNAME="options-scanner-backend-2exk6s.scm.azurewebsites.net" X-Forwarded-Proto="https" X-AppService-Proto="https" X-Forwarded-TlsVersion="1.3" X-WAWS-Unencoded-URL="/api/settings" X-Client-IP="4.236.173.16" X-Client-Port="29696" >
+  <step title="Cleanup Xml Logs" date="2026-02-18T21:35:10.408" >
+    <step title="Cleanup Infos" date="2026-02-18T21:35:10.482" totalFiles="1778" totalCleanup="1618" /><!-- duration: 9ms -->
+  </step><!-- duration: 87ms -->
+  <step title="Outgoing response" date="2026-02-18T21:35:11.992" type="response" statusCode="200" statusText="OK" /><!-- duration: 9ms -->
+</step><!-- duration: 1607ms -->

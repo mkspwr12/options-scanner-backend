@@ -1,0 +1,13 @@
+<step title="Incoming Request" date="2026-02-16T02:24:22.950" instance="f61db7" url="/api/zip/site/wwwroot/" method="GET" type="request" pid="769,1,29" Accept="application/json, text/json" Host="options-scanner-backend-2exk6s.scm.azurewebsites.net" Authorization="Bea..." traceparent="00-0f79e121f1f7d3f5b6491b690693e495-c6c6962349bea322-01" X-ARR-LOG-ID="94ffd9d5-0e7f-438b-b2b2-dcd04aaf4d05" CLIENT-IP="172.212.246.11:56438" X-SITE-DEPLOYMENT-ID="options-scanner-backend-2exk6s" WAS-DEFAULT-HOSTNAME="options-scanner-backend-2exk6s.scm.azurewebsites.net" X-Forwarded-Proto="https" X-AppService-Proto="https" X-Forwarded-TlsVersion="1.3" X-WAWS-Unencoded-URL="/api/zip/site/wwwroot/" X-Client-IP="172.212.246.11" X-Client-Port="56438" >
+  <step title="Cleanup Xml Logs" date="2026-02-16T02:24:23.020" >
+    <step title="Cleanup Infos" date="2026-02-16T02:24:23.787" totalFiles="583" totalCleanup="423" /><!-- duration: 99ms -->
+  </step><!-- duration: 894ms -->
+  <step title="Error occurred" date="2026-02-16T02:32:57.556" type="error" text="Unable to open /home/site/wwwroot/node_modules/node_modules, System.UnauthorizedAccessException: Access to the path &apos;/home/site/wwwroot/node_modules/node_modules&apos; is denied.
+ ---&gt; System.IO.IOException: Permission denied
+   --- End of inner exception stack trace ---
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Init(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Int64&amp; fileLength, UnixFileMode&amp; filePermissions)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, UnixFileMode openPermissions, Int64&amp; fileLength, UnixFileMode&amp; filePermissions, Boolean failForSymlink, Boolean&amp; wasSymlink, Func`4 createOpenException)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at Kudu.Core.Infrastructure.ZipArchiveExtensions.AddFile(ZipArchive zipArchive, FileInfoBase file, ITracer tracer, String directoryNameInArchive) in /tmp/KuduLite/Kudu.Core/Infrastructure/ZipArchiveExtensions.cs:line 111" /><!-- duration: 120ms -->
+  <step title="Outgoing response" date="2026-02-16T03:13:01.354" type="response" statusCode="200" statusText="OK" /><!-- duration: 319ms -->
+</step><!-- duration: 2918921ms -->

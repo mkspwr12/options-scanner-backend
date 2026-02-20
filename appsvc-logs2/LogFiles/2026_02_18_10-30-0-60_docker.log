@@ -1,0 +1,1111 @@
+2026-02-18T06:28:24.5626158Z State: Starting, Action: EstablishingSiteNetworks, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-18T06:28:25.7931493Z State: Starting, Action: StartingMsiContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-18T06:28:29.7231168Z State: Starting, Action: StartingSiteContainers, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-18T06:28:29.7232682Z Container start method called.
+2026-02-18T06:28:29.7238905Z State: Starting, Action: PullingImage, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pulling image 10.1.0.5:13209/appsvc/python:3.11_20260203.2.tuxprod for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-18T06:28:29.7240382Z Establishing network.
+2026-02-18T06:28:29.7241668Z Pulling image: appsvc/python:3.11_20260203.2.tuxprod.
+2026-02-18T06:29:04.6204900Z Image appsvc/python:3.11_20260203.2.tuxprod is pulled from registry 10.1.0.5:13209
+2026-02-18T06:29:04.6207272Z Container is starting.
+2026-02-18T06:29:04.6239868Z State: Starting, Action: MountingVolumes, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Mounting volumes for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-18T06:29:04.6241549Z Establishing user namespace if not established already.
+2026-02-18T06:29:04.6242729Z Establishing network if not established already.
+2026-02-18T06:29:04.6243838Z Mounting volumes.
+2026-02-18T06:29:04.6263385Z Nested mountpoint 
+2026-02-18T06:29:04.6307470Z Nested mountpoint volatile/logs
+2026-02-18T06:29:04.6364029Z Nested mountpoint 
+2026-02-18T06:29:04.6408368Z Nested mountpoint 
+2026-02-18T06:29:04.6416547Z Nested mountpoint 
+2026-02-18T06:29:04.8173300Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Finished pulling container image and mounting volumes for options-scanner-backend-2exk6s. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-02-18T06:29:04.8176171Z Creating container.
+2026-02-18T06:29:04.8178786Z Creating pipes for streaming container io.
+2026-02-18T06:29:04.8180263Z Creating stdout named pipe at /podr/container/pipe/11560cdc9735_options-scanner-backend-2exk6s/stdout_dd37046b95dc426c9bd93272240ad2ed.
+2026-02-18T06:29:04.8192595Z Successfully created stdout named pipe at: /podr/container/pipe/11560cdc9735_options-scanner-backend-2exk6s/stdout_dd37046b95dc426c9bd93272240ad2ed.
+2026-02-18T06:29:04.8195947Z Opening named pipe /podr/container/pipe/11560cdc9735_options-scanner-backend-2exk6s/stdout_dd37046b95dc426c9bd93272240ad2ed for reading in non-blocking mode.
+2026-02-18T06:29:04.8197513Z Successfully opened named pipe: /podr/container/pipe/11560cdc9735_options-scanner-backend-2exk6s/stdout_dd37046b95dc426c9bd93272240ad2ed.
+2026-02-18T06:29:04.8198602Z Successfully removed non-blocking flag from /podr/container/pipe/11560cdc9735_options-scanner-backend-2exk6s/stdout_dd37046b95dc426c9bd93272240ad2ed.
+2026-02-18T06:29:04.8200059Z Creating stderr named pipe at /podr/container/pipe/11560cdc9735_options-scanner-backend-2exk6s/stderr_e5bb90052f6e445c88c673558f14074d.
+2026-02-18T06:29:04.8201620Z Successfully created stderr named pipe at: /podr/container/pipe/11560cdc9735_options-scanner-backend-2exk6s/stderr_e5bb90052f6e445c88c673558f14074d.
+2026-02-18T06:29:04.8202593Z Opening named pipe /podr/container/pipe/11560cdc9735_options-scanner-backend-2exk6s/stderr_e5bb90052f6e445c88c673558f14074d for reading in non-blocking mode.
+2026-02-18T06:29:04.8203920Z Successfully opened named pipe: /podr/container/pipe/11560cdc9735_options-scanner-backend-2exk6s/stderr_e5bb90052f6e445c88c673558f14074d.
+2026-02-18T06:29:04.8204910Z Successfully removed non-blocking flag from /podr/container/pipe/11560cdc9735_options-scanner-backend-2exk6s/stderr_e5bb90052f6e445c88c673558f14074d.
+2026-02-18T06:29:04.8206222Z Creating container with image: appsvc/python:3.11_20260203.2.tuxprod from registry: 10.1.0.5:13209 and fully qualified image name: 10.1.0.5:13209/appsvc/python:3.11_20260203.2.tuxprod
+2026-02-18T06:29:06.9735850Z Starting container: 11560cdc9735_options-scanner-backend-2exk6s.
+2026-02-18T06:29:07.0163393Z Starting watchers and probes.
+2026-02-18T06:29:07.0208687Z Starting metrics collection.
+2026-02-18T06:29:07.0213854Z Container is running.
+2026-02-18T06:29:07.0214651Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-18T06:29:07.1542271Z Container start method finished after 37430 ms.
+2026-02-18T06:29:07.1563828Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-18T06:29:07.1579893Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-02-18T06:29:17.5746218Z Container has finished running with exit code: 127.
+2026-02-18T06:29:17.5747756Z Container is terminating. Grace period: 5 seconds.
+2026-02-18T06:29:17.5759863Z Stop and delete container. Retry count = 0
+2026-02-18T06:29:17.5763963Z Stopping container: 11560cdc9735_options-scanner-backend-2exk6s.
+2026-02-18T06:29:17.5956582Z Deleting container: 11560cdc9735_options-scanner-backend-2exk6s. Retry count = 0
+2026-02-18T06:29:17.6965125Z Container spec TerminationMessagePolicy  path 
+2026-02-18T06:29:17.6976902Z Container is terminated. Total time elapsed: 122 ms.
+2026-02-18T06:29:17.6980023Z Site container: options-scanner-backend-2exk6s terminated during site startup.
+2026-02-18T06:29:17.7139063Z State: Stopping, Action: CancellingStartup, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-18T06:29:17.7680226Z Site startup probe failed after 10.5924109 seconds.
+2026-02-18T06:29:17.9170220Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 06:29:17, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-18T06:29:17.9342485Z Failed to start site. Revert by stopping site.
+2026-02-18T06:29:17.9403849Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 06:29:17, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-18T06:29:17.9584869Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 06:29:17, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-18T06:29:17.9586329Z Site: options-scanner-backend-2exk6s stopped.
+2026-02-18T06:29:45.681Z INFO  - 3.11_20251017.5.tuxprod Pulling from appsvc/python
+2026-02-18T06:29:45.682Z INFO  - 10ffc47270cd Pulling fs layer
+2026-02-18T06:29:45.683Z INFO  - babe2e3e3c71 Pulling fs layer
+2026-02-18T06:29:45.684Z INFO  - 4f4fb700ef54 Pulling fs layer
+2026-02-18T06:29:45.685Z INFO  - f7943b878c5a Pulling fs layer
+2026-02-18T06:29:45.686Z INFO  - bf91c9135236 Pulling fs layer
+2026-02-18T06:29:45.689Z INFO  - a49b20bb820c Pulling fs layer
+2026-02-18T06:29:45.690Z INFO  - 2019780686b0 Pulling fs layer
+2026-02-18T06:29:45.691Z INFO  - ccbe65ed435b Pulling fs layer
+2026-02-18T06:29:45.692Z INFO  - b0399d4f1093 Pulling fs layer
+2026-02-18T06:29:45.693Z INFO  - 4296d9e49093 Pulling fs layer
+2026-02-18T06:29:45.694Z INFO  - f501553e1eeb Pulling fs layer
+2026-02-18T06:29:45.695Z INFO  - 67c9ba2ac3e9 Pulling fs layer
+2026-02-18T06:29:45.696Z INFO  - f87a5dc3ab54 Pulling fs layer
+2026-02-18T06:29:45.697Z INFO  - cf1f560cc9e6 Pulling fs layer
+2026-02-18T06:29:45.698Z INFO  - 614898d2f6e8 Pulling fs layer
+2026-02-18T06:29:45.698Z INFO  - 67d8ea62776d Pulling fs layer
+2026-02-18T06:29:45.699Z INFO  - a8698dba3c16 Pulling fs layer
+2026-02-18T06:29:45.700Z INFO  - 4223ad926969 Pulling fs layer
+2026-02-18T06:29:45.705Z INFO  - d17bda710013 Pulling fs layer
+2026-02-18T06:29:45.707Z INFO  - ca4cad3a1f11 Pulling fs layer
+2026-02-18T06:29:45.713Z INFO  - 4dab2df7fe81 Pulling fs layer
+2026-02-18T06:29:45.714Z INFO  - e5c3f3249afb Pulling fs layer
+2026-02-18T06:29:45.714Z INFO  - 6df8253f371a Pulling fs layer
+2026-02-18T06:29:45.715Z INFO  - 219dc8274a65 Pulling fs layer
+2026-02-18T06:29:45.716Z INFO  - 42ede7a6c55a Pulling fs layer
+2026-02-18T06:29:45.716Z INFO  - fb65f28b112b Pulling fs layer
+2026-02-18T06:29:45.717Z INFO  - a40510b545e4 Pulling fs layer
+2026-02-18T06:29:45.718Z INFO  - 6e80b76a2230 Pulling fs layer
+2026-02-18T06:29:45.718Z INFO  - 532e77ac237d Pulling fs layer
+2026-02-18T06:29:45.719Z INFO  - c3c20db5b37e Pulling fs layer
+2026-02-18T06:29:45.724Z INFO  - 765fc3fc3afc Pulling fs layer
+2026-02-18T06:29:45.725Z INFO  - 6b4c2adab45b Pulling fs layer
+2026-02-18T06:29:45.725Z INFO  - b7f285bbb111 Pulling fs layer
+2026-02-18T06:29:45.726Z INFO  - fdaec5c523b8 Pulling fs layer
+2026-02-18T06:29:45.727Z INFO  - f5a6dabbd87f Pulling fs layer
+2026-02-18T06:29:45.732Z INFO  - 0440265059c0 Pulling fs layer
+2026-02-18T06:29:45.747Z INFO  - feb3396323fe Pulling fs layer
+2026-02-18T06:29:45.752Z INFO  - 5c4548330576 Pulling fs layer
+2026-02-18T06:29:45.753Z INFO  - a221ee0b6f49 Pulling fs layer
+2026-02-18T06:29:45.754Z INFO  - ac250ea855ab Pulling fs layer
+2026-02-18T06:29:45.754Z INFO  - 6de9a9da98da Pulling fs layer
+2026-02-18T06:29:45.755Z INFO  - d531dc368e36 Pulling fs layer
+2026-02-18T06:29:45.756Z INFO  - c0fc26e916f7 Pulling fs layer
+2026-02-18T06:29:45.760Z INFO  - 50a09b64903a Pulling fs layer
+2026-02-18T06:29:45.761Z INFO  - 7b94c70810bd Pulling fs layer
+2026-02-18T06:29:45.762Z INFO  - b8c2a35bf8cf Pulling fs layer
+2026-02-18T06:29:45.765Z INFO  - 0b9fc1ae6357 Pulling fs layer
+2026-02-18T06:29:45.767Z INFO  - 1be8b0b29112 Pulling fs layer
+2026-02-18T06:29:45.768Z INFO  - e4bfa5b09991 Pulling fs layer
+2026-02-18T06:29:45.769Z INFO  - 20256efc20c6 Pulling fs layer
+2026-02-18T06:29:45.772Z INFO  - 655ae1159747 Pulling fs layer
+2026-02-18T06:29:45.778Z INFO  - a9d311bf7864 Pulling fs layer
+2026-02-18T06:29:45.782Z INFO  - 52d8d446e592 Pulling fs layer
+2026-02-18T06:29:45.789Z INFO  - 2fd6879c6c9f Pulling fs layer
+2026-02-18T06:29:45.791Z INFO  - 4dab2df7fe81 Waiting
+2026-02-18T06:29:45.793Z INFO  - e5c3f3249afb Waiting
+2026-02-18T06:29:45.794Z INFO  - 6df8253f371a Waiting
+2026-02-18T06:29:45.796Z INFO  - 219dc8274a65 Waiting
+2026-02-18T06:29:45.797Z INFO  - 42ede7a6c55a Waiting
+2026-02-18T06:29:45.800Z INFO  - fb65f28b112b Waiting
+2026-02-18T06:29:45.804Z INFO  - a40510b545e4 Waiting
+2026-02-18T06:29:45.805Z INFO  - 6e80b76a2230 Waiting
+2026-02-18T06:29:45.807Z INFO  - 532e77ac237d Waiting
+2026-02-18T06:29:45.812Z INFO  - c3c20db5b37e Waiting
+2026-02-18T06:29:45.820Z INFO  - 765fc3fc3afc Waiting
+2026-02-18T06:29:45.824Z INFO  - 6b4c2adab45b Waiting
+2026-02-18T06:29:45.826Z INFO  - b7f285bbb111 Waiting
+2026-02-18T06:29:45.827Z INFO  - fdaec5c523b8 Waiting
+2026-02-18T06:29:45.828Z INFO  - f5a6dabbd87f Waiting
+2026-02-18T06:29:45.828Z INFO  - 0440265059c0 Waiting
+2026-02-18T06:29:45.829Z INFO  - 5c4548330576 Waiting
+2026-02-18T06:29:45.829Z INFO  - a221ee0b6f49 Waiting
+2026-02-18T06:29:45.830Z INFO  - ac250ea855ab Waiting
+2026-02-18T06:29:45.830Z INFO  - 6de9a9da98da Waiting
+2026-02-18T06:29:45.830Z INFO  - d531dc368e36 Waiting
+2026-02-18T06:29:45.830Z INFO  - c0fc26e916f7 Waiting
+2026-02-18T06:29:45.830Z INFO  - 50a09b64903a Waiting
+2026-02-18T06:29:45.830Z INFO  - 7b94c70810bd Waiting
+2026-02-18T06:29:45.830Z INFO  - b8c2a35bf8cf Waiting
+2026-02-18T06:29:45.830Z INFO  - 0b9fc1ae6357 Waiting
+2026-02-18T06:29:45.830Z INFO  - 1be8b0b29112 Waiting
+2026-02-18T06:29:45.830Z INFO  - e4bfa5b09991 Waiting
+2026-02-18T06:29:45.830Z INFO  - 20256efc20c6 Waiting
+2026-02-18T06:29:45.830Z INFO  - 655ae1159747 Waiting
+2026-02-18T06:29:45.831Z INFO  - 52d8d446e592 Waiting
+2026-02-18T06:29:45.832Z INFO  - 2fd6879c6c9f Waiting
+2026-02-18T06:29:45.832Z INFO  - feb3396323fe Waiting
+2026-02-18T06:29:45.832Z INFO  - a9d311bf7864 Waiting
+2026-02-18T06:29:45.832Z INFO  - bf91c9135236 Downloading 131B / 131B
+2026-02-18T06:29:45.832Z INFO  - f7943b878c5a Downloading 386B / 386B
+2026-02-18T06:29:45.832Z INFO  - f7943b878c5a Verifying Checksum
+2026-02-18T06:29:45.832Z INFO  - f7943b878c5a Download complete
+2026-02-18T06:29:45.832Z INFO  - 4f4fb700ef54 Downloading 32B / 32B
+2026-02-18T06:29:45.832Z INFO  - bf91c9135236 Verifying Checksum
+2026-02-18T06:29:45.832Z INFO  - bf91c9135236 Download complete
+2026-02-18T06:29:45.832Z INFO  - 4f4fb700ef54 Verifying Checksum
+2026-02-18T06:29:45.832Z INFO  - 4f4fb700ef54 Download complete
+2026-02-18T06:29:45.832Z INFO  - 4296d9e49093 Downloading 35KB / 1MB
+2026-02-18T06:29:45.832Z INFO  - ccbe65ed435b Downloading 35KB / 433KB
+2026-02-18T06:29:45.832Z INFO  - d17bda710013 Downloading 1KB / 1KB
+2026-02-18T06:29:45.832Z INFO  - ca4cad3a1f11 Downloading 2KB / 2KB
+2026-02-18T06:29:45.832Z INFO  - 4dab2df7fe81 Downloading 508B / 508B
+2026-02-18T06:29:45.833Z INFO  - 4223ad926969 Downloading 14KB / 14KB
+2026-02-18T06:29:45.833Z INFO  - 2019780686b0 Downloading 2KB / 2KB
+2026-02-18T06:29:45.833Z INFO  - b0399d4f1093 Downloading 187B / 187B
+2026-02-18T06:29:45.833Z INFO  - ccbe65ed435b Downloading 433KB / 433KB
+2026-02-18T06:29:45.833Z INFO  - 2019780686b0 Verifying Checksum
+2026-02-18T06:29:45.833Z INFO  - 2019780686b0 Download complete
+2026-02-18T06:29:45.833Z INFO  - d17bda710013 Verifying Checksum
+2026-02-18T06:29:45.833Z INFO  - d17bda710013 Download complete
+2026-02-18T06:29:45.833Z INFO  - ca4cad3a1f11 Verifying Checksum
+2026-02-18T06:29:45.833Z INFO  - ca4cad3a1f11 Download complete
+2026-02-18T06:29:45.833Z INFO  - 4dab2df7fe81 Verifying Checksum
+2026-02-18T06:29:45.833Z INFO  - 4dab2df7fe81 Download complete
+2026-02-18T06:29:45.833Z INFO  - b0399d4f1093 Verifying Checksum
+2026-02-18T06:29:45.833Z INFO  - b0399d4f1093 Download complete
+2026-02-18T06:29:45.833Z INFO  - ccbe65ed435b Verifying Checksum
+2026-02-18T06:29:45.833Z INFO  - ccbe65ed435b Download complete
+2026-02-18T06:29:45.833Z INFO  - 4223ad926969 Verifying Checksum
+2026-02-18T06:29:45.833Z INFO  - 4223ad926969 Download complete
+2026-02-18T06:29:45.834Z INFO  - 67c9ba2ac3e9 Downloading 3KB / 12KB
+2026-02-18T06:29:45.834Z INFO  - a8698dba3c16 Downloading 3KB / 12KB
+2026-02-18T06:29:45.834Z INFO  - 614898d2f6e8 Downloading 35KB / 1MB
+2026-02-18T06:29:45.834Z INFO  - f87a5dc3ab54 Downloading 14KB / 14KB
+2026-02-18T06:29:45.834Z INFO  - a8698dba3c16 Downloading 12KB / 12KB
+2026-02-18T06:29:45.834Z INFO  - f87a5dc3ab54 Verifying Checksum
+2026-02-18T06:29:45.834Z INFO  - f87a5dc3ab54 Download complete
+2026-02-18T06:29:45.835Z INFO  - a8698dba3c16 Verifying Checksum
+2026-02-18T06:29:45.835Z INFO  - a8698dba3c16 Download complete
+2026-02-18T06:29:45.835Z INFO  - 10ffc47270cd Downloading 513KB / 51MB
+2026-02-18T06:29:45.835Z INFO  - 67c9ba2ac3e9 Downloading 12KB / 12KB
+2026-02-18T06:29:45.835Z INFO  - 67d8ea62776d Downloading 39KB / 39KB
+2026-02-18T06:29:45.835Z INFO  - f501553e1eeb Downloading 39KB / 39KB
+2026-02-18T06:29:45.835Z INFO  - 67c9ba2ac3e9 Verifying Checksum
+2026-02-18T06:29:45.835Z INFO  - 67d8ea62776d Verifying Checksum
+2026-02-18T06:29:45.835Z INFO  - 67d8ea62776d Download complete
+2026-02-18T06:29:45.835Z INFO  - f501553e1eeb Verifying Checksum
+2026-02-18T06:29:45.835Z INFO  - f501553e1eeb Download complete
+2026-02-18T06:29:45.835Z INFO  - 67c9ba2ac3e9 Download complete
+2026-02-18T06:29:45.835Z INFO  - 4296d9e49093 Downloading 1MB / 1MB
+2026-02-18T06:29:45.835Z INFO  - a49b20bb820c Downloading 250KB / 250KB
+2026-02-18T06:29:45.835Z INFO  - e5c3f3249afb Downloading 527B / 527B
+2026-02-18T06:29:45.835Z INFO  - 6df8253f371a Downloading 527B / 527B
+2026-02-18T06:29:45.835Z INFO  - 4296d9e49093 Verifying Checksum
+2026-02-18T06:29:45.835Z INFO  - 4296d9e49093 Download complete
+2026-02-18T06:29:45.835Z INFO  - a49b20bb820c Verifying Checksum
+2026-02-18T06:29:45.835Z INFO  - a49b20bb820c Download complete
+2026-02-18T06:29:45.835Z INFO  - e5c3f3249afb Verifying Checksum
+2026-02-18T06:29:45.835Z INFO  - e5c3f3249afb Download complete
+2026-02-18T06:29:45.835Z INFO  - 6df8253f371a Verifying Checksum
+2026-02-18T06:29:45.835Z INFO  - 6df8253f371a Download complete
+2026-02-18T06:29:45.835Z INFO  - fb65f28b112b Downloading 3KB / 4KB
+2026-02-18T06:29:45.835Z INFO  - 219dc8274a65 Downloading 2KB / 2KB
+2026-02-18T06:29:45.835Z INFO  - fb65f28b112b Downloading 4KB / 4KB
+2026-02-18T06:29:45.835Z INFO  - 219dc8274a65 Verifying Checksum
+2026-02-18T06:29:45.835Z INFO  - 219dc8274a65 Download complete
+2026-02-18T06:29:45.835Z INFO  - fb65f28b112b Verifying Checksum
+2026-02-18T06:29:45.838Z INFO  - fb65f28b112b Download complete
+2026-02-18T06:29:45.838Z INFO  - 614898d2f6e8 Downloading 1MB / 1MB
+2026-02-18T06:29:45.838Z INFO  - 614898d2f6e8 Verifying Checksum
+2026-02-18T06:29:45.838Z INFO  - 614898d2f6e8 Download complete
+2026-02-18T06:29:45.838Z INFO  - 0440265059c0 Downloading 272B / 272B
+2026-02-18T06:29:45.838Z INFO  - a221ee0b6f49 Downloading 416B / 416B
+2026-02-18T06:29:45.838Z INFO  - feb3396323fe Downloading 833B / 833B
+2026-02-18T06:29:45.838Z INFO  - 0440265059c0 Verifying Checksum
+2026-02-18T06:29:45.838Z INFO  - 0440265059c0 Download complete
+2026-02-18T06:29:45.838Z INFO  - a221ee0b6f49 Verifying Checksum
+2026-02-18T06:29:45.838Z INFO  - a221ee0b6f49 Download complete
+2026-02-18T06:29:45.838Z INFO  - feb3396323fe Verifying Checksum
+2026-02-18T06:29:45.838Z INFO  - feb3396323fe Download complete
+2026-02-18T06:29:45.838Z INFO  - f5a6dabbd87f Downloading 270B / 270B
+2026-02-18T06:29:45.838Z INFO  - fdaec5c523b8 Downloading 133B / 133B
+2026-02-18T06:29:45.838Z INFO  - 765fc3fc3afc Downloading 1KB / 1KB
+2026-02-18T06:29:45.838Z INFO  - 6b4c2adab45b Downloading 1KB / 1KB
+2026-02-18T06:29:45.838Z INFO  - 5c4548330576 Downloading 124B / 124B
+2026-02-18T06:29:45.838Z INFO  - b7f285bbb111 Downloading 3KB / 3KB
+2026-02-18T06:29:45.838Z INFO  - fdaec5c523b8 Verifying Checksum
+2026-02-18T06:29:45.838Z INFO  - fdaec5c523b8 Download complete
+2026-02-18T06:29:45.838Z INFO  - 765fc3fc3afc Verifying Checksum
+2026-02-18T06:29:45.838Z INFO  - 765fc3fc3afc Download complete
+2026-02-18T06:29:45.838Z INFO  - 6b4c2adab45b Verifying Checksum
+2026-02-18T06:29:45.838Z INFO  - 6b4c2adab45b Download complete
+2026-02-18T06:29:45.838Z INFO  - 5c4548330576 Verifying Checksum
+2026-02-18T06:29:45.838Z INFO  - 5c4548330576 Download complete
+2026-02-18T06:29:45.838Z INFO  - b7f285bbb111 Verifying Checksum
+2026-02-18T06:29:45.838Z INFO  - b7f285bbb111 Download complete
+2026-02-18T06:29:45.838Z INFO  - f5a6dabbd87f Verifying Checksum
+2026-02-18T06:29:45.838Z INFO  - f5a6dabbd87f Download complete
+2026-02-18T06:29:45.838Z INFO  - c3c20db5b37e Downloading 521KB / 67MB
+2026-02-18T06:29:45.838Z INFO  - cf1f560cc9e6 Downloading 538KB / 56MB
+2026-02-18T06:29:45.838Z INFO  - ac250ea855ab Downloading 1KB / 1KB
+2026-02-18T06:29:45.838Z INFO  - 6de9a9da98da Downloading 1KB / 1KB
+2026-02-18T06:29:45.838Z INFO  - ac250ea855ab Verifying Checksum
+2026-02-18T06:29:45.838Z INFO  - ac250ea855ab Download complete
+2026-02-18T06:29:45.838Z INFO  - 6de9a9da98da Verifying Checksum
+2026-02-18T06:29:45.838Z INFO  - 6de9a9da98da Download complete
+2026-02-18T06:29:45.838Z INFO  - e4bfa5b09991 Downloading 2KB / 2KB
+2026-02-18T06:29:45.838Z INFO  - 20256efc20c6 Downloading 143B / 143B
+2026-02-18T06:29:46.048Z INFO  - 1be8b0b29112 Downloading 137B / 137B
+2026-02-18T06:29:46.048Z INFO  - b8c2a35bf8cf Downloading 355B / 355B
+2026-02-18T06:29:46.048Z INFO  - 0b9fc1ae6357 Downloading 842B / 842B
+2026-02-18T06:29:46.048Z INFO  - 1be8b0b29112 Verifying Checksum
+2026-02-18T06:29:46.048Z INFO  - 1be8b0b29112 Download complete
+2026-02-18T06:29:46.048Z INFO  - b8c2a35bf8cf Verifying Checksum
+2026-02-18T06:29:46.048Z INFO  - b8c2a35bf8cf Download complete
+2026-02-18T06:29:46.048Z INFO  - 0b9fc1ae6357 Verifying Checksum
+2026-02-18T06:29:46.048Z INFO  - 0b9fc1ae6357 Download complete
+2026-02-18T06:29:46.066Z INFO  - d531dc368e36 Downloading 2KB / 2KB
+2026-02-18T06:29:46.067Z INFO  - c0fc26e916f7 Downloading 121B / 121B
+2026-02-18T06:29:46.067Z INFO  - d531dc368e36 Verifying Checksum
+2026-02-18T06:29:46.070Z INFO  - d531dc368e36 Download complete
+2026-02-18T06:29:46.071Z INFO  - c0fc26e916f7 Verifying Checksum
+2026-02-18T06:29:46.072Z INFO  - c0fc26e916f7 Download complete
+2026-02-18T06:29:46.076Z INFO  - 532e77ac237d Downloading 1MB / 5MB
+2026-02-18T06:29:46.076Z INFO  - 50a09b64903a Downloading 1KB / 1KB
+2026-02-18T06:29:46.077Z INFO  - 7b94c70810bd Downloading 1KB / 1KB
+2026-02-18T06:29:46.077Z INFO  - 50a09b64903a Verifying Checksum
+2026-02-18T06:29:46.079Z INFO  - 50a09b64903a Download complete
+2026-02-18T06:29:46.080Z INFO  - 7b94c70810bd Verifying Checksum
+2026-02-18T06:29:46.080Z INFO  - 7b94c70810bd Download complete
+2026-02-18T06:29:46.106Z INFO  - c3c20db5b37e Downloading 3MB / 67MB
+2026-02-18T06:29:46.111Z INFO  - 655ae1159747 Downloading 3KB / 11KB
+2026-02-18T06:29:46.111Z INFO  - 2fd6879c6c9f Downloading 1KB / 1KB
+2026-02-18T06:29:46.111Z INFO  - 655ae1159747 Downloading 11KB / 11KB
+2026-02-18T06:29:46.112Z INFO  - 2fd6879c6c9f Verifying Checksum
+2026-02-18T06:29:46.112Z INFO  - 2fd6879c6c9f Download complete
+2026-02-18T06:29:46.112Z INFO  - 655ae1159747 Verifying Checksum
+2026-02-18T06:29:46.112Z INFO  - 655ae1159747 Download complete
+2026-02-18T06:29:46.159Z INFO  - babe2e3e3c71 Downloading 6MB / 30MB
+2026-02-18T06:29:46.199Z INFO  - 532e77ac237d Verifying Checksum
+2026-02-18T06:29:46.200Z INFO  - 532e77ac237d Download complete
+2026-02-18T06:29:46.210Z INFO  - c3c20db5b37e Downloading 10MB / 67MB
+2026-02-18T06:29:46.221Z INFO  - e4bfa5b09991 Verifying Checksum
+2026-02-18T06:29:46.221Z INFO  - e4bfa5b09991 Download complete
+2026-02-18T06:29:46.221Z INFO  - 20256efc20c6 Verifying Checksum
+2026-02-18T06:29:46.221Z INFO  - 20256efc20c6 Download complete
+2026-02-18T06:29:46.230Z INFO  - 6e80b76a2230 Downloading 2MB / 36MB
+2026-02-18T06:29:46.231Z INFO  - 52d8d446e592 Downloading 16KB / 16KB
+2026-02-18T06:29:46.240Z INFO  - 52d8d446e592 Verifying Checksum
+2026-02-18T06:29:46.248Z INFO  - 52d8d446e592 Download complete
+2026-02-18T06:29:46.297Z INFO  - a9d311bf7864 Downloading 4MB / 5MB
+2026-02-18T06:29:46.307Z INFO  - cf1f560cc9e6 Downloading 8MB / 56MB
+2026-02-18T06:29:46.324Z INFO  - c3c20db5b37e Downloading 13MB / 67MB
+2026-02-18T06:29:46.332Z INFO  - 6e80b76a2230 Downloading 3MB / 36MB
+2026-02-18T06:29:46.337Z INFO  - a9d311bf7864 Verifying Checksum
+2026-02-18T06:29:46.337Z INFO  - a9d311bf7864 Download complete
+2026-02-18T06:29:46.398Z INFO  - babe2e3e3c71 Downloading 14MB / 30MB
+2026-02-18T06:29:46.417Z INFO  - 42ede7a6c55a Downloading 6MB / 111MB
+2026-02-18T06:29:46.634Z INFO  - babe2e3e3c71 Downloading 15MB / 30MB
+2026-02-18T06:29:46.671Z INFO  - 42ede7a6c55a Downloading 9MB / 111MB
+2026-02-18T06:29:46.730Z INFO  - 10ffc47270cd Downloading 14MB / 51MB
+2026-02-18T06:29:46.748Z INFO  - c3c20db5b37e Downloading 19MB / 67MB
+2026-02-18T06:29:46.792Z INFO  - cf1f560cc9e6 Downloading 12MB / 56MB
+2026-02-18T06:29:48.555Z INFO  - c3c20db5b37e Downloading 20MB / 67MB
+2026-02-18T06:29:48.560Z INFO  - 42ede7a6c55a Downloading 11MB / 111MB
+2026-02-18T06:29:48.567Z INFO  - a40510b545e4 Downloading 21MB / 36MB
+2026-02-18T06:29:48.570Z INFO  - 6e80b76a2230 Downloading 12MB / 36MB
+2026-02-18T06:29:48.572Z INFO  - 10ffc47270cd Downloading 16MB / 51MB
+2026-02-18T06:29:48.580Z INFO  - babe2e3e3c71 Downloading 17MB / 30MB
+2026-02-18T06:29:48.581Z INFO  - 42ede7a6c55a Downloading 16MB / 111MB
+2026-02-18T06:29:48.676Z INFO  - 10ffc47270cd Downloading 18MB / 51MB
+2026-02-18T06:29:48.830Z INFO  - c3c20db5b37e Downloading 22MB / 67MB
+2026-02-18T06:29:49.196Z INFO  - babe2e3e3c71 Downloading 19MB / 30MB
+2026-02-18T06:29:49.208Z INFO  - 6e80b76a2230 Downloading 21MB / 36MB
+2026-02-18T06:29:49.220Z INFO  - 10ffc47270cd Downloading 19MB / 51MB
+2026-02-18T06:29:49.224Z INFO  - 42ede7a6c55a Downloading 18MB / 111MB
+2026-02-18T06:29:49.289Z INFO  - cf1f560cc9e6 Downloading 18MB / 56MB
+2026-02-18T06:29:49.328Z INFO  - 6e80b76a2230 Downloading 23MB / 36MB
+2026-02-18T06:29:49.422Z INFO  - cf1f560cc9e6 Downloading 19MB / 56MB
+2026-02-18T06:29:49.473Z INFO  - c3c20db5b37e Downloading 24MB / 67MB
+2026-02-18T06:29:49.497Z INFO  - 10ffc47270cd Downloading 22MB / 51MB
+2026-02-18T06:29:49.520Z INFO  - cf1f560cc9e6 Downloading 20MB / 56MB
+2026-02-18T06:29:49.524Z INFO  - babe2e3e3c71 Downloading 20MB / 30MB
+2026-02-18T06:29:49.580Z INFO  - 6e80b76a2230 Downloading 25MB / 36MB
+2026-02-18T06:29:49.612Z INFO  - 42ede7a6c55a Downloading 22MB / 111MB
+2026-02-18T06:29:49.684Z INFO  - cf1f560cc9e6 Downloading 21MB / 56MB
+2026-02-18T06:29:49.702Z INFO  - babe2e3e3c71 Downloading 21MB / 30MB
+2026-02-18T06:29:49.915Z INFO  - 10ffc47270cd Downloading 23MB / 51MB
+2026-02-18T06:29:49.915Z INFO  - babe2e3e3c71 Downloading 22MB / 30MB
+2026-02-18T06:29:49.925Z INFO  - babe2e3e3c71 Downloading 22MB / 30MB
+2026-02-18T06:29:49.965Z INFO  - 42ede7a6c55a Downloading 27MB / 111MB
+2026-02-18T06:29:49.996Z INFO  - 6e80b76a2230 Downloading 28MB / 36MB
+2026-02-18T06:29:50.008Z INFO  - c3c20db5b37e Downloading 27MB / 67MB
+2026-02-18T06:29:50.020Z INFO  - cf1f560cc9e6 Downloading 24MB / 56MB
+2026-02-18T06:29:50.140Z INFO  - 6e80b76a2230 Downloading 29MB / 36MB
+2026-02-18T06:29:50.256Z INFO  - 6e80b76a2230 Downloading 30MB / 36MB
+2026-02-18T06:29:50.448Z INFO  - 10ffc47270cd Downloading 29MB / 51MB
+2026-02-18T06:29:50.467Z INFO  - cf1f560cc9e6 Downloading 26MB / 56MB
+2026-02-18T06:29:51.012Z INFO  - 6e80b76a2230 Downloading 31MB / 36MB
+2026-02-18T06:29:51.819Z INFO  - 42ede7a6c55a Downloading 31MB / 111MB
+2026-02-18T06:29:51.819Z INFO  - a40510b545e4 Downloading 28MB / 36MB
+2026-02-18T06:29:51.819Z INFO  - babe2e3e3c71 Downloading 24MB / 30MB
+2026-02-18T06:29:51.819Z INFO  - cf1f560cc9e6 Downloading 27MB / 56MB
+2026-02-18T06:29:51.819Z INFO  - babe2e3e3c71 Downloading 25MB / 30MB
+2026-02-18T06:29:51.819Z INFO  - 42ede7a6c55a Downloading 31MB / 111MB
+2026-02-18T06:29:51.819Z INFO  - cf1f560cc9e6 Downloading 28MB / 56MB
+2026-02-18T06:29:51.819Z INFO  - babe2e3e3c71 Downloading 26MB / 30MB
+2026-02-18T06:29:51.819Z INFO  - a40510b545e4 Downloading 30MB / 36MB
+2026-02-18T06:29:51.819Z INFO  - c3c20db5b37e Downloading 30MB / 67MB
+2026-02-18T06:29:51.821Z INFO  - cf1f560cc9e6 Downloading 29MB / 56MB
+2026-02-18T06:29:51.821Z INFO  - 10ffc47270cd Downloading 36MB / 51MB
+2026-02-18T06:29:51.895Z INFO  - c3c20db5b37e Downloading 31MB / 67MB
+2026-02-18T06:29:51.932Z INFO  - babe2e3e3c71 Downloading 28MB / 30MB
+2026-02-18T06:29:51.948Z INFO  - 10ffc47270cd Downloading 37MB / 51MB
+2026-02-18T06:29:51.948Z INFO  - 42ede7a6c55a Downloading 36MB / 111MB
+2026-02-18T06:29:52.139Z INFO  - cf1f560cc9e6 Downloading 34MB / 56MB
+2026-02-18T06:29:52.352Z INFO  - 6e80b76a2230 Downloading 34MB / 36MB
+2026-02-18T06:29:52.556Z INFO  - babe2e3e3c71 Downloading 29MB / 30MB
+2026-02-18T06:29:52.580Z INFO  - a40510b545e4 Downloading 32MB / 36MB
+2026-02-18T06:29:53.067Z INFO  - babe2e3e3c71 Verifying Checksum
+2026-02-18T06:29:53.067Z INFO  - babe2e3e3c71 Download complete
+2026-02-18T06:29:53.092Z INFO  - 42ede7a6c55a Downloading 36MB / 111MB
+2026-02-18T06:29:53.104Z INFO  - 6e80b76a2230 Download complete
+2026-02-18T06:29:55.167Z INFO  - 42ede7a6c55a Downloading 38MB / 111MB
+2026-02-18T06:29:55.169Z INFO  - cf1f560cc9e6 Downloading 35MB / 56MB
+2026-02-18T06:29:55.188Z INFO  - 10ffc47270cd Downloading 39MB / 51MB
+2026-02-18T06:29:55.194Z INFO  - a40510b545e4 Downloading 35MB / 36MB
+2026-02-18T06:29:55.214Z INFO  - c3c20db5b37e Downloading 36MB / 67MB
+2026-02-18T06:29:55.218Z INFO  - c3c20db5b37e Downloading 37MB / 67MB
+2026-02-18T06:29:55.220Z INFO  - 10ffc47270cd Downloading 40MB / 51MB
+2026-02-18T06:29:55.312Z INFO  - a40510b545e4 Downloading 36MB / 36MB
+2026-02-18T06:29:55.313Z INFO  - 10ffc47270cd Downloading 42MB / 51MB
+2026-02-18T06:29:55.319Z INFO  - a40510b545e4 Verifying Checksum
+2026-02-18T06:29:55.319Z INFO  - a40510b545e4 Download complete
+2026-02-18T06:29:55.322Z INFO  - cf1f560cc9e6 Downloading 37MB / 56MB
+2026-02-18T06:29:55.323Z INFO  - c3c20db5b37e Downloading 39MB / 67MB
+2026-02-18T06:29:55.324Z INFO  - 42ede7a6c55a Downloading 47MB / 111MB
+2026-02-18T06:29:55.325Z INFO  - 10ffc47270cd Downloading 43MB / 51MB
+2026-02-18T06:29:55.326Z INFO  - c3c20db5b37e Downloading 40MB / 67MB
+2026-02-18T06:29:55.326Z INFO  - 42ede7a6c55a Downloading 47MB / 111MB
+2026-02-18T06:29:55.327Z INFO  - 10ffc47270cd Downloading 45MB / 51MB
+2026-02-18T06:29:55.328Z INFO  - c3c20db5b37e Downloading 42MB / 67MB
+2026-02-18T06:29:55.468Z INFO  - cf1f560cc9e6 Downloading 41MB / 56MB
+2026-02-18T06:29:55.470Z INFO  - 42ede7a6c55a Downloading 49MB / 111MB
+2026-02-18T06:29:55.504Z INFO  - c3c20db5b37e Downloading 43MB / 67MB
+2026-02-18T06:29:56.180Z INFO  - 10ffc47270cd Downloading 46MB / 51MB
+2026-02-18T06:29:56.318Z INFO  - 42ede7a6c55a Downloading 49MB / 111MB
+2026-02-18T06:29:56.319Z INFO  - cf1f560cc9e6 Downloading 42MB / 56MB
+2026-02-18T06:29:56.319Z INFO  - 10ffc47270cd Downloading 47MB / 51MB
+2026-02-18T06:29:56.467Z INFO  - 42ede7a6c55a Downloading 51MB / 111MB
+2026-02-18T06:29:56.713Z INFO  - 10ffc47270cd Download complete
+2026-02-18T06:29:56.875Z INFO  - cf1f560cc9e6 Downloading 50MB / 56MB
+2026-02-18T06:29:57.021Z INFO  - cf1f560cc9e6 Downloading 53MB / 56MB
+2026-02-18T06:29:57.021Z INFO  - cf1f560cc9e6 Verifying Checksum
+2026-02-18T06:29:57.021Z INFO  - cf1f560cc9e6 Download complete
+2026-02-18T06:29:57.625Z INFO  - 42ede7a6c55a Downloading 72MB / 111MB
+2026-02-18T06:29:57.625Z INFO  - 42ede7a6c55a Downloading 73MB / 111MB
+2026-02-18T06:29:57.913Z INFO  - 42ede7a6c55a Downloading 75MB / 111MB
+2026-02-18T06:29:58.005Z INFO  - c3c20db5b37e Verifying Checksum
+2026-02-18T06:29:58.005Z INFO  - c3c20db5b37e Download complete
+2026-02-18T06:29:58.013Z INFO  - 42ede7a6c55a Downloading 78MB / 111MB
+2026-02-18T06:29:58.674Z INFO  - 42ede7a6c55a Downloading 82MB / 111MB
+2026-02-18T06:29:58.869Z INFO  - 42ede7a6c55a Downloading 85MB / 111MB
+2026-02-18T06:29:59.314Z INFO  - 42ede7a6c55a Downloading 99MB / 111MB
+2026-02-18T06:29:59.315Z INFO  - 42ede7a6c55a Downloading 109MB / 111MB
+2026-02-18T06:29:59.315Z INFO  - 42ede7a6c55a Verifying Checksum
+2026-02-18T06:29:59.316Z INFO  - 42ede7a6c55a Download complete
+2026-02-18T06:30:01.510Z INFO  - 10ffc47270cd Extracting 7MB / 51MB
+2026-02-18T06:30:02.027Z INFO  - 10ffc47270cd Extracting 8MB / 51MB
+2026-02-18T06:30:02.138Z INFO  - 10ffc47270cd Extracting 9MB / 51MB
+2026-02-18T06:30:02.363Z INFO  - 10ffc47270cd Extracting 13MB / 51MB
+2026-02-18T06:30:02.580Z INFO  - 10ffc47270cd Extracting 16MB / 51MB
+2026-02-18T06:30:02.761Z INFO  - 10ffc47270cd Extracting 17MB / 51MB
+2026-02-18T06:30:02.871Z INFO  - 10ffc47270cd Extracting 19MB / 51MB
+2026-02-18T06:30:03.050Z INFO  - 10ffc47270cd Extracting 23MB / 51MB
+2026-02-18T06:30:03.876Z INFO  - 10ffc47270cd Extracting 24MB / 51MB
+2026-02-18T06:30:04.225Z INFO  - 10ffc47270cd Extracting 26MB / 51MB
+2026-02-18T06:30:04.801Z INFO  - 10ffc47270cd Extracting 34MB / 51MB
+2026-02-18T06:30:05.463Z INFO  - 10ffc47270cd Extracting 39MB / 51MB
+2026-02-18T06:30:06.112Z INFO  - 10ffc47270cd Extracting 41MB / 51MB
+2026-02-18T06:30:06.468Z INFO  - 10ffc47270cd Extracting 42MB / 51MB
+2026-02-18T06:30:06.858Z INFO  - 10ffc47270cd Extracting 45MB / 51MB
+2026-02-18T06:30:06.991Z INFO  - 10ffc47270cd Extracting 47MB / 51MB
+2026-02-18T06:30:07.886Z INFO  - 10ffc47270cd Extracting 50MB / 51MB
+2026-02-18T06:30:08.095Z INFO  - 10ffc47270cd Extracting 51MB / 51MB
+2026-02-18T06:30:08.294Z INFO  - 10ffc47270cd Pull complete
+2026-02-18T06:30:08.614Z INFO  - babe2e3e3c71 Extracting 2MB / 30MB
+2026-02-18T06:30:08.725Z INFO  - babe2e3e3c71 Extracting 3MB / 30MB
+2026-02-18T06:30:09.051Z INFO  - babe2e3e3c71 Extracting 11MB / 30MB
+2026-02-18T06:30:09.278Z INFO  - babe2e3e3c71 Extracting 14MB / 30MB
+2026-02-18T06:30:09.560Z INFO  - babe2e3e3c71 Extracting 16MB / 30MB
+2026-02-18T06:30:09.875Z INFO  - babe2e3e3c71 Extracting 18MB / 30MB
+2026-02-18T06:30:10.325Z INFO  - babe2e3e3c71 Extracting 29MB / 30MB
+2026-02-18T06:30:11.063Z INFO  - babe2e3e3c71 Extracting 30MB / 30MB
+2026-02-18T06:30:12.558Z INFO  - babe2e3e3c71 Pull complete
+2026-02-18T06:30:12.610Z INFO  - 4f4fb700ef54 Extracting 32B / 32B
+2026-02-18T06:30:12.671Z INFO  - 4f4fb700ef54 Extracting 32B / 32B
+2026-02-18T06:30:12.785Z INFO  - 4f4fb700ef54 Pull complete
+2026-02-18T06:30:12.815Z INFO  - f7943b878c5a Extracting 386B / 386B
+2026-02-18T06:30:12.870Z INFO  - f7943b878c5a Extracting 386B / 386B
+2026-02-18T06:30:13.027Z INFO  - f7943b878c5a Pull complete
+2026-02-18T06:30:13.044Z INFO  - bf91c9135236 Extracting 131B / 131B
+2026-02-18T06:30:13.113Z INFO  - bf91c9135236 Extracting 131B / 131B
+2026-02-18T06:30:13.242Z INFO  - bf91c9135236 Pull complete
+2026-02-18T06:30:13.264Z INFO  - a49b20bb820c Extracting 32KB / 250KB
+2026-02-18T06:30:13.318Z INFO  - a49b20bb820c Extracting 250KB / 250KB
+2026-02-18T06:30:13.320Z INFO  - a49b20bb820c Extracting 250KB / 250KB
+2026-02-18T06:30:13.496Z INFO  - a49b20bb820c Pull complete
+2026-02-18T06:30:13.575Z INFO  - 2019780686b0 Extracting 2KB / 2KB
+2026-02-18T06:30:13.689Z INFO  - 2019780686b0 Extracting 2KB / 2KB
+2026-02-18T06:30:13.847Z INFO  - 2019780686b0 Pull complete
+2026-02-18T06:30:14.154Z INFO  - ccbe65ed435b Extracting 64KB / 433KB
+2026-02-18T06:30:14.249Z INFO  - ccbe65ed435b Extracting 433KB / 433KB
+2026-02-18T06:30:14.270Z INFO  - ccbe65ed435b Extracting 433KB / 433KB
+2026-02-18T06:30:15.261Z INFO  - ccbe65ed435b Pull complete
+2026-02-18T06:30:15.364Z INFO  - b0399d4f1093 Extracting 187B / 187B
+2026-02-18T06:30:15.479Z INFO  - b0399d4f1093 Extracting 187B / 187B
+2026-02-18T06:30:15.618Z INFO  - b0399d4f1093 Pull complete
+2026-02-18T06:30:15.646Z INFO  - 4296d9e49093 Extracting 32KB / 1MB
+2026-02-18T06:30:15.737Z INFO  - 4296d9e49093 Extracting 1MB / 1MB
+2026-02-18T06:30:15.911Z INFO  - 4296d9e49093 Pull complete
+2026-02-18T06:30:15.934Z INFO  - f501553e1eeb Extracting 32KB / 39KB
+2026-02-18T06:30:15.983Z INFO  - f501553e1eeb Extracting 39KB / 39KB
+2026-02-18T06:30:16.005Z INFO  - f501553e1eeb Extracting 39KB / 39KB
+2026-02-18T06:30:16.146Z INFO  - f501553e1eeb Pull complete
+2026-02-18T06:30:16.168Z INFO  - 67c9ba2ac3e9 Extracting 12KB / 12KB
+2026-02-18T06:30:16.216Z INFO  - 67c9ba2ac3e9 Extracting 12KB / 12KB
+2026-02-18T06:30:16.331Z INFO  - 67c9ba2ac3e9 Pull complete
+2026-02-18T06:30:16.354Z INFO  - f87a5dc3ab54 Extracting 14KB / 14KB
+2026-02-18T06:30:16.405Z INFO  - f87a5dc3ab54 Extracting 14KB / 14KB
+2026-02-18T06:30:16.522Z INFO  - f87a5dc3ab54 Pull complete
+2026-02-18T06:30:16.597Z INFO  - cf1f560cc9e6 Extracting 544KB / 56MB
+2026-02-18T06:30:16.711Z INFO  - cf1f560cc9e6 Extracting 3MB / 56MB
+2026-02-18T06:30:16.819Z INFO  - cf1f560cc9e6 Extracting 7MB / 56MB
+2026-02-18T06:30:17.165Z INFO  - cf1f560cc9e6 Extracting 8MB / 56MB
+2026-02-18T06:30:18.126Z INFO  - cf1f560cc9e6 Extracting 11MB / 56MB
+2026-02-18T06:30:18.233Z INFO  - cf1f560cc9e6 Extracting 14MB / 56MB
+2026-02-18T06:30:18.468Z INFO  - cf1f560cc9e6 Extracting 22MB / 56MB
+2026-02-18T06:30:18.993Z INFO  - cf1f560cc9e6 Extracting 34MB / 56MB
+2026-02-18T06:30:19.482Z INFO  - cf1f560cc9e6 Extracting 38MB / 56MB
+2026-02-18T06:30:19.585Z INFO  - cf1f560cc9e6 Extracting 40MB / 56MB
+2026-02-18T06:30:20.143Z INFO  - cf1f560cc9e6 Extracting 50MB / 56MB
+2026-02-18T06:30:20.536Z INFO  - cf1f560cc9e6 Extracting 52MB / 56MB
+2026-02-18T06:30:20.637Z INFO  - cf1f560cc9e6 Extracting 54MB / 56MB
+2026-02-18T06:30:20.775Z INFO  - cf1f560cc9e6 Extracting 56MB / 56MB
+2026-02-18T06:30:21.878Z INFO  - cf1f560cc9e6 Pull complete
+2026-02-18T06:30:21.907Z INFO  - 614898d2f6e8 Extracting 32KB / 1MB
+2026-02-18T06:30:22.004Z INFO  - 614898d2f6e8 Extracting 1MB / 1MB
+2026-02-18T06:30:22.115Z INFO  - 614898d2f6e8 Pull complete
+2026-02-18T06:30:22.137Z INFO  - 67d8ea62776d Extracting 32KB / 39KB
+2026-02-18T06:30:22.188Z INFO  - 67d8ea62776d Extracting 39KB / 39KB
+2026-02-18T06:30:22.201Z INFO  - 67d8ea62776d Extracting 39KB / 39KB
+2026-02-18T06:30:22.691Z INFO  - 67d8ea62776d Pull complete
+2026-02-18T06:30:22.721Z INFO  - a8698dba3c16 Extracting 12KB / 12KB
+2026-02-18T06:30:22.766Z INFO  - a8698dba3c16 Extracting 12KB / 12KB
+2026-02-18T06:30:22.891Z INFO  - a8698dba3c16 Pull complete
+2026-02-18T06:30:22.912Z INFO  - 4223ad926969 Extracting 14KB / 14KB
+2026-02-18T06:30:22.955Z INFO  - 4223ad926969 Extracting 14KB / 14KB
+2026-02-18T06:30:23.089Z INFO  - 4223ad926969 Pull complete
+2026-02-18T06:30:23.277Z INFO  - d17bda710013 Extracting 1KB / 1KB
+2026-02-18T06:30:23.330Z INFO  - d17bda710013 Extracting 1KB / 1KB
+2026-02-18T06:30:23.470Z INFO  - d17bda710013 Pull complete
+2026-02-18T06:30:23.647Z INFO  - ca4cad3a1f11 Extracting 2KB / 2KB
+2026-02-18T06:30:23.679Z INFO  - ca4cad3a1f11 Extracting 2KB / 2KB
+2026-02-18T06:30:23.822Z INFO  - ca4cad3a1f11 Pull complete
+2026-02-18T06:30:24.024Z INFO  - 4dab2df7fe81 Extracting 508B / 508B
+2026-02-18T06:30:24.071Z INFO  - 4dab2df7fe81 Extracting 508B / 508B
+2026-02-18T06:30:24.196Z INFO  - 4dab2df7fe81 Pull complete
+2026-02-18T06:30:24.412Z INFO  - e5c3f3249afb Extracting 527B / 527B
+2026-02-18T06:30:24.449Z INFO  - e5c3f3249afb Extracting 527B / 527B
+2026-02-18T06:30:24.565Z INFO  - e5c3f3249afb Pull complete
+2026-02-18T06:30:24.778Z INFO  - 6df8253f371a Extracting 527B / 527B
+2026-02-18T06:30:24.815Z INFO  - 6df8253f371a Extracting 527B / 527B
+2026-02-18T06:30:24.946Z INFO  - 6df8253f371a Pull complete
+2026-02-18T06:30:24.968Z INFO  - 219dc8274a65 Extracting 2KB / 2KB
+2026-02-18T06:30:25.009Z INFO  - 219dc8274a65 Extracting 2KB / 2KB
+2026-02-18T06:30:25.129Z INFO  - 219dc8274a65 Pull complete
+2026-02-18T06:30:25.274Z INFO  - 42ede7a6c55a Extracting 544KB / 111MB
+2026-02-18T06:30:25.386Z INFO  - 42ede7a6c55a Extracting 4MB / 111MB
+2026-02-18T06:30:25.717Z INFO  - 42ede7a6c55a Extracting 11MB / 111MB
+2026-02-18T06:30:25.836Z INFO  - 42ede7a6c55a Extracting 13MB / 111MB
+2026-02-18T06:30:25.936Z INFO  - 42ede7a6c55a Extracting 14MB / 111MB
+2026-02-18T06:30:26.288Z INFO  - 42ede7a6c55a Extracting 15MB / 111MB
+2026-02-18T06:30:26.712Z INFO  - 42ede7a6c55a Extracting 16MB / 111MB
+2026-02-18T06:30:26.820Z INFO  - 42ede7a6c55a Extracting 20MB / 111MB
+2026-02-18T06:30:26.936Z INFO  - 42ede7a6c55a Extracting 22MB / 111MB
+2026-02-18T06:30:27.178Z INFO  - 42ede7a6c55a Extracting 24MB / 111MB
+2026-02-18T06:30:27.870Z INFO  - 42ede7a6c55a Extracting 29MB / 111MB
+2026-02-18T06:30:27.977Z INFO  - 42ede7a6c55a Extracting 29MB / 111MB
+2026-02-18T06:30:28.136Z INFO  - 42ede7a6c55a Extracting 31MB / 111MB
+2026-02-18T06:30:28.316Z INFO  - 42ede7a6c55a Extracting 34MB / 111MB
+2026-02-18T06:30:28.423Z INFO  - 42ede7a6c55a Extracting 34MB / 111MB
+2026-02-18T06:30:28.566Z INFO  - 42ede7a6c55a Extracting 38MB / 111MB
+2026-02-18T06:30:28.781Z INFO  - 42ede7a6c55a Extracting 42MB / 111MB
+2026-02-18T06:30:28.918Z INFO  - 42ede7a6c55a Extracting 45MB / 111MB
+2026-02-18T06:30:29.174Z INFO  - 42ede7a6c55a Extracting 49MB / 111MB
+2026-02-18T06:30:29.544Z INFO  - 42ede7a6c55a Extracting 58MB / 111MB
+2026-02-18T06:30:29.783Z INFO  - 42ede7a6c55a Extracting 58MB / 111MB
+2026-02-18T06:30:30.570Z INFO  - 42ede7a6c55a Extracting 60MB / 111MB
+2026-02-18T06:30:30.879Z INFO  - 42ede7a6c55a Extracting 61MB / 111MB
+2026-02-18T06:30:31.304Z INFO  - 42ede7a6c55a Extracting 64MB / 111MB
+2026-02-18T06:30:31.576Z INFO  - 42ede7a6c55a Extracting 67MB / 111MB
+2026-02-18T06:30:31.678Z INFO  - 42ede7a6c55a Extracting 70MB / 111MB
+2026-02-18T06:30:31.792Z INFO  - 42ede7a6c55a Extracting 71MB / 111MB
+2026-02-18T06:30:32.488Z INFO  - 42ede7a6c55a Extracting 73MB / 111MB
+2026-02-18T06:30:32.971Z INFO  - 42ede7a6c55a Extracting 76MB / 111MB
+2026-02-18T06:30:33.881Z INFO  - 42ede7a6c55a Extracting 78MB / 111MB
+2026-02-18T06:30:33.881Z INFO  - 42ede7a6c55a Extracting 79MB / 111MB
+2026-02-18T06:30:34.121Z INFO  - 42ede7a6c55a Extracting 81MB / 111MB
+2026-02-18T06:30:34.230Z INFO  - 42ede7a6c55a Extracting 82MB / 111MB
+2026-02-18T06:30:34.419Z INFO  - 42ede7a6c55a Extracting 83MB / 111MB
+2026-02-18T06:30:34.526Z INFO  - 42ede7a6c55a Extracting 85MB / 111MB
+2026-02-18T06:30:35.119Z INFO  - 42ede7a6c55a Extracting 87MB / 111MB
+2026-02-18T06:30:35.234Z INFO  - 42ede7a6c55a Extracting 87MB / 111MB
+2026-02-18T06:30:36.614Z INFO  - 42ede7a6c55a Extracting 94MB / 111MB
+2026-02-18T06:30:36.724Z INFO  - 42ede7a6c55a Extracting 94MB / 111MB
+2026-02-18T06:30:37.081Z INFO  - 42ede7a6c55a Extracting 96MB / 111MB
+2026-02-18T06:30:37.341Z INFO  - 42ede7a6c55a Extracting 96MB / 111MB
+2026-02-18T06:30:37.474Z INFO  - 42ede7a6c55a Extracting 98MB / 111MB
+2026-02-18T06:30:37.881Z INFO  - 42ede7a6c55a Extracting 100MB / 111MB
+2026-02-18T06:30:38.152Z INFO  - 42ede7a6c55a Extracting 101MB / 111MB
+2026-02-18T06:30:39.089Z INFO  - 42ede7a6c55a Extracting 103MB / 111MB
+2026-02-18T06:30:40.084Z INFO  - 42ede7a6c55a Extracting 105MB / 111MB
+2026-02-18T06:30:40.241Z INFO  - 42ede7a6c55a Extracting 105MB / 111MB
+2026-02-18T06:30:40.618Z INFO  - 42ede7a6c55a Extracting 107MB / 111MB
+2026-02-18T06:30:40.883Z INFO  - 42ede7a6c55a Extracting 109MB / 111MB
+2026-02-18T06:30:41.150Z INFO  - 42ede7a6c55a Extracting 111MB / 111MB
+2026-02-18T06:30:42.499Z INFO  - 42ede7a6c55a Pull complete
+2026-02-18T06:30:42.530Z INFO  - fb65f28b112b Extracting 4KB / 4KB
+2026-02-18T06:30:42.617Z INFO  - fb65f28b112b Extracting 4KB / 4KB
+2026-02-18T06:30:42.791Z INFO  - fb65f28b112b Pull complete
+2026-02-18T06:30:43.280Z INFO  - a40510b545e4 Extracting 4MB / 36MB
+2026-02-18T06:30:43.452Z INFO  - a40510b545e4 Extracting 5MB / 36MB
+2026-02-18T06:30:43.706Z INFO  - a40510b545e4 Extracting 6MB / 36MB
+2026-02-18T06:30:44.419Z INFO  - a40510b545e4 Extracting 6MB / 36MB
+2026-02-18T06:30:44.583Z INFO  - a40510b545e4 Extracting 9MB / 36MB
+2026-02-18T06:30:44.691Z INFO  - a40510b545e4 Extracting 9MB / 36MB
+2026-02-18T06:30:44.791Z INFO  - a40510b545e4 Extracting 12MB / 36MB
+2026-02-18T06:30:44.965Z INFO  - a40510b545e4 Extracting 15MB / 36MB
+2026-02-18T06:30:46.162Z INFO  - a40510b545e4 Extracting 19MB / 36MB
+2026-02-18T06:30:47.028Z INFO  - a40510b545e4 Extracting 26MB / 36MB
+2026-02-18T06:30:47.144Z INFO  - a40510b545e4 Extracting 28MB / 36MB
+2026-02-18T06:30:47.267Z INFO  - a40510b545e4 Extracting 29MB / 36MB
+2026-02-18T06:30:47.553Z INFO  - a40510b545e4 Extracting 31MB / 36MB
+2026-02-18T06:30:47.657Z INFO  - a40510b545e4 Extracting 32MB / 36MB
+2026-02-18T06:30:48.164Z INFO  - a40510b545e4 Extracting 35MB / 36MB
+2026-02-18T06:30:48.966Z INFO  - a40510b545e4 Extracting 36MB / 36MB
+2026-02-18T06:30:49.751Z INFO  - a40510b545e4 Extracting 36MB / 36MB
+2026-02-18T06:30:50.129Z INFO  - a40510b545e4 Pull complete
+2026-02-18T06:30:50.668Z INFO  - 6e80b76a2230 Extracting 5MB / 36MB
+2026-02-18T06:30:50.835Z INFO  - 6e80b76a2230 Extracting 6MB / 36MB
+2026-02-18T06:30:51.632Z INFO  - 6e80b76a2230 Extracting 9MB / 36MB
+2026-02-18T06:30:51.987Z INFO  - 6e80b76a2230 Extracting 12MB / 36MB
+2026-02-18T06:30:52.102Z INFO  - 6e80b76a2230 Extracting 15MB / 36MB
+2026-02-18T06:30:52.225Z INFO  - 6e80b76a2230 Extracting 16MB / 36MB
+2026-02-18T06:30:52.331Z INFO  - 6e80b76a2230 Extracting 17MB / 36MB
+2026-02-18T06:30:52.519Z INFO  - 6e80b76a2230 Extracting 19MB / 36MB
+2026-02-18T06:30:53.029Z INFO  - 6e80b76a2230 Extracting 36MB / 36MB
+2026-02-18T06:30:54.375Z INFO  - 6e80b76a2230 Pull complete
+2026-02-18T06:30:54.597Z INFO  - 532e77ac237d Extracting 5MB / 5MB
+2026-02-18T06:30:55.194Z INFO  - 532e77ac237d Pull complete
+2026-02-18T06:30:55.299Z INFO  - c3c20db5b37e Extracting 544KB / 67MB
+2026-02-18T06:30:55.400Z INFO  - c3c20db5b37e Extracting 1MB / 67MB
+2026-02-18T06:30:55.569Z INFO  - c3c20db5b37e Extracting 3MB / 67MB
+2026-02-18T06:30:56.267Z INFO  - c3c20db5b37e Extracting 11MB / 67MB
+2026-02-18T06:30:56.661Z INFO  - c3c20db5b37e Extracting 16MB / 67MB
+2026-02-18T06:30:56.893Z INFO  - c3c20db5b37e Extracting 19MB / 67MB
+2026-02-18T06:30:57.813Z INFO  - c3c20db5b37e Extracting 27MB / 67MB
+2026-02-18T06:30:58.032Z INFO  - c3c20db5b37e Extracting 32MB / 67MB
+2026-02-18T06:30:58.323Z INFO  - c3c20db5b37e Extracting 36MB / 67MB
+2026-02-18T06:30:58.452Z INFO  - c3c20db5b37e Extracting 39MB / 67MB
+2026-02-18T06:30:58.587Z INFO  - c3c20db5b37e Extracting 41MB / 67MB
+2026-02-18T06:30:58.841Z INFO  - c3c20db5b37e Extracting 43MB / 67MB
+2026-02-18T06:30:59.353Z INFO  - c3c20db5b37e Extracting 46MB / 67MB
+2026-02-18T06:30:59.482Z INFO  - c3c20db5b37e Extracting 47MB / 67MB
+2026-02-18T06:30:59.608Z INFO  - c3c20db5b37e Extracting 49MB / 67MB
+2026-02-18T06:30:59.776Z INFO  - c3c20db5b37e Extracting 50MB / 67MB
+2026-02-18T06:30:59.884Z INFO  - c3c20db5b37e Extracting 51MB / 67MB
+2026-02-18T06:31:00.496Z INFO  - c3c20db5b37e Extracting 53MB / 67MB
+2026-02-18T06:31:00.708Z INFO  - c3c20db5b37e Extracting 54MB / 67MB
+2026-02-18T06:31:01.346Z INFO  - c3c20db5b37e Extracting 62MB / 67MB
+2026-02-18T06:31:01.479Z INFO  - c3c20db5b37e Extracting 63MB / 67MB
+2026-02-18T06:31:02.070Z INFO  - c3c20db5b37e Extracting 66MB / 67MB
+2026-02-18T06:31:02.884Z INFO  - c3c20db5b37e Extracting 67MB / 67MB
+2026-02-18T06:31:04.038Z INFO  - c3c20db5b37e Pull complete
+2026-02-18T06:31:04.047Z INFO  - 765fc3fc3afc Extracting 1KB / 1KB
+2026-02-18T06:31:04.102Z INFO  - 765fc3fc3afc Extracting 1KB / 1KB
+2026-02-18T06:31:04.246Z INFO  - 765fc3fc3afc Pull complete
+2026-02-18T06:31:04.267Z INFO  - 6b4c2adab45b Extracting 1KB / 1KB
+2026-02-18T06:31:04.312Z INFO  - 6b4c2adab45b Extracting 1KB / 1KB
+2026-02-18T06:31:04.467Z INFO  - 6b4c2adab45b Pull complete
+2026-02-18T06:31:04.709Z INFO  - b7f285bbb111 Extracting 3KB / 3KB
+2026-02-18T06:31:04.768Z INFO  - b7f285bbb111 Extracting 3KB / 3KB
+2026-02-18T06:31:04.907Z INFO  - b7f285bbb111 Pull complete
+2026-02-18T06:31:04.944Z INFO  - fdaec5c523b8 Extracting 133B / 133B
+2026-02-18T06:31:04.984Z INFO  - fdaec5c523b8 Extracting 133B / 133B
+2026-02-18T06:31:05.132Z INFO  - fdaec5c523b8 Pull complete
+2026-02-18T06:31:05.160Z INFO  - f5a6dabbd87f Extracting 270B / 270B
+2026-02-18T06:31:05.211Z INFO  - f5a6dabbd87f Extracting 270B / 270B
+2026-02-18T06:31:05.340Z INFO  - f5a6dabbd87f Pull complete
+2026-02-18T06:31:05.398Z INFO  - 0440265059c0 Extracting 272B / 272B
+2026-02-18T06:31:05.439Z INFO  - 0440265059c0 Extracting 272B / 272B
+2026-02-18T06:31:05.552Z INFO  - 0440265059c0 Pull complete
+2026-02-18T06:31:05.573Z INFO  - feb3396323fe Extracting 833B / 833B
+2026-02-18T06:31:05.609Z INFO  - feb3396323fe Extracting 833B / 833B
+2026-02-18T06:31:05.758Z INFO  - feb3396323fe Pull complete
+2026-02-18T06:31:05.784Z INFO  - 5c4548330576 Extracting 124B / 124B
+2026-02-18T06:31:05.834Z INFO  - 5c4548330576 Extracting 124B / 124B
+2026-02-18T06:31:05.954Z INFO  - 5c4548330576 Pull complete
+2026-02-18T06:31:05.989Z INFO  - a221ee0b6f49 Extracting 416B / 416B
+2026-02-18T06:31:06.022Z INFO  - a221ee0b6f49 Extracting 416B / 416B
+2026-02-18T06:31:06.149Z INFO  - a221ee0b6f49 Pull complete
+2026-02-18T06:31:06.181Z INFO  - ac250ea855ab Extracting 1KB / 1KB
+2026-02-18T06:31:06.226Z INFO  - ac250ea855ab Extracting 1KB / 1KB
+2026-02-18T06:31:06.410Z INFO  - ac250ea855ab Pull complete
+2026-02-18T06:31:06.440Z INFO  - 6de9a9da98da Extracting 1KB / 1KB
+2026-02-18T06:31:06.483Z INFO  - 6de9a9da98da Extracting 1KB / 1KB
+2026-02-18T06:31:06.634Z INFO  - 6de9a9da98da Pull complete
+2026-02-18T06:31:06.661Z INFO  - d531dc368e36 Extracting 2KB / 2KB
+2026-02-18T06:31:06.698Z INFO  - d531dc368e36 Extracting 2KB / 2KB
+2026-02-18T06:31:07.457Z INFO  - d531dc368e36 Pull complete
+2026-02-18T06:31:07.485Z INFO  - c0fc26e916f7 Extracting 121B / 121B
+2026-02-18T06:31:07.545Z INFO  - c0fc26e916f7 Extracting 121B / 121B
+2026-02-18T06:31:07.680Z INFO  - c0fc26e916f7 Pull complete
+2026-02-18T06:31:07.702Z INFO  - 50a09b64903a Extracting 1KB / 1KB
+2026-02-18T06:31:07.740Z INFO  - 50a09b64903a Extracting 1KB / 1KB
+2026-02-18T06:31:08.577Z INFO  - 50a09b64903a Pull complete
+2026-02-18T06:31:08.600Z INFO  - 7b94c70810bd Extracting 1KB / 1KB
+2026-02-18T06:31:08.657Z INFO  - 7b94c70810bd Extracting 1KB / 1KB
+2026-02-18T06:31:08.888Z INFO  - 7b94c70810bd Pull complete
+2026-02-18T06:31:08.912Z INFO  - b8c2a35bf8cf Extracting 355B / 355B
+2026-02-18T06:31:08.957Z INFO  - b8c2a35bf8cf Extracting 355B / 355B
+2026-02-18T06:31:09.196Z INFO  - b8c2a35bf8cf Pull complete
+2026-02-18T06:31:09.262Z INFO  - 0b9fc1ae6357 Extracting 842B / 842B
+2026-02-18T06:31:09.301Z INFO  - 0b9fc1ae6357 Extracting 842B / 842B
+2026-02-18T06:31:09.479Z INFO  - 0b9fc1ae6357 Pull complete
+2026-02-18T06:31:09.525Z INFO  - 1be8b0b29112 Extracting 137B / 137B
+2026-02-18T06:31:09.561Z INFO  - 1be8b0b29112 Extracting 137B / 137B
+2026-02-18T06:31:09.709Z INFO  - 1be8b0b29112 Pull complete
+2026-02-18T06:31:09.739Z INFO  - e4bfa5b09991 Extracting 2KB / 2KB
+2026-02-18T06:31:09.805Z INFO  - e4bfa5b09991 Extracting 2KB / 2KB
+2026-02-18T06:31:09.951Z INFO  - e4bfa5b09991 Pull complete
+2026-02-18T06:31:09.981Z INFO  - 20256efc20c6 Extracting 143B / 143B
+2026-02-18T06:31:10.026Z INFO  - 20256efc20c6 Extracting 143B / 143B
+2026-02-18T06:31:10.151Z INFO  - 20256efc20c6 Pull complete
+2026-02-18T06:31:10.181Z INFO  - 655ae1159747 Extracting 11KB / 11KB
+2026-02-18T06:31:10.297Z INFO  - 655ae1159747 Extracting 11KB / 11KB
+2026-02-18T06:31:10.401Z INFO  - 655ae1159747 Pull complete
+2026-02-18T06:31:10.611Z INFO  - a9d311bf7864 Extracting 448KB / 5MB
+2026-02-18T06:31:10.720Z INFO  - a9d311bf7864 Extracting 1MB / 5MB
+2026-02-18T06:31:10.822Z INFO  - a9d311bf7864 Extracting 2MB / 5MB
+2026-02-18T06:31:10.937Z INFO  - a9d311bf7864 Extracting 2MB / 5MB
+2026-02-18T06:31:11.037Z INFO  - a9d311bf7864 Extracting 4MB / 5MB
+2026-02-18T06:31:11.066Z INFO  - a9d311bf7864 Extracting 5MB / 5MB
+2026-02-18T06:31:12.122Z INFO  - a9d311bf7864 Pull complete
+2026-02-18T06:31:13.178Z INFO  - 52d8d446e592 Extracting 16KB / 16KB
+2026-02-18T06:31:13.340Z INFO  - 52d8d446e592 Extracting 16KB / 16KB
+2026-02-18T06:31:13.871Z INFO  - 52d8d446e592 Pull complete
+2026-02-18T06:31:14.046Z INFO  - 2fd6879c6c9f Extracting 1KB / 1KB
+2026-02-18T06:31:14.183Z INFO  - 2fd6879c6c9f Extracting 1KB / 1KB
+2026-02-18T06:31:14.489Z INFO  - 2fd6879c6c9f Pull complete
+2026-02-18T06:31:14.940Z INFO  -  Digest: sha256:92df52c98d35c066251e05baab9059c619b01135f04fc31ee577b55fefcb49ac
+2026-02-18T06:31:15.081Z INFO  -  Status: Downloaded newer image for 10.1.0.5:13209/appsvc/python:3.11_20251017.5.tuxprod
+2026-02-18T06:31:15.228Z INFO  - Pull Image successful, Time taken: 89 Seconds
+2026-02-18T06:31:20.728Z INFO  - Starting container for site
+2026-02-18T06:31:20.729Z INFO  - docker run -d --expose=8000 --name options-scanner-backend-2exk6s_0_b1c45b31 -e WEBSITE_USE_DIAGNOSTIC_SERVER=false -e PORT=8000 -e WEBSITE_SITE_NAME=options-scanner-backend-2exk6s -e WEBSITE_AUTH_ENABLED=False -e WEBSITE_ROLE_INSTANCE_ID=0 -e WEBSITE_HOSTNAME=options-scanner-backend-2exk6s.azurewebsites.net -e WEBSITE_INSTANCE_ID=72443ba77a190b727ea02c21a26ecfb5e610863ffb42819c9c2f60a0c94499ea -e HTTP_LOGGING_ENABLED=1 appsvc/python:3.11_20251017.5.tuxprod REDACTED
+2026-02-18T06:31:29.216Z INFO  - Initiating warmup request to container options-scanner-backend-2exk6s_0_b1c45b31_msiProxy for site options-scanner-backend-2exk6s
+2026-02-18T06:31:29.558Z INFO  - Container options-scanner-backend-2exk6s_0_b1c45b31_msiProxy for site options-scanner-backend-2exk6s initialized successfully and is ready to serve requests.
+2026-02-18T06:31:29.561Z INFO  - Initiating warmup request to container options-scanner-backend-2exk6s_0_b1c45b31 for site options-scanner-backend-2exk6s
+2026-02-18T06:31:40.813Z ERROR - Container options-scanner-backend-2exk6s_0_b1c45b31 for site options-scanner-backend-2exk6s has exited, failing site start
+2026-02-18T06:31:40.878Z ERROR - Container options-scanner-backend-2exk6s_0_b1c45b31 didn't respond to HTTP pings on port: 8000. Failing site start. See container logs for debugging.
+2026-02-18T06:31:40.975Z INFO  - Stopping site options-scanner-backend-2exk6s because it failed during startup.
+2026-02-18T06:31:52.524Z INFO  - 3.11_20251017.5.tuxprod Pulling from appsvc/python
+2026-02-18T06:31:52.540Z INFO  -  Digest: sha256:92df52c98d35c066251e05baab9059c619b01135f04fc31ee577b55fefcb49ac
+2026-02-18T06:31:52.566Z INFO  -  Status: Downloaded newer image for 10.1.0.4:13209/appsvc/python:3.11_20251017.5.tuxprod
+2026-02-18T06:31:52.585Z INFO  - Pull Image successful, Time taken: 0 Seconds
+2026-02-18T06:31:52.674Z INFO  - Starting container for site
+2026-02-18T06:31:52.674Z INFO  - docker run -d --expose=8000 --name options-scanner-backend-2exk6s_0_b7827e76 -e WEBSITE_USE_DIAGNOSTIC_SERVER=false -e PORT=8000 -e WEBSITE_SITE_NAME=options-scanner-backend-2exk6s -e WEBSITE_AUTH_ENABLED=False -e WEBSITE_ROLE_INSTANCE_ID=0 -e WEBSITE_HOSTNAME=options-scanner-backend-2exk6s.azurewebsites.net -e WEBSITE_INSTANCE_ID=72443ba77a190b727ea02c21a26ecfb5e610863ffb42819c9c2f60a0c94499ea -e HTTP_LOGGING_ENABLED=1 appsvc/python:3.11_20251017.5.tuxprod REDACTED
+2026-02-18T06:31:55.566Z INFO  - Initiating warmup request to container options-scanner-backend-2exk6s_0_b7827e76_msiProxy for site options-scanner-backend-2exk6s
+2026-02-18T06:31:55.681Z INFO  - Container options-scanner-backend-2exk6s_0_b7827e76_msiProxy for site options-scanner-backend-2exk6s initialized successfully and is ready to serve requests.
+2026-02-18T06:31:55.681Z INFO  - Initiating warmup request to container options-scanner-backend-2exk6s_0_b7827e76 for site options-scanner-backend-2exk6s
+2026-02-18T06:32:00.999Z ERROR - Container options-scanner-backend-2exk6s_0_b7827e76 for site options-scanner-backend-2exk6s has exited, failing site start
+2026-02-18T06:32:01.011Z ERROR - Container options-scanner-backend-2exk6s_0_b7827e76 didn't respond to HTTP pings on port: 8000. Failing site start. See container logs for debugging.
+2026-02-18T06:32:01.019Z INFO  - Stopping site options-scanner-backend-2exk6s because it failed during startup.
+2026-02-18T06:33:05.983Z INFO  - 3.11_20251017.5.tuxprod Pulling from appsvc/python
+2026-02-18T06:33:06.018Z INFO  -  Digest: sha256:92df52c98d35c066251e05baab9059c619b01135f04fc31ee577b55fefcb49ac
+2026-02-18T06:33:06.019Z INFO  -  Status: Image is up to date for 10.1.0.4:13209/appsvc/python:3.11_20251017.5.tuxprod
+2026-02-18T06:33:06.032Z INFO  - Pull Image successful, Time taken: 0 Seconds
+2026-02-18T06:33:06.198Z INFO  - Starting container for site
+2026-02-18T06:33:06.199Z INFO  - docker run -d --expose=8000 --name options-scanner-backend-2exk6s_0_a31b0675 -e WEBSITE_USE_DIAGNOSTIC_SERVER=false -e PORT=8000 -e WEBSITE_SITE_NAME=options-scanner-backend-2exk6s -e WEBSITE_AUTH_ENABLED=False -e WEBSITE_ROLE_INSTANCE_ID=0 -e WEBSITE_HOSTNAME=options-scanner-backend-2exk6s.azurewebsites.net -e WEBSITE_INSTANCE_ID=72443ba77a190b727ea02c21a26ecfb5e610863ffb42819c9c2f60a0c94499ea -e HTTP_LOGGING_ENABLED=1 appsvc/python:3.11_20251017.5.tuxprod REDACTED
+2026-02-18T06:33:11.332Z INFO  - Initiating warmup request to container options-scanner-backend-2exk6s_0_a31b0675_msiProxy for site options-scanner-backend-2exk6s
+2026-02-18T06:33:11.350Z INFO  - Container options-scanner-backend-2exk6s_0_a31b0675_msiProxy for site options-scanner-backend-2exk6s initialized successfully and is ready to serve requests.
+2026-02-18T06:33:11.351Z INFO  - Initiating warmup request to container options-scanner-backend-2exk6s_0_a31b0675 for site options-scanner-backend-2exk6s
+2026-02-18T06:33:24.862Z ERROR - Container options-scanner-backend-2exk6s_0_a31b0675 for site options-scanner-backend-2exk6s has exited, failing site start
+2026-02-18T06:33:24.873Z ERROR - Container options-scanner-backend-2exk6s_0_a31b0675 didn't respond to HTTP pings on port: 8000. Failing site start. See container logs for debugging.
+2026-02-18T06:33:26.636Z INFO  - Stopping site options-scanner-backend-2exk6s because it failed during startup.
+2026-02-18T06:33:53.798Z INFO  - 3.11_20251017.5.tuxprod Pulling from appsvc/python
+2026-02-18T06:33:54.029Z INFO  -  Digest: sha256:92df52c98d35c066251e05baab9059c619b01135f04fc31ee577b55fefcb49ac
+2026-02-18T06:33:54.031Z INFO  -  Status: Image is up to date for 10.1.0.5:13209/appsvc/python:3.11_20251017.5.tuxprod
+2026-02-18T06:33:54.084Z INFO  - Pull Image successful, Time taken: 0 Seconds
+2026-02-18T06:33:54.667Z INFO  - Starting container for site
+2026-02-18T06:33:54.669Z INFO  - docker run -d --expose=8000 --name options-scanner-backend-2exk6s_0_62653b7e -e WEBSITE_USE_DIAGNOSTIC_SERVER=false -e PORT=8000 -e WEBSITE_SITE_NAME=options-scanner-backend-2exk6s -e WEBSITE_AUTH_ENABLED=False -e WEBSITE_ROLE_INSTANCE_ID=0 -e WEBSITE_HOSTNAME=options-scanner-backend-2exk6s.azurewebsites.net -e WEBSITE_INSTANCE_ID=72443ba77a190b727ea02c21a26ecfb5e610863ffb42819c9c2f60a0c94499ea -e HTTP_LOGGING_ENABLED=1 appsvc/python:3.11_20251017.5.tuxprod REDACTED
+2026-02-18T06:34:01.509Z INFO  - Initiating warmup request to container options-scanner-backend-2exk6s_0_62653b7e_msiProxy for site options-scanner-backend-2exk6s
+2026-02-18T06:34:01.545Z INFO  - Container options-scanner-backend-2exk6s_0_62653b7e_msiProxy for site options-scanner-backend-2exk6s initialized successfully and is ready to serve requests.
+2026-02-18T06:34:01.551Z INFO  - Initiating warmup request to container options-scanner-backend-2exk6s_0_62653b7e for site options-scanner-backend-2exk6s
+2026-02-18T06:34:17.887Z INFO  - Waiting for response to warmup request for container options-scanner-backend-2exk6s_0_62653b7e. Elapsed time = 16.3774756 sec
+2026-02-18T06:34:23.187Z ERROR - Container options-scanner-backend-2exk6s_0_62653b7e for site options-scanner-backend-2exk6s has exited, failing site start
+2026-02-18T06:34:23.197Z ERROR - Container options-scanner-backend-2exk6s_0_62653b7e didn't respond to HTTP pings on port: 8000. Failing site start. See container logs for debugging.
+2026-02-18T06:34:23.282Z INFO  - Stopping site options-scanner-backend-2exk6s because it failed during startup.
+2026-02-18T06:37:02.818Z INFO  - 3.11_20251017.5.tuxprod Pulling from appsvc/python
+2026-02-18T06:37:02.860Z INFO  -  Digest: sha256:92df52c98d35c066251e05baab9059c619b01135f04fc31ee577b55fefcb49ac
+2026-02-18T06:37:02.863Z INFO  -  Status: Image is up to date for 10.1.0.5:13209/appsvc/python:3.11_20251017.5.tuxprod
+2026-02-18T06:37:02.899Z INFO  - Pull Image successful, Time taken: 0 Seconds
+2026-02-18T06:37:03.191Z INFO  - Starting container for site
+2026-02-18T06:37:03.192Z INFO  - docker run -d --expose=8000 --name options-scanner-backend-2exk6s_0_1011bf20 -e WEBSITE_USE_DIAGNOSTIC_SERVER=false -e PORT=8000 -e WEBSITE_SITE_NAME=options-scanner-backend-2exk6s -e WEBSITE_AUTH_ENABLED=False -e WEBSITE_ROLE_INSTANCE_ID=0 -e WEBSITE_HOSTNAME=options-scanner-backend-2exk6s.azurewebsites.net -e WEBSITE_INSTANCE_ID=72443ba77a190b727ea02c21a26ecfb5e610863ffb42819c9c2f60a0c94499ea -e HTTP_LOGGING_ENABLED=1 appsvc/python:3.11_20251017.5.tuxprod REDACTED
+2026-02-18T06:37:21.634Z INFO  - Initiating warmup request to container options-scanner-backend-2exk6s_0_1011bf20_msiProxy for site options-scanner-backend-2exk6s
+2026-02-18T06:37:21.793Z INFO  - Container options-scanner-backend-2exk6s_0_1011bf20_msiProxy for site options-scanner-backend-2exk6s initialized successfully and is ready to serve requests.
+2026-02-18T06:37:21.798Z INFO  - Initiating warmup request to container options-scanner-backend-2exk6s_0_1011bf20 for site options-scanner-backend-2exk6s
+2026-02-18T06:37:42.540Z INFO  - Waiting for response to warmup request for container options-scanner-backend-2exk6s_0_1011bf20. Elapsed time = 20.9055616 sec
+2026-02-18T06:37:46.148Z ERROR - Container options-scanner-backend-2exk6s_0_1011bf20 for site options-scanner-backend-2exk6s has exited, failing site start
+2026-02-18T06:37:46.167Z ERROR - Container options-scanner-backend-2exk6s_0_1011bf20 didn't respond to HTTP pings on port: 8000. Failing site start. See container logs for debugging.
+2026-02-18T06:37:46.240Z INFO  - Stopping site options-scanner-backend-2exk6s because it failed during startup.
+2026-02-18T07:00:44.390Z INFO  - 3.11_20251017.5.tuxprod Pulling from appsvc/python
+2026-02-18T07:00:44.405Z INFO  -  Digest: sha256:92df52c98d35c066251e05baab9059c619b01135f04fc31ee577b55fefcb49ac
+2026-02-18T07:00:44.406Z INFO  -  Status: Image is up to date for 10.1.0.5:13209/appsvc/python:3.11_20251017.5.tuxprod
+2026-02-18T07:00:44.452Z INFO  - Pull Image successful, Time taken: 0 Seconds
+age2
+2026-02-18T07:09:28.952Z INFO  - 3.11_20251017.5.tuxprod Pulling from appsvc/python
+2026-02-18T07:09:28.974Z INFO  -  Digest: sha256:92df52c98d35c066251e05baab9059c619b01135f04fc31ee577b55fefcb49ac
+2026-02-18T07:09:28.975Z INFO  -  Status: Image is up to date for 10.1.0.4:13209/appsvc/python:3.11_20251017.5.tuxprod
+2026-02-18T07:09:29.018Z INFO  - Pull Image successful, Time taken: 0 Seconds
+2026-02-18T07:09:29.313Z INFO  - Starting container for site
+2026-02-18T07:09:29.324Z INFO  - docker run -d --expose=8000 --name options-scanner-backend-2exk6s_0_4ad48ac1 -e WEBSITE_USE_DIAGNOSTIC_SERVER=false -e PORT=8000 -e WEBSITE_SITE_NAME=options-scanner-backend-2exk6s -e WEBSITE_AUTH_ENABLED=False -e WEBSITE_ROLE_INSTANCE_ID=0 -e WEBSITE_HOSTNAME=options-scanner-backend-2exk6s.azurewebsites.net -e WEBSITE_INSTANCE_ID=72443ba77a190b727ea02c21a26ecfb5e610863ffb42819c9c2f60a0c94499ea -e HTTP_LOGGING_ENABLED=1 appsvc/python:3.11_20251017.5.tuxprod REDACTED
+2026-02-18T07:09:33.238Z INFO  - Initiating warmup request to container options-scanner-backend-2exk6s_0_4ad48ac1_msiProxy for site options-scanner-backend-2exk6s
+2026-02-18T07:09:33.250Z INFO  - Container options-scanner-backend-2exk6s_0_4ad48ac1_msiProxy for site options-scanner-backend-2exk6s initialized successfully and is ready to serve requests.
+2026-02-18T07:09:33.252Z INFO  - Initiating warmup request to container options-scanner-backend-2exk6s_0_4ad48ac1 for site options-scanner-backend-2exk6s
+2026-02-18T07:09:51.144Z INFO  - Waiting for response to warmup request for container options-scanner-backend-2exk6s_0_4ad48ac1. Elapsed time = 17.9060101 sec
+2026-02-18T07:10:01.357Z INFO  - Container options-scanner-backend-2exk6s_0_4ad48ac1 for site options-scanner-backend-2exk6s initialized successfully and is ready to serve requests.
+2026-02-18T15:43:40.0587964Z State: Starting, Action: EstablishingSiteNetworks, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-18T15:43:42.2874493Z State: Starting, Action: StartingMsiContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-18T15:43:46.4072616Z State: Starting, Action: StartingSiteContainers, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-18T15:43:46.4075532Z Container start method called.
+2026-02-18T15:43:46.4076515Z State: Starting, Action: PullingImage, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pulling image 10.1.0.5:13209/appsvc/python:3.11_20260203.2.tuxprod for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-18T15:43:46.4077941Z Establishing network.
+2026-02-18T15:43:46.4079587Z Pulling image: appsvc/python:3.11_20260203.2.tuxprod.
+2026-02-18T15:43:46.6289501Z Image appsvc/python:3.11_20260203.2.tuxprod is pulled from registry 10.1.0.5:13209
+2026-02-18T15:43:46.6299811Z Container is starting.
+2026-02-18T15:43:46.6305888Z State: Starting, Action: MountingVolumes, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Mounting volumes for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-18T15:43:46.6322264Z Establishing user namespace if not established already.
+2026-02-18T15:43:46.6326492Z Establishing network if not established already.
+2026-02-18T15:43:46.6327867Z Mounting volumes.
+2026-02-18T15:43:46.6330701Z Nested mountpoint 
+2026-02-18T15:43:46.6431928Z Nested mountpoint volatile/logs
+2026-02-18T15:43:46.6504237Z Nested mountpoint 
+2026-02-18T15:43:46.7150576Z Nested mountpoint 
+2026-02-18T15:43:46.7205382Z Nested mountpoint 
+2026-02-18T15:43:46.8121843Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Finished pulling container image and mounting volumes for options-scanner-backend-2exk6s. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-02-18T15:43:46.8132414Z Creating container.
+2026-02-18T15:43:46.8133945Z Creating pipes for streaming container io.
+2026-02-18T15:43:46.8135126Z Creating stdout named pipe at /podr/container/pipe/6b1d9887204e_options-scanner-backend-2exk6s/stdout_fa866e13dfb14d198db152665c8844cb.
+2026-02-18T15:43:46.8141682Z Successfully created stdout named pipe at: /podr/container/pipe/6b1d9887204e_options-scanner-backend-2exk6s/stdout_fa866e13dfb14d198db152665c8844cb.
+2026-02-18T15:43:46.8143262Z Opening named pipe /podr/container/pipe/6b1d9887204e_options-scanner-backend-2exk6s/stdout_fa866e13dfb14d198db152665c8844cb for reading in non-blocking mode.
+2026-02-18T15:43:46.8144621Z Successfully opened named pipe: /podr/container/pipe/6b1d9887204e_options-scanner-backend-2exk6s/stdout_fa866e13dfb14d198db152665c8844cb.
+2026-02-18T15:43:46.8146689Z Successfully removed non-blocking flag from /podr/container/pipe/6b1d9887204e_options-scanner-backend-2exk6s/stdout_fa866e13dfb14d198db152665c8844cb.
+2026-02-18T15:43:46.8153626Z Creating stderr named pipe at /podr/container/pipe/6b1d9887204e_options-scanner-backend-2exk6s/stderr_be0a714ce6ad41f0bcc771c5ac7c17d0.
+2026-02-18T15:43:46.8155249Z Successfully created stderr named pipe at: /podr/container/pipe/6b1d9887204e_options-scanner-backend-2exk6s/stderr_be0a714ce6ad41f0bcc771c5ac7c17d0.
+2026-02-18T15:43:46.8156387Z Opening named pipe /podr/container/pipe/6b1d9887204e_options-scanner-backend-2exk6s/stderr_be0a714ce6ad41f0bcc771c5ac7c17d0 for reading in non-blocking mode.
+2026-02-18T15:43:46.8157932Z Successfully opened named pipe: /podr/container/pipe/6b1d9887204e_options-scanner-backend-2exk6s/stderr_be0a714ce6ad41f0bcc771c5ac7c17d0.
+2026-02-18T15:43:46.8158995Z Successfully removed non-blocking flag from /podr/container/pipe/6b1d9887204e_options-scanner-backend-2exk6s/stderr_be0a714ce6ad41f0bcc771c5ac7c17d0.
+2026-02-18T15:43:46.8171684Z Creating container with image: appsvc/python:3.11_20260203.2.tuxprod from registry: 10.1.0.5:13209 and fully qualified image name: 10.1.0.5:13209/appsvc/python:3.11_20260203.2.tuxprod
+2026-02-18T15:43:47.7115552Z Starting container: 6b1d9887204e_options-scanner-backend-2exk6s.
+2026-02-18T15:43:47.7286781Z Starting watchers and probes.
+2026-02-18T15:43:47.7373379Z Starting metrics collection.
+2026-02-18T15:43:47.7398345Z Container is running.
+2026-02-18T15:43:47.7410268Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-18T15:43:47.7594216Z Container start method finished after 1351 ms.
+2026-02-18T15:43:47.7599490Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-18T15:43:47.7710260Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-02-18T15:44:09.6458755Z Site startup probe succeeded after 21.8609153 seconds.
+2026-02-18T15:44:09.6919968Z State: Starting, Action: WarmUpProbeSucceeded, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site startup probe succeeded after 21.8609153 seconds., DetailsLevel: INFO
+2026-02-18T15:44:09.7485360Z Site is running with deployment version: bf54b4f2-bc8e-4744-99ab-905007a145a5
+2026-02-18T15:44:09.7550313Z Site started.
+2026-02-18T15:44:09.7551653Z State: Started, Action: None, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site started at 02/18/2026 15:44:09 (UTC), DetailsLevel: INFO
+2026-02-18T15:44:10.3151983Z Site is running with patch version PYTHON 3.11.14
+2026-02-18T16:14:14.4813942Z State: Starting, Action: EstablishingSiteNetworks, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-18T16:14:16.2172398Z State: Starting, Action: StartingMsiContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-18T16:14:20.2995636Z State: Starting, Action: StartingSiteContainers, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-18T16:14:20.2997096Z Container start method called.
+2026-02-18T16:14:20.2997771Z State: Starting, Action: PullingImage, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pulling image 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-18T16:14:20.2998805Z Establishing network.
+2026-02-18T16:14:20.2999926Z Pulling image: appsvc/python:3.11_20260203.2.tuxprod.
+2026-02-18T16:14:21.4390406Z Image appsvc/python:3.11_20260203.2.tuxprod is pulled from registry 10.1.0.4:13209
+2026-02-18T16:14:21.4392242Z Container is starting.
+2026-02-18T16:14:21.4393302Z State: Starting, Action: MountingVolumes, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Mounting volumes for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-18T16:14:21.4394507Z Establishing user namespace if not established already.
+2026-02-18T16:14:21.4395956Z Establishing network if not established already.
+2026-02-18T16:14:21.4397512Z Mounting volumes.
+2026-02-18T16:14:21.4401103Z Nested mountpoint 
+2026-02-18T16:14:21.4423659Z Nested mountpoint volatile/logs
+2026-02-18T16:14:21.4479158Z Nested mountpoint 
+2026-02-18T16:14:21.4718753Z Nested mountpoint 
+2026-02-18T16:14:21.4727599Z Nested mountpoint 
+2026-02-18T16:14:21.5639207Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Finished pulling container image and mounting volumes for options-scanner-backend-2exk6s. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-02-18T16:14:21.5640989Z Creating container.
+2026-02-18T16:14:21.5642079Z Creating pipes for streaming container io.
+2026-02-18T16:14:21.5643042Z Creating stdout named pipe at /podr/container/pipe/3b1e7af4825f_options-scanner-backend-2exk6s/stdout_41100757517949acb36c4ce0253ee60a.
+2026-02-18T16:14:21.5644965Z Successfully created stdout named pipe at: /podr/container/pipe/3b1e7af4825f_options-scanner-backend-2exk6s/stdout_41100757517949acb36c4ce0253ee60a.
+2026-02-18T16:14:21.5645831Z Opening named pipe /podr/container/pipe/3b1e7af4825f_options-scanner-backend-2exk6s/stdout_41100757517949acb36c4ce0253ee60a for reading in non-blocking mode.
+2026-02-18T16:14:21.5646983Z Successfully opened named pipe: /podr/container/pipe/3b1e7af4825f_options-scanner-backend-2exk6s/stdout_41100757517949acb36c4ce0253ee60a.
+2026-02-18T16:14:21.5648641Z Successfully removed non-blocking flag from /podr/container/pipe/3b1e7af4825f_options-scanner-backend-2exk6s/stdout_41100757517949acb36c4ce0253ee60a.
+2026-02-18T16:14:21.5650185Z Creating stderr named pipe at /podr/container/pipe/3b1e7af4825f_options-scanner-backend-2exk6s/stderr_f9ca029ad2684d6aa3e53527a89e6284.
+2026-02-18T16:14:21.5652801Z Successfully created stderr named pipe at: /podr/container/pipe/3b1e7af4825f_options-scanner-backend-2exk6s/stderr_f9ca029ad2684d6aa3e53527a89e6284.
+2026-02-18T16:14:21.5653749Z Opening named pipe /podr/container/pipe/3b1e7af4825f_options-scanner-backend-2exk6s/stderr_f9ca029ad2684d6aa3e53527a89e6284 for reading in non-blocking mode.
+2026-02-18T16:14:21.5654779Z Successfully opened named pipe: /podr/container/pipe/3b1e7af4825f_options-scanner-backend-2exk6s/stderr_f9ca029ad2684d6aa3e53527a89e6284.
+2026-02-18T16:14:21.5655561Z Successfully removed non-blocking flag from /podr/container/pipe/3b1e7af4825f_options-scanner-backend-2exk6s/stderr_f9ca029ad2684d6aa3e53527a89e6284.
+2026-02-18T16:14:21.5658647Z Creating container with image: appsvc/python:3.11_20260203.2.tuxprod from registry: 10.1.0.4:13209 and fully qualified image name: 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod
+2026-02-18T16:14:22.6949411Z Starting container: 3b1e7af4825f_options-scanner-backend-2exk6s.
+2026-02-18T16:14:22.7330268Z Starting watchers and probes.
+2026-02-18T16:14:22.7564745Z Starting metrics collection.
+2026-02-18T16:14:22.7570410Z Container is running.
+2026-02-18T16:14:22.7574907Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-18T16:14:22.8487631Z Container start method finished after 2548 ms.
+2026-02-18T16:14:22.8515140Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-18T16:14:22.8515936Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-02-18T16:18:18.1036764Z Site startup probe succeeded after 235.2143796 seconds.
+2026-02-18T16:18:18.2640564Z State: Starting, Action: WarmUpProbeSucceeded, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site startup probe succeeded after 235.2143796 seconds., DetailsLevel: INFO
+2026-02-18T16:18:18.3945008Z Site is running with deployment version: bf54b4f2-bc8e-4744-99ab-905007a145a5
+2026-02-18T16:18:18.4023247Z Site started.
+2026-02-18T16:18:18.4028390Z State: Started, Action: None, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site started at 02/18/2026 16:18:18 (UTC), DetailsLevel: INFO
+2026-02-18T16:18:18.4823466Z Site is running with patch version PYTHON 3.11.14
+2026-02-18T16:18:41.1217519Z State: Stopping, Action: StoppingSite, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site started at 02/18/2026 15:44:09 (UTC), DetailsLevel: INFO
+2026-02-18T16:18:43.3054627Z State: Stopping, Action: StoppingSiteContainers, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site started at 02/18/2026 15:44:09 (UTC), DetailsLevel: INFO
+2026-02-18T16:18:43.8706888Z Container is terminating. Grace period: 5 seconds.
+2026-02-18T16:18:53.7818975Z Stop and delete container. Retry count = 0
+2026-02-18T16:18:53.8954650Z Stopping container: 6b1d9887204e_options-scanner-backend-2exk6s.
+2026-02-18T16:18:56.1303966Z Deleting container: 6b1d9887204e_options-scanner-backend-2exk6s. Retry count = 0
+2026-02-18T16:18:59.8546996Z Container spec TerminationMessagePolicy  path 
+2026-02-18T16:18:59.9103703Z Container is terminated. Total time elapsed: 12905 ms.
+2026-02-18T16:18:59.9334574Z Site: options-scanner-backend-2exk6s stopped.
+2026-02-18T16:21:09.8003212Z State: Starting, Action: EstablishingSiteNetworks, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-18T16:21:11.5745275Z State: Starting, Action: StartingMsiContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-18T16:21:23.0937285Z State: Starting, Action: StartingSiteContainers, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-18T16:21:23.1246490Z Container start method called.
+2026-02-18T16:21:23.1275095Z State: Starting, Action: PullingImage, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pulling image 10.1.0.5:13209/appsvc/python:3.11_20260203.2.tuxprod for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-18T16:21:23.1316548Z Establishing network.
+2026-02-18T16:21:23.1525047Z Pulling image: appsvc/python:3.11_20260203.2.tuxprod.
+2026-02-18T16:21:24.9182376Z Image appsvc/python:3.11_20260203.2.tuxprod is pulled from registry 10.1.0.5:13209
+2026-02-18T16:21:24.9188000Z Container is starting.
+2026-02-18T16:21:24.9188858Z State: Starting, Action: MountingVolumes, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Mounting volumes for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-18T16:21:24.9190040Z Establishing user namespace if not established already.
+2026-02-18T16:21:24.9193979Z Establishing network if not established already.
+2026-02-18T16:21:24.9195549Z Mounting volumes.
+2026-02-18T16:21:24.9197948Z Nested mountpoint 
+2026-02-18T16:21:24.9256300Z Nested mountpoint volatile/logs
+2026-02-18T16:21:24.9374982Z Nested mountpoint 
+2026-02-18T16:21:25.1309069Z Nested mountpoint 
+2026-02-18T16:21:25.1377539Z Nested mountpoint 
+2026-02-18T16:21:27.3619861Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Finished pulling container image and mounting volumes for options-scanner-backend-2exk6s. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-02-18T16:21:27.3622204Z Creating container.
+2026-02-18T16:21:27.3623585Z Creating pipes for streaming container io.
+2026-02-18T16:21:27.3626887Z Creating stdout named pipe at /podr/container/pipe/d35a3bc733c6_options-scanner-backend-2exk6s/stdout_65d69a4d58ae4a57ae0e97d5d4f3a1f9.
+2026-02-18T16:21:27.3629324Z Successfully created stdout named pipe at: /podr/container/pipe/d35a3bc733c6_options-scanner-backend-2exk6s/stdout_65d69a4d58ae4a57ae0e97d5d4f3a1f9.
+2026-02-18T16:21:27.3630536Z Opening named pipe /podr/container/pipe/d35a3bc733c6_options-scanner-backend-2exk6s/stdout_65d69a4d58ae4a57ae0e97d5d4f3a1f9 for reading in non-blocking mode.
+2026-02-18T16:21:27.3661796Z Successfully opened named pipe: /podr/container/pipe/d35a3bc733c6_options-scanner-backend-2exk6s/stdout_65d69a4d58ae4a57ae0e97d5d4f3a1f9.
+2026-02-18T16:21:27.3665575Z Successfully removed non-blocking flag from /podr/container/pipe/d35a3bc733c6_options-scanner-backend-2exk6s/stdout_65d69a4d58ae4a57ae0e97d5d4f3a1f9.
+2026-02-18T16:21:27.3668699Z Creating stderr named pipe at /podr/container/pipe/d35a3bc733c6_options-scanner-backend-2exk6s/stderr_73f00a3c5893472ca3eb9a930c0d7192.
+2026-02-18T16:21:27.3670632Z Successfully created stderr named pipe at: /podr/container/pipe/d35a3bc733c6_options-scanner-backend-2exk6s/stderr_73f00a3c5893472ca3eb9a930c0d7192.
+2026-02-18T16:21:27.3700766Z Opening named pipe /podr/container/pipe/d35a3bc733c6_options-scanner-backend-2exk6s/stderr_73f00a3c5893472ca3eb9a930c0d7192 for reading in non-blocking mode.
+2026-02-18T16:21:27.3704935Z Successfully opened named pipe: /podr/container/pipe/d35a3bc733c6_options-scanner-backend-2exk6s/stderr_73f00a3c5893472ca3eb9a930c0d7192.
+2026-02-18T16:21:27.3709166Z Successfully removed non-blocking flag from /podr/container/pipe/d35a3bc733c6_options-scanner-backend-2exk6s/stderr_73f00a3c5893472ca3eb9a930c0d7192.
+2026-02-18T16:21:27.3716614Z Creating container with image: appsvc/python:3.11_20260203.2.tuxprod from registry: 10.1.0.5:13209 and fully qualified image name: 10.1.0.5:13209/appsvc/python:3.11_20260203.2.tuxprod
+2026-02-18T16:21:28.5777427Z Starting container: d35a3bc733c6_options-scanner-backend-2exk6s.
+2026-02-18T16:21:28.6219745Z Starting watchers and probes.
+2026-02-18T16:21:28.6222516Z Starting metrics collection.
+2026-02-18T16:21:28.6223992Z Container is running.
+2026-02-18T16:21:28.6225311Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-18T16:21:28.6501593Z Container start method finished after 5525 ms.
+2026-02-18T16:21:28.6531395Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-18T16:21:28.6533541Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-02-18T16:21:31.0441495Z Site startup probe failed after 2.3695461 seconds.
+2026-02-18T16:21:31.1853354Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: ERR
+2026-02-18T16:21:31.2202580Z Failed to start site. Revert by stopping site.
+2026-02-18T16:21:31.2228351Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: ERR
+2026-02-18T16:21:31.2241601Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: ERR
+2026-02-18T16:21:31.2243535Z Container is terminating. Grace period: 5 seconds.
+2026-02-18T16:21:31.3673858Z Stop and delete container. Retry count = 0
+2026-02-18T16:21:31.3675137Z Stopping container: d35a3bc733c6_options-scanner-backend-2exk6s.
+2026-02-18T16:21:36.3185697Z Deleting container: d35a3bc733c6_options-scanner-backend-2exk6s. Retry count = 0
+2026-02-18T16:21:36.4244986Z Container spec TerminationMessagePolicy  path 
+2026-02-18T16:21:36.4246995Z Container is terminated. Total time elapsed: 5200 ms.
+2026-02-18T16:21:36.4248523Z Site container: options-scanner-backend-2exk6s terminated during site startup.
+2026-02-18T16:21:36.4319749Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site container: options-scanner-backend-2exk6s terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-02-18T16:21:36.4330199Z Site: options-scanner-backend-2exk6s stopped.
+2026-02-18T16:21:58.8347004Z State: Stopping, Action: StoppingSite, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site started at 02/18/2026 16:18:18 (UTC), DetailsLevel: INFO
+2026-02-18T16:21:58.8371444Z State: Stopping, Action: StoppingSiteContainers, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site started at 02/18/2026 16:18:18 (UTC), DetailsLevel: INFO
+2026-02-18T16:21:58.8376304Z Container is terminating. Grace period: 5 seconds.
+2026-02-18T16:21:58.8586323Z Stop and delete container. Retry count = 0
+2026-02-18T16:21:58.8588518Z Stopping container: 3b1e7af4825f_options-scanner-backend-2exk6s.
+2026-02-18T16:22:03.9007668Z Deleting container: 3b1e7af4825f_options-scanner-backend-2exk6s. Retry count = 0
+2026-02-18T16:22:05.2048204Z Container spec TerminationMessagePolicy  path 
+2026-02-18T16:22:05.2050287Z Container is terminated. Total time elapsed: 6366 ms.
+2026-02-18T16:22:05.2051399Z Site: options-scanner-backend-2exk6s stopped.
+2026-02-18T16:22:27.1192966Z State: Starting, Action: EstablishingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/18/2026 16:21:38 (UTC), DetailsLevel: ERR
+2026-02-18T16:22:29.0316466Z State: Starting, Action: StartingMsiContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/18/2026 16:21:38 (UTC), DetailsLevel: ERR
+2026-02-18T16:22:33.7006872Z State: Starting, Action: StartingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site stopped at 02/18/2026 16:21:38 (UTC), DetailsLevel: ERR
+2026-02-18T16:22:33.7012704Z Container start method called.
+2026-02-18T16:22:33.7013313Z State: Starting, Action: PullingImage, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pulling image 10.1.0.5:13209/appsvc/python:3.11_20260203.2.tuxprod for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-18T16:22:33.7014324Z Establishing network.
+2026-02-18T16:22:33.7015813Z Pulling image: appsvc/python:3.11_20260203.2.tuxprod.
+2026-02-18T16:22:33.7860575Z Container is starting.
+2026-02-18T16:22:33.7861469Z State: Starting, Action: MountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Mounting volumes for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-18T16:22:33.7862742Z Establishing user namespace if not established already.
+2026-02-18T16:22:33.7864115Z Establishing network if not established already.
+2026-02-18T16:22:33.7865268Z Mounting volumes.
+2026-02-18T16:22:33.7868024Z Nested mountpoint 
+2026-02-18T16:22:33.7912924Z Nested mountpoint volatile/logs
+2026-02-18T16:22:33.7951406Z Nested mountpoint 
+2026-02-18T16:22:33.7963501Z Nested mountpoint 
+2026-02-18T16:22:33.7970213Z Nested mountpoint 
+2026-02-18T16:22:33.9347273Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Finished pulling container image and mounting volumes for options-scanner-backend-2exk6s. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-02-18T16:22:33.9364615Z Creating container.
+2026-02-18T16:22:33.9368774Z Creating pipes for streaming container io.
+2026-02-18T16:22:33.9373637Z Creating stdout named pipe at /podr/container/pipe/05443c651b28_options-scanner-backend-2exk6s/stdout_39fe0768c28e43b3a25b896416db0b82.
+2026-02-18T16:22:33.9383820Z Successfully created stdout named pipe at: /podr/container/pipe/05443c651b28_options-scanner-backend-2exk6s/stdout_39fe0768c28e43b3a25b896416db0b82.
+2026-02-18T16:22:33.9399588Z Opening named pipe /podr/container/pipe/05443c651b28_options-scanner-backend-2exk6s/stdout_39fe0768c28e43b3a25b896416db0b82 for reading in non-blocking mode.
+2026-02-18T16:22:33.9401138Z Successfully opened named pipe: /podr/container/pipe/05443c651b28_options-scanner-backend-2exk6s/stdout_39fe0768c28e43b3a25b896416db0b82.
+2026-02-18T16:22:33.9402062Z Successfully removed non-blocking flag from /podr/container/pipe/05443c651b28_options-scanner-backend-2exk6s/stdout_39fe0768c28e43b3a25b896416db0b82.
+2026-02-18T16:22:33.9403332Z Creating stderr named pipe at /podr/container/pipe/05443c651b28_options-scanner-backend-2exk6s/stderr_1682c6068dd34de9aecdba63beea8241.
+2026-02-18T16:22:33.9404785Z Successfully created stderr named pipe at: /podr/container/pipe/05443c651b28_options-scanner-backend-2exk6s/stderr_1682c6068dd34de9aecdba63beea8241.
+2026-02-18T16:22:33.9405658Z Opening named pipe /podr/container/pipe/05443c651b28_options-scanner-backend-2exk6s/stderr_1682c6068dd34de9aecdba63beea8241 for reading in non-blocking mode.
+2026-02-18T16:22:33.9406726Z Successfully opened named pipe: /podr/container/pipe/05443c651b28_options-scanner-backend-2exk6s/stderr_1682c6068dd34de9aecdba63beea8241.
+2026-02-18T16:22:33.9407511Z Successfully removed non-blocking flag from /podr/container/pipe/05443c651b28_options-scanner-backend-2exk6s/stderr_1682c6068dd34de9aecdba63beea8241.
+2026-02-18T16:22:33.9408673Z Creating container with image: appsvc/python:3.11_20260203.2.tuxprod from registry: 10.1.0.5:13209 and fully qualified image name: 10.1.0.5:13209/appsvc/python:3.11_20260203.2.tuxprod
+2026-02-18T16:22:34.1270686Z Starting container: 05443c651b28_options-scanner-backend-2exk6s.
+2026-02-18T16:22:34.1467565Z Starting watchers and probes.
+2026-02-18T16:22:34.1470563Z Starting metrics collection.
+2026-02-18T16:22:34.1510582Z Container is running.
+2026-02-18T16:22:34.1511575Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-18T16:22:34.1856004Z Container start method finished after 484 ms.
+2026-02-18T16:22:34.1858431Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-18T16:22:34.1858673Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-02-18T16:22:54.1535856Z Site startup probe succeeded after 19.9671927 seconds.
+2026-02-18T16:22:54.4307657Z State: Starting, Action: WarmUpProbeSucceeded, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site startup probe succeeded after 19.9671927 seconds., DetailsLevel: INFO
+2026-02-18T16:22:54.9015934Z Site is running with deployment version: aa77f065-b35c-49e4-b367-be07ecdd04ed
+2026-02-18T16:22:54.9164004Z Site started.
+2026-02-18T16:22:54.9165648Z State: Started, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site started at 02/18/2026 16:22:54 (UTC), DetailsLevel: INFO
+2026-02-18T16:22:54.9373020Z Site is running with patch version PYTHON 3.11.14
+2026-02-18T16:32:44.8192219Z State: Starting, Action: EstablishingSiteNetworks, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-18T16:32:48.0541445Z State: Starting, Action: StartingMsiContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-18T16:32:53.7107651Z State: Starting, Action: StartingSiteContainers, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-18T16:32:53.7114378Z Container start method called.
+2026-02-18T16:32:53.7117455Z State: Starting, Action: PullingImage, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pulling image 10.1.0.5:13209/appsvc/python:3.11_20260203.2.tuxprod for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-18T16:32:53.7119133Z Establishing network.
+2026-02-18T16:32:53.7120781Z Pulling image: appsvc/python:3.11_20260203.2.tuxprod.
+2026-02-18T16:32:54.3571385Z Container is starting.
+2026-02-18T16:32:54.3572245Z State: Starting, Action: MountingVolumes, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Mounting volumes for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-18T16:32:54.3575321Z Establishing user namespace if not established already.
+2026-02-18T16:32:54.3577313Z Establishing network if not established already.
+2026-02-18T16:32:54.3578711Z Mounting volumes.
+2026-02-18T16:32:54.3581201Z Nested mountpoint 
+2026-02-18T16:32:54.3649287Z Nested mountpoint volatile/logs
+2026-02-18T16:32:54.3700749Z Nested mountpoint 
+2026-02-18T16:32:54.3993840Z Nested mountpoint 
+2026-02-18T16:32:54.4790956Z Nested mountpoint 
+2026-02-18T16:32:54.7658993Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Finished pulling container image and mounting volumes for options-scanner-backend-2exk6s. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-02-18T16:32:54.7663820Z Creating container.
+2026-02-18T16:32:54.7666071Z Creating pipes for streaming container io.
+2026-02-18T16:32:54.7667370Z Creating stdout named pipe at /podr/container/pipe/d115dd5e03f9_options-scanner-backend-2exk6s/stdout_9d463a5c75a84acebad0cbe96149f67e.
+2026-02-18T16:32:54.7669518Z Successfully created stdout named pipe at: /podr/container/pipe/d115dd5e03f9_options-scanner-backend-2exk6s/stdout_9d463a5c75a84acebad0cbe96149f67e.
+2026-02-18T16:32:54.7670771Z Opening named pipe /podr/container/pipe/d115dd5e03f9_options-scanner-backend-2exk6s/stdout_9d463a5c75a84acebad0cbe96149f67e for reading in non-blocking mode.
+2026-02-18T16:32:54.7672175Z Successfully opened named pipe: /podr/container/pipe/d115dd5e03f9_options-scanner-backend-2exk6s/stdout_9d463a5c75a84acebad0cbe96149f67e.
+2026-02-18T16:32:54.7673357Z Successfully removed non-blocking flag from /podr/container/pipe/d115dd5e03f9_options-scanner-backend-2exk6s/stdout_9d463a5c75a84acebad0cbe96149f67e.
+2026-02-18T16:32:54.7701012Z Creating stderr named pipe at /podr/container/pipe/d115dd5e03f9_options-scanner-backend-2exk6s/stderr_afa0a41b51ff4ddaa2d2b17d12c3fc3b.
+2026-02-18T16:32:54.7705261Z Successfully created stderr named pipe at: /podr/container/pipe/d115dd5e03f9_options-scanner-backend-2exk6s/stderr_afa0a41b51ff4ddaa2d2b17d12c3fc3b.
+2026-02-18T16:32:54.7714843Z Opening named pipe /podr/container/pipe/d115dd5e03f9_options-scanner-backend-2exk6s/stderr_afa0a41b51ff4ddaa2d2b17d12c3fc3b for reading in non-blocking mode.
+2026-02-18T16:32:54.7716550Z Successfully opened named pipe: /podr/container/pipe/d115dd5e03f9_options-scanner-backend-2exk6s/stderr_afa0a41b51ff4ddaa2d2b17d12c3fc3b.
+2026-02-18T16:32:54.7717944Z Successfully removed non-blocking flag from /podr/container/pipe/d115dd5e03f9_options-scanner-backend-2exk6s/stderr_afa0a41b51ff4ddaa2d2b17d12c3fc3b.
+2026-02-18T16:32:54.7719286Z Creating container with image: appsvc/python:3.11_20260203.2.tuxprod from registry: 10.1.0.5:13209 and fully qualified image name: 10.1.0.5:13209/appsvc/python:3.11_20260203.2.tuxprod
+2026-02-18T16:32:55.6075812Z Starting container: d115dd5e03f9_options-scanner-backend-2exk6s.
+2026-02-18T16:32:55.6220925Z Starting watchers and probes.
+2026-02-18T16:32:55.6245835Z Starting metrics collection.
+2026-02-18T16:32:55.6249379Z Container is running.
+2026-02-18T16:32:55.6250039Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-18T16:32:55.6402299Z Container start method finished after 1928 ms.
+2026-02-18T16:32:55.6418357Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-18T16:32:55.6419131Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-02-18T16:33:30.6424669Z Site startup probe succeeded after 34.9810826 seconds.
+2026-02-18T16:33:30.7648465Z State: Starting, Action: WarmUpProbeSucceeded, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site startup probe succeeded after 34.9810826 seconds., DetailsLevel: INFO
+2026-02-18T16:33:30.8106469Z Site is running with deployment version: a9455007-d0a9-4b3a-aef5-d96f405db389
+2026-02-18T16:33:30.8122769Z Site started.
+2026-02-18T16:33:30.8123538Z State: Started, Action: None, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site started at 02/18/2026 16:33:30 (UTC), DetailsLevel: INFO
+2026-02-18T16:33:30.8290395Z Site is running with patch version PYTHON 3.11.14
+2026-02-18T16:33:51.1017779Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site started at 02/18/2026 16:22:54 (UTC), DetailsLevel: INFO
+2026-02-18T16:33:51.1077366Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site started at 02/18/2026 16:22:54 (UTC), DetailsLevel: INFO
+2026-02-18T16:33:51.1139049Z Container is terminating. Grace period: 5 seconds.
+2026-02-18T16:33:51.2090544Z Stop and delete container. Retry count = 0
+2026-02-18T16:33:51.2092692Z Stopping container: 05443c651b28_options-scanner-backend-2exk6s.
+2026-02-18T16:33:56.3477381Z Deleting container: 05443c651b28_options-scanner-backend-2exk6s. Retry count = 0
+2026-02-18T16:33:57.5391710Z Container spec TerminationMessagePolicy  path 
+2026-02-18T16:33:57.5426120Z Container is terminated. Total time elapsed: 6427 ms.
+2026-02-18T16:33:57.5455167Z Site: options-scanner-backend-2exk6s stopped.
+2026-02-18T16:40:44.4249520Z State: Starting, Action: EstablishingSiteNetworks, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-18T16:40:46.6652976Z State: Starting, Action: StartingMsiContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-18T16:40:52.0439681Z State: Starting, Action: StartingSiteContainers, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-18T16:40:52.0441095Z Container start method called.
+2026-02-18T16:40:52.0441631Z State: Starting, Action: PullingImage, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pulling image 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-18T16:40:52.0442664Z Establishing network.
+2026-02-18T16:40:52.0443554Z Pulling image: appsvc/python:3.11_20260203.2.tuxprod.
+2026-02-18T16:40:52.9025998Z Image appsvc/python:3.11_20260203.2.tuxprod is pulled from registry 10.1.0.4:13209
+2026-02-18T16:40:52.9039331Z Container is starting.
+2026-02-18T16:40:52.9041927Z State: Starting, Action: MountingVolumes, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Mounting volumes for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-18T16:40:52.9055325Z Establishing user namespace if not established already.
+2026-02-18T16:40:52.9068121Z Establishing network if not established already.
+2026-02-18T16:40:52.9069901Z Mounting volumes.
+2026-02-18T16:40:52.9073592Z Nested mountpoint 
+2026-02-18T16:40:52.9151581Z Nested mountpoint volatile/logs
+2026-02-18T16:40:52.9288505Z Nested mountpoint 
+2026-02-18T16:40:52.9544261Z Nested mountpoint 
+2026-02-18T16:40:52.9618762Z Nested mountpoint 
+2026-02-18T16:40:53.1159541Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Finished pulling container image and mounting volumes for options-scanner-backend-2exk6s. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-02-18T16:40:53.1161372Z Creating container.
+2026-02-18T16:40:53.1162387Z Creating pipes for streaming container io.
+2026-02-18T16:40:53.1163200Z Creating stdout named pipe at /podr/container/pipe/90dca70396ba_options-scanner-backend-2exk6s/stdout_05ee3be416aa4fe4a216ccc102a2c31f.
+2026-02-18T16:40:53.1164968Z Successfully created stdout named pipe at: /podr/container/pipe/90dca70396ba_options-scanner-backend-2exk6s/stdout_05ee3be416aa4fe4a216ccc102a2c31f.
+2026-02-18T16:40:53.1165803Z Opening named pipe /podr/container/pipe/90dca70396ba_options-scanner-backend-2exk6s/stdout_05ee3be416aa4fe4a216ccc102a2c31f for reading in non-blocking mode.
+2026-02-18T16:40:53.1187233Z Successfully opened named pipe: /podr/container/pipe/90dca70396ba_options-scanner-backend-2exk6s/stdout_05ee3be416aa4fe4a216ccc102a2c31f.
+2026-02-18T16:40:53.1188833Z Successfully removed non-blocking flag from /podr/container/pipe/90dca70396ba_options-scanner-backend-2exk6s/stdout_05ee3be416aa4fe4a216ccc102a2c31f.
+2026-02-18T16:40:53.1201553Z Creating stderr named pipe at /podr/container/pipe/90dca70396ba_options-scanner-backend-2exk6s/stderr_a4483843bf7240ae95909567f5001180.
+2026-02-18T16:40:53.1205394Z Successfully created stderr named pipe at: /podr/container/pipe/90dca70396ba_options-scanner-backend-2exk6s/stderr_a4483843bf7240ae95909567f5001180.
+2026-02-18T16:40:53.1206830Z Opening named pipe /podr/container/pipe/90dca70396ba_options-scanner-backend-2exk6s/stderr_a4483843bf7240ae95909567f5001180 for reading in non-blocking mode.
+2026-02-18T16:40:53.1208153Z Successfully opened named pipe: /podr/container/pipe/90dca70396ba_options-scanner-backend-2exk6s/stderr_a4483843bf7240ae95909567f5001180.
+2026-02-18T16:40:53.1209545Z Successfully removed non-blocking flag from /podr/container/pipe/90dca70396ba_options-scanner-backend-2exk6s/stderr_a4483843bf7240ae95909567f5001180.
+2026-02-18T16:40:53.1211150Z Creating container with image: appsvc/python:3.11_20260203.2.tuxprod from registry: 10.1.0.4:13209 and fully qualified image name: 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod
+2026-02-18T16:40:55.0444483Z Starting container: 90dca70396ba_options-scanner-backend-2exk6s.
+2026-02-18T16:40:55.0604862Z Starting watchers and probes.
+2026-02-18T16:40:55.0637967Z Starting metrics collection.
+2026-02-18T16:40:55.0640841Z Container is running.
+2026-02-18T16:40:55.0641596Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-18T16:40:55.1397341Z Container start method finished after 3094 ms.
+2026-02-18T16:40:55.1402022Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-18T16:40:55.1402842Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-02-18T16:41:46.9014946Z Site startup probe succeeded after 51.7469782 seconds.
+2026-02-18T16:41:46.9792145Z State: Starting, Action: WarmUpProbeSucceeded, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site startup probe succeeded after 51.7469782 seconds., DetailsLevel: INFO
+2026-02-18T16:41:47.5767588Z Site is running with deployment version: d293ca16-9bb9-4f96-932a-c5e8362331be
+2026-02-18T16:41:47.6321991Z Site started.
+2026-02-18T16:41:47.6349420Z State: Started, Action: None, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site started at 02/18/2026 16:41:47 (UTC), DetailsLevel: INFO
+2026-02-18T16:41:47.7033305Z Site is running with patch version PYTHON 3.11.14
+2026-02-18T16:42:11.7347973Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site started at 02/18/2026 16:33:30 (UTC), DetailsLevel: INFO
+2026-02-18T16:42:15.6353164Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 02/18/2026 16:21:31, LastErrorDetails: Container did not start within expected time limit of 600s. Please inspect your container logs for more details., Details: Site started at 02/18/2026 16:33:30 (UTC), DetailsLevel: INFO
+2026-02-18T16:42:15.7122942Z Container is terminating. Grace period: 5 seconds.
+2026-02-18T16:42:21.4864236Z Stop and delete container. Retry count = 0
+2026-02-18T16:42:21.4906699Z Stopping container: d115dd5e03f9_options-scanner-backend-2exk6s.
+2026-02-18T16:42:23.5052906Z Deleting container: d115dd5e03f9_options-scanner-backend-2exk6s. Retry count = 0
+2026-02-18T16:42:30.9258133Z Container spec TerminationMessagePolicy  path 
+2026-02-18T16:42:30.9284796Z Container is terminated. Total time elapsed: 15202 ms.
+2026-02-18T16:42:30.9315408Z Site: options-scanner-backend-2exk6s stopped.
+2026-02-18T16:44:29.8446270Z State: Stopping, Action: StoppingSite, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site started at 02/18/2026 16:41:47 (UTC), DetailsLevel: INFO
+2026-02-18T16:44:29.8512391Z State: Stopping, Action: StoppingSiteContainers, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site started at 02/18/2026 16:41:47 (UTC), DetailsLevel: INFO
+2026-02-18T16:44:29.8513910Z Container is terminating. Grace period: 5 seconds.
+2026-02-18T16:44:29.9702974Z Stop and delete container. Retry count = 0
+2026-02-18T16:44:29.9704103Z Stopping container: 90dca70396ba_options-scanner-backend-2exk6s.
+2026-02-18T16:44:35.0800103Z Deleting container: 90dca70396ba_options-scanner-backend-2exk6s. Retry count = 0
+2026-02-18T16:44:37.5328363Z Container spec TerminationMessagePolicy  path 
+2026-02-18T16:44:37.5339185Z Container is terminated. Total time elapsed: 7678 ms.
+2026-02-18T16:44:37.5340656Z Site: options-scanner-backend-2exk6s stopped.

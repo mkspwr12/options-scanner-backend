@@ -7,6 +7,7 @@ persists results.  Returns empty results when no data is available.
 from __future__ import annotations
 
 import logging
+import time
 import uuid
 from datetime import datetime, timedelta, timezone
 from typing import Any
@@ -36,7 +37,7 @@ class ScanService:
         self._repo = repo or ScanRepository()
         self._provider = provider
         self._cb = circuit_breaker or CircuitBreaker(
-            failure_threshold=3,
+            failure_threshold=5,
             recovery_timeout=300.0,
             name="market_data",
         )
@@ -280,8 +281,13 @@ class ScanService:
 
         all_opportunities: list[dict[str, Any]] = []
         now_ms = int(datetime.now(timezone.utc).timestamp() * 1000)
+        symbol_list = list(symbols or [])
+        total = len(symbol_list)
 
-        for sym in (symbols or []):
+        for idx, sym in enumerate(symbol_list):
+            logger.info(
+                "Scanning symbol %d/%d: %s", idx + 1, total, sym
+            )
             try:
                 quote = self._provider.get_quote(sym)
                 contracts = self._provider.get_options_chain(sym)
@@ -292,11 +298,23 @@ class ScanService:
                     if opp is not None:
                         all_opportunities.append(opp)
 
+                logger.info(
+                    "Symbol %s complete: %d contracts, %d opps so far",
+                    sym,
+                    len(contracts),
+                    len(all_opportunities),
+                )
+
             except Exception:
                 logger.exception("Provider failed for %s", sym)
                 self._cb.record_failure()
                 if not self._cb.allow_request():
                     return self._cached_results()
+
+            # Throttle between symbols to stay within API rate limits
+            if idx < total - 1:
+                logger.info("Throttle: waiting 5s before next symbol...")
+                time.sleep(5)
 
         # Deduplicate: keep only one entry per (symbol, strike, expiration, type)
         seen: dict[tuple, dict] = {}

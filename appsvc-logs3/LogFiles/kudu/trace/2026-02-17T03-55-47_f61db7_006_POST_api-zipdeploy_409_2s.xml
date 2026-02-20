@@ -1,0 +1,18 @@
+<step title="Incoming Request" date="2026-02-17T03:55:47.265" instance="f61db7" url="/api/zipdeploy?isAsync=true" method="POST" type="request" pid="770,1,7" Accept="*/*" Host="options-scanner-backend-2exk6s.scm.azurewebsites.net" User-Agent="AZURECLI/2.83.0 (MSI)" Accept-Encoding="gzip, deflate" Authorization="Bea..." Cache-Control="no-cache" Content-Type="application/octet-stream" Content-Length="11557624" x-ms-client-request-id="776bcddb-0bb4-11f1-809d-84b1e26ffc70" x-ms-artifact-checksum="64b25b3e735c617baa31efc2e587a5954a46766de33a3bd4f95a65193a6626c5" X-ARR-LOG-ID="776bcddb-0bb4-11f1-809d-84b1e26ffc70" CLIENT-IP="50.47.228.37:64986" X-SITE-DEPLOYMENT-ID="options-scanner-backend-2exk6s" WAS-DEFAULT-HOSTNAME="options-scanner-backend-2exk6s.scm.azurewebsites.net" X-Forwarded-Proto="https" X-AppService-Proto="https" X-Forwarded-TlsVersion="1.3" X-WAWS-Unencoded-URL="/api/zipdeploy?isAsync=true" X-Client-IP="50.47.228.37" X-Client-Port="64986" >
+  <step title="Cleanup Xml Logs" date="2026-02-17T03:55:47.277" >
+    <step title="Cleanup Infos" date="2026-02-17T03:55:47.365" totalFiles="1238" totalCleanup="1078" /><!-- duration: 69ms -->
+  </step><!-- duration: 188ms -->
+  <step title="ZipPushDeploy" date="2026-02-17T03:55:47.787" >
+    <step title="ZipDeploy. Extract zip. Remote build." date="2026-02-17T03:55:47.855" /><!-- duration: 26ms -->
+    <step title="Starting PushDeployAsync" date="2026-02-17T03:55:47.888" /><!-- duration: 6ms -->
+    <step title="Writing artifact to /tmp/zipdeploy/18cc71a4-da9c-4b99-a2a9-40c06a453ef3.zip" date="2026-02-17T03:55:47.985" >
+      <step title="Writing multipart request body to /tmp/zipdeploy/18cc71a4-da9c-4b99-a2a9-40c06a453ef3.zip" date="2026-02-17T03:55:47.990" /><!-- duration: 7ms -->
+    </step><!-- duration: 856ms -->
+    <step title="Start deployment in the background" date="2026-02-17T03:55:48.860" >
+      <step title="Acquiring Deployment Lock" date="2026-02-17T03:55:48.890" /><!-- duration: 7ms -->
+      <step title="Cannot Acquire Deployment Lock already held" date="2026-02-17T03:55:48.912" /><!-- duration: 3ms -->
+    </step><!-- duration: 192ms -->
+    <step title="There is a deployment currently in progress. Please try again when it completes." date="2026-02-17T03:55:49.066" /><!-- duration: 35ms -->
+  </step><!-- duration: 1335ms -->
+  <step title="Outgoing response" date="2026-02-17T03:55:49.201" type="response" statusCode="409" statusText="Conflict" /><!-- duration: 13ms -->
+</step><!-- duration: 1983ms -->

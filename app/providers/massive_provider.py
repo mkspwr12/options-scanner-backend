@@ -27,17 +27,17 @@ class MassiveProvider:
     """Live options/quote data via Massive with rate limiting.
     
     Rate limiting strategy:
-    - Minimum delay between requests: 0.1s (10 req/sec max)
-    - Exponential backoff on 429 errors (1s, 2s, 4s, 8s)
-    - Max retries: 3
+    - Minimum delay between requests: 13s (~4.6 req/min, under free-tier 5/min limit)
+    - Exponential backoff on 429 errors (15s, 30s, 45s, 60s)
+    - Max retries: 4
     """
 
     def __init__(
         self,
         api_key: str | None = None,
         base_url: str | None = None,
-        min_request_interval: float = 0.1,  # 100ms between requests
-        max_retries: int = 3,
+        min_request_interval: float = 13.0,  # 13s between requests (free tier ~5 req/min)
+        max_retries: int = 4,
     ) -> None:
         self._api_key = (api_key or os.getenv("MASSIVE_API_KEY") or "").strip()
         self._base_url = (base_url or os.getenv("MASSIVE_BASE_URL") or "https://api.massive.com").rstrip("/")
@@ -231,8 +231,8 @@ class MassiveProvider:
 
             except HTTPError as exc:
                 if exc.code == 429:
-                    # Rate limit hit - exponential backoff
-                    backoff_time = 2 ** attempt  # 1s, 2s, 4s
+                    # Rate limit hit - longer backoff for free-tier limits
+                    backoff_time = 15 * (attempt + 1)  # 15s, 30s, 45s, 60s
                     logger.warning(
                         "Massive rate limit hit (429) for %s, attempt %d/%d - backing off %ds",
                         path,

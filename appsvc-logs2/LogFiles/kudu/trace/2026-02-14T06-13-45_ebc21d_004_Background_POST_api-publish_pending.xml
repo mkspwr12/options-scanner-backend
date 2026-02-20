@@ -1,0 +1,40 @@
+<step title="BackgroundTrace" date="2026-02-14T06:13:45.723" instance="ebc21d" url="/api/publish" method="POST" >
+  <step title="Creating temporary deployment - FetchDeploymentManager" date="2026-02-14T06:13:45.809" /><!-- duration: 3ms -->
+  <step title="Creating temporary deployment" date="2026-02-14T06:13:45.815" /><!-- duration: 60ms -->
+  <step title="Performing fetch based deployment" date="2026-02-14T06:13:45.934" >
+    <step title="Cleaning up temp folders from previous zip deployments and extracting pushed zip file /tmp/zipdeploy/2172b67e-0a29-40ba-be98-76eb5e3891e5.zip (0.04 MB) to /tmp/zipdeploy/extracted" date="2026-02-14T06:13:47.162" >
+      <step title="ChmodRecursive Process exited with total time taken in ms: 94" date="2026-02-14T06:13:47.369" /><!-- duration: 17ms -->
+    </step><!-- duration: 231ms -->
+    <step title="Deployment timer started" date="2026-02-14T06:13:49.408" >
+      <step title="DeploymentManager.Deploy(id:fa56982a-3186-40ed-a1c5-88d7f8ac21a4)" date="2026-02-14T06:13:49.415" >
+        <step title="Collecting changeset information" date="2026-02-14T06:13:49.444" /><!-- duration: 152ms -->
+        <step title="Updating submodules" date="2026-02-14T06:13:49.602" /><!-- duration: 1129ms -->
+        <step title="Determining deployment builder" date="2026-02-14T06:13:51.018" >
+          <step title="Builder is OryxBuilder" date="2026-02-14T06:13:51.037" /><!-- duration: 18ms -->
+        </step><!-- duration: 48ms -->
+        <step title="PreDeployment: context.CleanOutputPath False" date="2026-02-14T06:13:51.134" >
+          <step title="PreDeployment: context.OutputPath /home/site/wwwroot" date="2026-02-14T06:13:51.261" >
+            <step title="Building" date="2026-02-14T06:13:51.428" >
+              <step title="Executing external process" date="2026-02-14T06:13:51.885" type="process" path="bash" arguments="-c &quot;oryx build /tmp/zipdeploy/extracted -o /home/site/wwwroot --platform python --platform-version 3.11 -p virtualenv_name=antenv --log-file /tmp/build-debug.log  -i /tmp/8de6b90391cffb2 --compress-destination-dir | tee /tmp/oryx-build.log ; exit $PIPESTATUS &quot;" >
+                <step title="Error occurred" date="2026-02-14T06:15:04.900" type="error" text="GetParentProcessLinux (1083) failed.: Could not find a part of the path &apos;/proc/1083/stat&apos;." stackTrace="   at Interop.ThrowExceptionForIoErrno(ErrorInfo errorInfo, String path, Boolean isDirError)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, UnixFileMode openPermissions, Int64&amp; fileLength, UnixFileMode&amp; filePermissions, Boolean failForSymlink, Boolean&amp; wasSymlink, Func`4 createOpenException)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at System.IO.StreamReader.ValidateArgsAndOpenPath(String path, Encoding encoding, Int32 bufferSize)
+   at System.IO.File.ReadLines(String path)
+   at Kudu.Core.Infrastructure.ProcessExtensions.GetParentProcessLinux(Process process, ITracer tracer) in /tmp/KuduLite/Kudu.Core/Infrastructure/ProcessExtensions.cs:line 155" /><!-- duration: 260ms -->
+                <step title="Cpu: gzip(1068,10.440s)+tar(1067,5.160s)+build.sh(1055,0.020s)+oryx(1034,9.970s)+tee(1035,0.000s)+bash(1033,0.000s)=total(25.570s)" date="2026-02-14T06:15:06.146" /><!-- duration: 178ms -->
+                <step title="bash: no io activity for 60s, prev-cpu=-1.000s, current-cpu=25.570s" date="2026-02-14T06:15:06.433" /><!-- duration: 22ms -->
+              </step><!-- duration: 203827ms -->
+              <step title="Using PythonDeploymentLogParser" date="2026-02-14T06:17:17.945" /><!-- duration: 41ms -->
+              <step title="Modified file to trigger a restart of the app container." date="2026-02-14T06:17:22.271" /><!-- duration: 20ms -->
+              <step title="Skip function trigger and logicapp sync because function is not enabled." date="2026-02-14T06:17:22.351" /><!-- duration: 277ms -->
+            </step><!-- duration: 215895ms -->
+          </step><!-- duration: 216164ms -->
+          <step title="Cleaning up temp files" date="2026-02-14T06:17:27.464" /><!-- duration: 3841ms -->
+          <step title="Cleaning up temp files" date="2026-02-14T06:17:31.365" /><!-- duration: 553ms -->
+          <step title="Reloading status file with latest updates" date="2026-02-14T06:17:32.059" >
+            <step title="WebHooksManager.PublishEventAsync: PostDeployment" date="2026-02-14T06:17:32.121" /><!-- duration: 548ms -->
+          </step><!-- duration: 640ms -->
+          <step title="Cleaning up temporary deployment - fetch deployment was successful" date="2026-02-14T06:17:32.731" /><!-- duration: 32ms -->
+        </step><!-- duration: 221782ms -->
+      </step><!-- duration: 223610ms -->

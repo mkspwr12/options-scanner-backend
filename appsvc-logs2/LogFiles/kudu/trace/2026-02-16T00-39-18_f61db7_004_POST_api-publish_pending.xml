@@ -1,0 +1,17 @@
+<step title="Incoming Request" date="2026-02-16T00:39:18.167" instance="f61db7" url="/api/publish?async=true&amp;deployer=GITHUB_ONE_DEPLOY&amp;type=zip&amp;message=%7B%22type%22%3A%22deployment%22%2C%22sha%22%3A%226d32e5b9bdcfb67442018fe5f39cd2a4d0da1853%22%2C%22repoName%22%3A%22mkspwr12%2Foptions-scanner-backend%22%2C%22actor%22%3A%22mkspwr12%22%2C%22slotName%22%3A%22production%22%2C%22commitMessage%22%3A%22fix%3A%20remove%20unixodbc-dev%20to%20prevent%20segfault%2C%20add%20gunicorn%20for%20resilience%20(%232)%22%7D" method="POST" type="request" pid="776,1,18" Host="options-scanner-backend-2exk6s.scm.azurewebsites.net" User-Agent="GITHUBACTIONS_DeployWebAppToAzure_1bac1de709833053b85ab0d60063d021becbab353b8d246140a86507d9e31133" Authorization="Bea..." Content-Type="application/octet-stream" Cookie="ARRAffinity=f61db71164c7fbc96a48b8334d6a4273c48541f982080ae5a71433a0e2a8d849;Path=/;HttpOnly;Secure;Domain=options-scanner-backend-2exk6s.scm.azurewebsites.net; ARRAffinitySameSite=f61db71164c7fbc96a48b8334d6a4273c48541f982080ae5a71433a0e2a8d849;Path=/;HttpOnly;SameSite=None;Secure;Domain=options-scanner-backend-2exk6s.scm.azurewebsites.net" Transfer-Encoding="chunked" X-ARR-LOG-ID="478a8363-7d89-4118-9e25-e6264db67308" CLIENT-IP="135.232.200.17:26624" X-SITE-DEPLOYMENT-ID="options-scanner-backend-2exk6s" WAS-DEFAULT-HOSTNAME="options-scanner-backend-2exk6s.scm.azurewebsites.net" X-Forwarded-Proto="https" X-AppService-Proto="https" X-Forwarded-TlsVersion="1.3" X-WAWS-Unencoded-URL="/api/publish?async=true&amp;deployer=GITHUB_ONE_DEPLOY&amp;type=zip&amp;message=%7B%22type%22%3A%22deployment%22%2C%22sha%22%3A%226d32e5b9bdcfb67442018fe5f39cd2a4d0da1853%22%2C%22repoName%22%3A%22mkspwr12%2Foptions-scanner-backend%22%2C%22actor%22%3A%22mkspwr12%22%2C%22slotName%22%3A%22production%22%2C%22commitMessage%22%3A%22fix%3A%20remove%20unixodbc-dev%20to%20prevent%20segfault%2C%20add%20gunicorn%20for%20resilience%20(%232)%22%7D" X-Client-IP="135.232.200.17" X-Client-Port="26624" >
+  <step title="OneDeploy" date="2026-02-16T00:39:18.970" >
+    <step title="None repository commit" date="2026-02-16T00:39:19.129" >
+      <step title="Commit id: df6f7df0-095c-4242-b74e-b97619b641eb" date="2026-02-16T00:39:19.168" Message="N/A" AuthorName="N/A" AuthorEmail="N/A" /><!-- duration: 49ms -->
+    </step><!-- duration: 126ms -->
+    <step title="Starting PushDeployAsync" date="2026-02-16T00:39:19.295" /><!-- duration: 28ms -->
+    <step title="Writing artifact to /tmp/zipdeploy/88f0d5fc-bb58-4ec7-8280-c123e02c4dd6.zip" date="2026-02-16T00:39:19.623" >
+      <step title="Writing multipart request body to /tmp/zipdeploy/88f0d5fc-bb58-4ec7-8280-c123e02c4dd6.zip" date="2026-02-16T00:39:19.674" /><!-- duration: 47ms -->
+    </step><!-- duration: 447ms -->
+    <step title="Removing previous build artifact&apos;s manifest file" date="2026-02-16T00:39:20.150" >
+      <step title="Start deployment in the background" date="2026-02-16T00:39:20.311" >
+        <step title="Acquiring Deployment Lock" date="2026-02-16T00:39:20.742" /><!-- duration: 40ms -->
+        <step title="Acquired Deployment Lock" date="2026-02-16T00:39:21.158" /><!-- duration: 23ms -->
+      </step><!-- duration: 2048ms -->
+    </step><!-- duration: 2328ms -->
+    <step title="Outgoing response" date="2026-02-16T00:39:22.530" type="response" statusCode="202" statusText="Accepted" /><!-- duration: 20ms -->
+  </step><!-- duration: 3606ms -->

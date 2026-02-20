@@ -1,0 +1,46 @@
+2026-02-19T08:44:45.9446329Z State: Starting, Action: EstablishingSiteNetworks, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-19T08:44:47.0167801Z State: Starting, Action: StartingMsiContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-19T08:44:51.7100025Z State: Starting, Action: StartingSiteContainers, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-02-19T08:44:51.7105187Z Container start method called.
+2026-02-19T08:44:51.7106675Z State: Starting, Action: PullingImage, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pulling image 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-19T08:44:51.7110489Z Establishing network.
+2026-02-19T08:44:51.7112494Z Pulling image: appsvc/python:3.11_20260203.2.tuxprod.
+2026-02-19T08:45:20.0952178Z Image appsvc/python:3.11_20260203.2.tuxprod is pulled from registry 10.1.0.4:13209
+2026-02-19T08:45:20.0963960Z Container is starting.
+2026-02-19T08:45:20.0979272Z State: Starting, Action: MountingVolumes, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Mounting volumes for options-scanner-backend-2exk6s., DetailsLevel: INFO
+2026-02-19T08:45:20.0981173Z Establishing user namespace if not established already.
+2026-02-19T08:45:20.0989378Z Establishing network if not established already.
+2026-02-19T08:45:20.0995792Z Mounting volumes.
+2026-02-19T08:45:20.1005024Z Nested mountpoint 
+2026-02-19T08:45:20.1054105Z Nested mountpoint volatile/logs
+2026-02-19T08:45:20.1096401Z Nested mountpoint 
+2026-02-19T08:45:20.1557741Z Nested mountpoint 
+2026-02-19T08:45:20.1579587Z Nested mountpoint 
+2026-02-19T08:45:20.2807116Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Finished pulling container image and mounting volumes for options-scanner-backend-2exk6s. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-02-19T08:45:20.2808925Z Creating container.
+2026-02-19T08:45:20.2810102Z Creating pipes for streaming container io.
+2026-02-19T08:45:20.2811168Z Creating stdout named pipe at /podr/container/pipe/87d763fadddc_options-scanner-backend-2exk6s/stdout_b2a0152fad2f4f2bbbaed49823587210.
+2026-02-19T08:45:20.2819269Z Successfully created stdout named pipe at: /podr/container/pipe/87d763fadddc_options-scanner-backend-2exk6s/stdout_b2a0152fad2f4f2bbbaed49823587210.
+2026-02-19T08:45:20.2820384Z Opening named pipe /podr/container/pipe/87d763fadddc_options-scanner-backend-2exk6s/stdout_b2a0152fad2f4f2bbbaed49823587210 for reading in non-blocking mode.
+2026-02-19T08:45:20.2821515Z Successfully opened named pipe: /podr/container/pipe/87d763fadddc_options-scanner-backend-2exk6s/stdout_b2a0152fad2f4f2bbbaed49823587210.
+2026-02-19T08:45:20.2822682Z Successfully removed non-blocking flag from /podr/container/pipe/87d763fadddc_options-scanner-backend-2exk6s/stdout_b2a0152fad2f4f2bbbaed49823587210.
+2026-02-19T08:45:20.2824051Z Creating stderr named pipe at /podr/container/pipe/87d763fadddc_options-scanner-backend-2exk6s/stderr_c64711787f0e4229b32bcc00da224c42.
+2026-02-19T08:45:20.2825503Z Successfully created stderr named pipe at: /podr/container/pipe/87d763fadddc_options-scanner-backend-2exk6s/stderr_c64711787f0e4229b32bcc00da224c42.
+2026-02-19T08:45:20.2826526Z Opening named pipe /podr/container/pipe/87d763fadddc_options-scanner-backend-2exk6s/stderr_c64711787f0e4229b32bcc00da224c42 for reading in non-blocking mode.
+2026-02-19T08:45:20.2827976Z Successfully opened named pipe: /podr/container/pipe/87d763fadddc_options-scanner-backend-2exk6s/stderr_c64711787f0e4229b32bcc00da224c42.
+2026-02-19T08:45:20.2829344Z Successfully removed non-blocking flag from /podr/container/pipe/87d763fadddc_options-scanner-backend-2exk6s/stderr_c64711787f0e4229b32bcc00da224c42.
+2026-02-19T08:45:20.2833162Z Creating container with image: appsvc/python:3.11_20260203.2.tuxprod from registry: 10.1.0.4:13209 and fully qualified image name: 10.1.0.4:13209/appsvc/python:3.11_20260203.2.tuxprod
+2026-02-19T08:45:20.8141304Z Starting container: 87d763fadddc_options-scanner-backend-2exk6s.
+2026-02-19T08:45:20.8624871Z Starting watchers and probes.
+2026-02-19T08:45:20.8769069Z Starting metrics collection.
+2026-02-19T08:45:20.8773069Z Container is running.
+2026-02-19T08:45:20.8776593Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-19T08:45:20.8988908Z Container start method finished after 29188 ms.
+2026-02-19T08:45:20.9003586Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container options-scanner-backend-2exk6s successfully created and is running., DetailsLevel: INFO
+2026-02-19T08:45:20.9055808Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-02-19T08:45:43.9293546Z Site startup probe succeeded after 23.0075105 seconds.
+2026-02-19T08:45:44.0601067Z State: Starting, Action: WarmUpProbeSucceeded, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site startup probe succeeded after 23.0075105 seconds., DetailsLevel: INFO
+2026-02-19T08:45:44.1931233Z Site is running with deployment version: d7049651-7ca4-4a13-8785-40f1c0255527
+2026-02-19T08:45:44.1962641Z Site started.
+2026-02-19T08:45:44.1971275Z State: Started, Action: None, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site started at 02/19/2026 08:45:44 (UTC), DetailsLevel: INFO
+2026-02-19T08:45:44.4543008Z Site is running with patch version PYTHON 3.11.14

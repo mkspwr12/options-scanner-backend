@@ -1,0 +1,9 @@
+2026-02-19T08:37:37.5515292Z State: Stopping, Action: StoppingSite, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site started at 02/18/2026 23:19:13 (UTC), DetailsLevel: INFO
+2026-02-19T08:37:37.6875335Z State: Stopping, Action: StoppingSiteContainers, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site started at 02/18/2026 23:19:13 (UTC), DetailsLevel: INFO
+2026-02-19T08:37:37.6877136Z Container is terminating. Grace period: 5 seconds.
+2026-02-19T08:37:37.7080921Z Stop and delete container. Retry count = 0
+2026-02-19T08:37:37.7166141Z Stopping container: fcc1e2383f1d_options-scanner-backend-2exk6s.
+2026-02-19T08:37:44.1799244Z Deleting container: fcc1e2383f1d_options-scanner-backend-2exk6s. Retry count = 0
+2026-02-19T08:37:54.0529187Z Container spec TerminationMessagePolicy  path 
+2026-02-19T08:37:54.0541849Z Container is terminated. Total time elapsed: 16366 ms.
+2026-02-19T08:37:54.0622402Z Site: options-scanner-backend-2exk6s stopped.

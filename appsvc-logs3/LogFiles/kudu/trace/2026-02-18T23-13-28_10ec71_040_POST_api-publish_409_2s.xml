@@ -1,0 +1,17 @@
+<step title="Incoming Request" date="2026-02-18T23:13:28.805" instance="10ec71" url="/api/publish?async=true&amp;deployer=GITHUB_ONE_DEPLOY&amp;type=zip&amp;message=%7B%22type%22%3A%22deployment%22%2C%22sha%22%3A%22d1ad2282047ea63960a9f91521e3da11b6867275%22%2C%22repoName%22%3A%22mkspwr12%2Foptions-scanner-backend%22%2C%22actor%22%3A%22mkspwr12%22%2C%22slotName%22%3A%22production%22%2C%22commitMessage%22%3A%22fix%3A%20deduplicate%20option%20contracts%20in%20scan%20results%20(%2319)%22%7D" method="POST" type="request" pid="770,1,39" Host="options-scanner-backend-2exk6s.scm.azurewebsites.net" User-Agent="GITHUBACTIONS_DeployWebAppToAzure_1bac1de709833053b85ab0d60063d021becbab353b8d246140a86507d9e31133" Authorization="Bea..." Content-Type="application/octet-stream" Cookie="ARRAffinity=10ec71252d15acc549bd1b49685e9bce1d1247141bf9ff915402b1130345f15b;Path=/;HttpOnly;Secure;Domain=options-scanner-backend-2exk6s.scm.azurewebsites.net; ARRAffinitySameSite=10ec71252d15acc549bd1b49685e9bce1d1247141bf9ff915402b1130345f15b;Path=/;HttpOnly;SameSite=None;Secure;Domain=options-scanner-backend-2exk6s.scm.azurewebsites.net" Transfer-Encoding="chunked" X-ARR-LOG-ID="dc3725a4-4efc-4576-b92e-477cd7caea99" CLIENT-IP="64.236.137.135:53272" X-SITE-DEPLOYMENT-ID="options-scanner-backend-2exk6s" WAS-DEFAULT-HOSTNAME="options-scanner-backend-2exk6s.scm.azurewebsites.net" X-Forwarded-Proto="https" X-AppService-Proto="https" X-Forwarded-TlsVersion="1.3" X-WAWS-Unencoded-URL="/api/publish?async=true&amp;deployer=GITHUB_ONE_DEPLOY&amp;type=zip&amp;message=%7B%22type%22%3A%22deployment%22%2C%22sha%22%3A%22d1ad2282047ea63960a9f91521e3da11b6867275%22%2C%22repoName%22%3A%22mkspwr12%2Foptions-scanner-backend%22%2C%22actor%22%3A%22mkspwr12%22%2C%22slotName%22%3A%22production%22%2C%22commitMessage%22%3A%22fix%3A%20deduplicate%20option%20contracts%20in%20scan%20results%20(%2319)%22%7D" X-Client-IP="64.236.137.135" X-Client-Port="53272" >
+  <step title="Cleanup Xml Logs" date="2026-02-18T23:13:28.826" >
+    <step title="Cleanup Infos" date="2026-02-18T23:13:29.022" totalFiles="1859" totalCleanup="1699" /><!-- duration: 184ms -->
+  </step><!-- duration: 398ms -->
+  <step title="OneDeploy" date="2026-02-18T23:13:29.570" >
+    <step title="Starting PushDeployAsync" date="2026-02-18T23:13:29.754" /><!-- duration: 10ms -->
+    <step title="Writing artifact to /tmp/zipdeploy/4845a723-5b96-4ba3-8c37-7da1289579a3.zip" date="2026-02-18T23:13:29.962" >
+      <step title="Writing multipart request body to /tmp/zipdeploy/4845a723-5b96-4ba3-8c37-7da1289579a3.zip" date="2026-02-18T23:13:29.982" /><!-- duration: 27ms -->
+    </step><!-- duration: 170ms -->
+    <step title="Start deployment in the background" date="2026-02-18T23:13:30.223" >
+      <step title="Acquiring Deployment Lock" date="2026-02-18T23:13:30.378" /><!-- duration: 11ms -->
+      <step title="Cannot Acquire Deployment Lock already held" date="2026-02-18T23:13:30.497" /><!-- duration: 12ms -->
+    </step><!-- duration: 657ms -->
+    <step title="There is a deployment currently in progress. Please try again when it completes." date="2026-02-18T23:13:31.022" /><!-- duration: 49ms -->
+  </step><!-- duration: 1539ms -->
+  <step title="Outgoing response" date="2026-02-18T23:13:31.165" type="response" statusCode="409" statusText="Conflict" /><!-- duration: 30ms -->
+</step><!-- duration: 2446ms -->

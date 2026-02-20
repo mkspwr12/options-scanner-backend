@@ -1,0 +1,12 @@
+<step title="Incoming Request" date="2026-02-15T20:09:16.470" instance="f61db7" url="/dump" method="GET" type="request" pid="770,1,7" Host="options-scanner-backend-2exk6s.scm.azurewebsites.net" User-Agent="AZURECLI/2.83.0 (MSI)" Accept-Encoding="identity" Authorization="Bea..." x-ms-client-request-id="31d086ec-0aaa-11f1-bf08-84b1e26ffc70" X-ARR-LOG-ID="31d086ec-0aaa-11f1-bf08-84b1e26ffc70" CLIENT-IP="50.47.228.37:53377" X-SITE-DEPLOYMENT-ID="options-scanner-backend-2exk6s" WAS-DEFAULT-HOSTNAME="options-scanner-backend-2exk6s.scm.azurewebsites.net" X-Forwarded-Proto="https" X-AppService-Proto="https" X-Forwarded-TlsVersion="1.3" X-WAWS-Unencoded-URL="/dump" X-Client-IP="50.47.228.37" X-Client-Port="53377" >
+  <step title="Cleanup Xml Logs" date="2026-02-15T20:09:16.520" >
+    <step title="Cleanup Infos" date="2026-02-15T20:09:16.802" totalFiles="459" totalCleanup="299" /><!-- duration: 40ms -->
+  </step><!-- duration: 349ms -->
+  <step title="Error occurred" date="2026-02-15T20:10:08.875" type="error" text="Unable to open /home/LogFiles/kudu/trace/2026-02-15T20-09-02_f61db7_004_GET_dump_pending.xml, System.IO.FileNotFoundException: Could not find file &apos;/home/LogFiles/kudu/trace/2026-02-15T20-09-02_f61db7_004_GET_dump_pending.xml&apos;.
+File name: &apos;/home/LogFiles/kudu/trace/2026-02-15T20-09-02_f61db7_004_GET_dump_pending.xml&apos;
+   at Interop.ThrowExceptionForIoErrno(ErrorInfo errorInfo, String path, Boolean isDirError)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, UnixFileMode openPermissions, Int64&amp; fileLength, UnixFileMode&amp; filePermissions, Boolean failForSymlink, Boolean&amp; wasSymlink, Func`4 createOpenException)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at Kudu.Core.Infrastructure.ZipArchiveExtensions.AddFileAsync(ZipArchive zipArchive, FileInfoBase file, ITracer tracer, String directoryNameInArchive) in /tmp/KuduLite/Kudu.Core/Infrastructure/ZipArchiveExtensions.cs:line 165" /><!-- duration: 29ms -->
+  <step title="Outgoing response" date="2026-02-15T20:10:11.680" type="response" statusCode="200" statusText="OK" /><!-- duration: 357ms -->
+</step><!-- duration: 55776ms -->
