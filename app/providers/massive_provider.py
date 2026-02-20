@@ -244,21 +244,32 @@ class MassiveProvider:
         end_date = date.today()
         start_date = end_date - timedelta(days=max(days, 30))
         
+        bars_by_sym: dict[str, list[dict[str, Any]]] = {}
         try:
             bars_payload = self._get_json(
                 f"/v2/aggs/ticker/{ticker_list}/range/1/day/{start_date.isoformat()}/{end_date.isoformat()}",
                 {"adjusted": "true", "sort": "asc", "limit": "200"},
             )
             # Results may contain data for multiple symbols
-            # The response structure depends on Massive API — it might return:
-            # { "results": [...] } for single sym or { "results": [...] } with symbol field
             bars_by_sym = self._parse_batch_bars(bars_payload, syms)
+            logger.debug(f"Batch bars fetch: {len(bars_by_sym)} symbols with data")
         except Exception as e:
-            logger.warning("Batch bars fetch failed for %s: %s", ticker_list, e)
-            bars_by_sym = {}
+            logger.warning(f"Batch bars fetch failed for {ticker_list}: {e}")
+            # Fall back to fetching individually
+            for sym in syms:
+                try:
+                    single_payload = self._get_json(
+                        f"/v2/aggs/ticker/{sym}/range/1/day/{start_date.isoformat()}/{end_date.isoformat()}",
+                        {"adjusted": "true", "sort": "asc", "limit": "200"},
+                    )
+                    individual_bars = single_payload.get("results") or []
+                    if individual_bars:
+                        bars_by_sym[sym] = individual_bars
+                        logger.debug(f"Fallback: Fetched {len(individual_bars)} bars for {sym}")
+                except Exception as inner_e:
+                    logger.warning(f"Fallback bars fetch failed for {sym}: {inner_e}")
         
         # Step 2: Fetch reference data for each symbol individually
-        # (batch reference endpoint may not be available on free tier)
         ref_by_sym: dict[str, dict[str, Any]] = {}
         for sym in syms:
             try:
@@ -266,17 +277,19 @@ class MassiveProvider:
                 ref = ref_payload.get("results") or {}
                 ref_by_sym[sym] = ref
             except Exception:
-                logger.debug("Reference lookup unavailable for %s", sym)
+                logger.debug(f"Reference lookup unavailable for {sym}")
         
         # Step 3: Combine bars + reference for each symbol
         for sym in syms:
             bars = bars_by_sym.get(sym, [])
             if len(bars) < 14:
+                logger.debug(f"Insufficient bars for {sym}: {len(bars)} < 14")
                 results[sym] = None
                 continue
             
             closes = [self._safe_float(b.get("c")) for b in bars if self._safe_float(b.get("c")) > 0]
             if len(closes) < 14:
+                logger.debug(f"Insufficient closes for {sym}: {len(closes)} < 14")
                 results[sym] = None
                 continue
             
@@ -300,6 +313,7 @@ class MassiveProvider:
                 "pe_ratio": pe_ratio,
             }
         
+        logger.info(f"Batch scan for {len(syms)} symbols: {sum(1 for v in results.values() if v)} successful")
         return results
 
     @staticmethod
